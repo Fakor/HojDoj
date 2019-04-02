@@ -1,21 +1,21 @@
-# main.py
 import tkinter as tk
 import subprocess
 import queue
 import os
 from threading import Thread
 
+
 class Console(tk.Frame):
     def __init__(self,parent=None):
         tk.Frame.__init__(self, parent)
         self.parent = parent
-        self.createWidgets()
+        self.create_widgets()
 
         # get the path to the console.py file assuming it is in the same folder
-        consolePath = os.path.join(os.path.dirname(__file__),"console.py")
+        console_path = os.path.join(os.path.dirname(__file__),"console.py")
         # open the console.py file (replace the path to python with the correct one for your system)
         # e.g. it might be "C:\\Python35\\python"
-        self.p = subprocess.Popen(["python3",consolePath],
+        self.p = subprocess.Popen(["python3",console_path],
                                   stdout=subprocess.PIPE,
                                   stdin=subprocess.PIPE,
                                   stderr=subprocess.PIPE)
@@ -33,14 +33,17 @@ class Console(tk.Frame):
         # a daemon to keep track of the threads so they can stop running
         self.alive = True
         # start the functions that get stdout and stderr in separate threads
-        Thread(target=self.readFromProccessOut).start()
-        Thread(target=self.readFromProccessErr).start()
+        Thread(target=self.read_from_proccess_out).start()
+        Thread(target=self.read_from_process_err).start()
 
         # start the write loop in the main thread
-        self.writeLoop()
+        self.write_loop()
+        self.pack(fill=tk.BOTH, expand=True)
 
     def destroy(self):
-        "This is the function that is automatically called when the widget is destroyed."
+        """
+        This is the function that is automatically called when the widget is destroyed.
+        """
         self.alive=False
         # write exit() to the console in order to stop it running
         self.p.stdin.write("exit()\n".encode())
@@ -48,27 +51,36 @@ class Console(tk.Frame):
         # call the destroy methods to properly destroy widgets
         self.ttyText.destroy()
         tk.Frame.destroy(self)
+
     def enter(self,e):
-        "The <Return> key press handler"
+        """
+        The <Return> key press handler
+        """
         string = self.ttyText.get(1.0, tk.END)[self.line_start:]
         self.line_start+=len(string)
         self.p.stdin.write(string.encode())
         self.p.stdin.flush()
 
-    def readFromProccessOut(self):
-        "To be executed in a separate thread to make read non-blocking"
+    def read_from_proccess_out(self):
+        """
+        To be executed in a separate thread to make read non-blocking
+        """
         while self.alive:
             data = self.p.stdout.raw.read(1024).decode()
             self.outQueue.put(data)
 
-    def readFromProccessErr(self):
-        "To be executed in a separate thread to make read non-blocking"
+    def read_from_process_err(self):
+        """
+        To be executed in a separate thread to make read non-blocking
+        """
         while self.alive:
             data = self.p.stderr.raw.read(1024).decode()
             self.errQueue.put(data)
 
-    def writeLoop(self):
-        "Used to write data from stdout and stderr to the Text widget"
+    def write_loop(self):
+        """
+        Used to write data from stdout and stderr to the Text widget
+        """
         # if there is anything to write from stdout or stderr, then write it
         if not self.errQueue.empty():
             self.write(self.errQueue.get())
@@ -77,21 +89,15 @@ class Console(tk.Frame):
 
         # run this method again after 10ms
         if self.alive:
-            self.after(10,self.writeLoop)
+            self.after(10, self.write_loop)
 
     def write(self,string):
         self.ttyText.insert(tk.END, string)
         self.ttyText.see(tk.END)
         self.line_start+=len(string)
 
-    def createWidgets(self):
+    def create_widgets(self):
         self.ttyText = tk.Text(self, wrap=tk.WORD)
         self.ttyText.pack(fill=tk.BOTH,expand=True)
 
 
-if __name__ == '__main__':
-    root = tk.Tk()
-    root.config(background="red")
-    main_window = Console(root)
-    main_window.pack(fill=tk.BOTH,expand=True)
-    root.mainloop()

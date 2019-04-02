@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 class Demo1:
     def __init__(self, master):
         self.master = master
@@ -12,6 +13,7 @@ class Demo1:
         self.newWindow = tk.Toplevel(self.master)
         self.app = Demo2(self.newWindow)
 
+
 class Demo2:
     def __init__(self, master):
         self.master = master
@@ -22,6 +24,7 @@ class Demo2:
 
     def close_windows(self):
         self.master.destroy()
+
 
 def main():
     root = tk.Tk()
