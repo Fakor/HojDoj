@@ -1,6 +1,6 @@
 import tkinter as tk
 
-import interpreter
+from command_window import CommandWindow
 
 
 class MainWindow:
@@ -8,7 +8,13 @@ class MainWindow:
         self.parent = parent
         self.frame = tk.Frame(self.parent)
 
-        self.interpreter = interpreter.Console(self.parent)
-        self.new_window = tk.Toplevel(self.parent)
+        self.text_var = tk.StringVar()
 
+        self.label = tk.Label(self.frame, textvariable = self.text_var)
+        self.text_var.set("Not set yet")
+        self.label.pack()
+
+        self.new_window = tk.Toplevel(self.parent)
+        self.command = CommandWindow(self.new_window)
         self.frame.pack()
+        self.new_window.pack_slaves()

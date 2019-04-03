@@ -1,6 +1,5 @@
 import tkinter as tk
 
-import interpreter
 import main_window
 
 
