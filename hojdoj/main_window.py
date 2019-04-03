@@ -15,6 +15,6 @@ class MainWindow:
         self.label.pack()
 
         self.new_window = tk.Toplevel(self.parent)
-        self.command = CommandWindow(self.new_window)
+        self.command = CommandWindow(self.new_window, self.text_var)
         self.frame.pack()
         self.new_window.pack_slaves()
