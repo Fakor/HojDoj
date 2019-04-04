@@ -1,6 +1,7 @@
 import tkinter as tk
 
 from command_window import CommandWindow
+from Scetch import Scetch
 
 
 class MainWindow:
@@ -14,11 +15,16 @@ class MainWindow:
         self.text_var.set("Not set yet")
         self.label.pack()
 
+
+        self.scetch_window = tk.Toplevel(self.parent)
+        self.scetch = Scetch(self.scetch_window, 300, 300)
+
         v = {
-            'text_var': self.text_var
+            'text_var': self.text_var,
+            'scetch': self.scetch
         }
 
-        self.new_window = tk.Toplevel(self.parent)
-        self.command = CommandWindow(self.new_window, v)
+        self.command_window = tk.Toplevel(self.parent)
+        self.command = CommandWindow(self.command_window, v)
+
         self.frame.pack()
-        self.new_window.pack_slaves()
