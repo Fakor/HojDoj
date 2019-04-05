@@ -1,4 +1,5 @@
 import tkinter as tk
+import code
 
 from Sketch import Sketch
 
@@ -23,5 +24,9 @@ class MainWindow(tk.Text):
         self.text.set("Not set yet")
         self.label.grid()
 
+        self.shell = code.InteractiveInterpreter(locals=locals())
+
     def enter_pressed(self, event):
-        exec(self.get(1.4, tk.END))
+        line_private___ = self.get(1.4, tk.END).strip()
+        if line_private___[-1] != ":":
+            self.shell.runcode(line_private___)
