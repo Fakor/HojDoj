@@ -1,30 +1,27 @@
 import tkinter as tk
 
-from command_window import CommandWindow
-from Scetch import Scetch
+from Sketch import Sketch
 
 
-class MainWindow:
+class MainWindow(tk.Text):
     def __init__(self, parent):
         self.parent = parent
-        self.frame = tk.Frame(self.parent)
+        tk.Text.__init__(self, parent)
+        self.bind('<Return>', self.enter_pressed)
 
-        self.text_var = tk.StringVar()
+        self.grid()
+        self.insert(0.0, ">>> ")
 
-        self.label = tk.Label(self.frame, textvariable = self.text_var)
-        self.text_var.set("Not set yet")
-        self.label.pack()
+        self.sketch_window = tk.Toplevel(self.parent)
+        self.sketch = Sketch(self.sketch_window, 300, 300)
+        self.sketch.grid()
 
+        self.label_window = tk.Toplevel(self.parent)
+        self.text = tk.StringVar()
 
-        self.scetch_window = tk.Toplevel(self.parent)
-        self.scetch = Scetch(self.scetch_window, 300, 300)
+        self.label = tk.Label(self.sketch_window, textvariable=self.text)
+        self.text.set("Not set yet")
+        self.label.grid()
 
-        v = {
-            'text_var': self.text_var,
-            'scetch': self.scetch
-        }
-
-        self.command_window = tk.Toplevel(self.parent)
-        self.command = CommandWindow(self.command_window, v)
-
-        self.frame.pack()
+    def enter_pressed(self, event):
+        exec(self.get(1.4, tk.END))
