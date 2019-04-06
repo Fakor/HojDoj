@@ -1,0 +1,7 @@
+A link to a stackoverflow discussion on how layers can be implemented with tkinter.
+
+https://stackoverflow.com/questions/9576063/stacking-order-maintenance-in-tkinter
+
+Stackoverflow discussion on how to implement an interactive python interpreter with tkinter.
+
+https://stackoverflow.com/questions/21811464/how-can-i-embed-a-python-interpreter-frame-in-python-using-tkinter
