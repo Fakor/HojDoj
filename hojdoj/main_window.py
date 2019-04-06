@@ -20,7 +20,7 @@ class MainWindow(tk.Text):
         self.label_window = tk.Toplevel(self.parent)
         self.text = tk.StringVar()
 
-        self.label = tk.Label(self.sketch_window, textvariable=self.text)
+        self.label = tk.Label(self.label_window, textvariable=self.text)
         self.text.set("Not set yet")
         self.label.grid()
 
