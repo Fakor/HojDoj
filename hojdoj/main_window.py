@@ -1,7 +1,7 @@
 import tkinter as tk
 import code
 
-from Sketch import Sketch
+from sketch import Sketch
 
 
 class MainWindow(tk.Text):
@@ -9,6 +9,7 @@ class MainWindow(tk.Text):
         self.parent = parent
         tk.Text.__init__(self, parent)
         self.bind('<Return>', self.enter_pressed)
+        self.bind('<Control-c>', self.quit)
 
         self.grid()
         self.insert(0.0, ">>> ")
@@ -30,3 +31,6 @@ class MainWindow(tk.Text):
         line_private___ = self.get(1.4, tk.END).strip()
         if line_private___[-1] != ":":
             self.shell.runcode(line_private___)
+
+    def quit(self, event):
+        self.parent.quit()
