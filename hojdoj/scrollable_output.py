@@ -1,9 +1,11 @@
 import tkinter as tk
 
 
-class ScrollableOutput(tk.Label):
+class ScrollableOutput(tk.Text):
     def __init__(self, parent):
         self.parent = parent
-        tk.Label.__init__(self, parent)
+        tk.Text.__init__(self, parent)
+        self.insert(tk.END, "HojDoj Scrollable output")
 
-        self.config(text="HojDoj Scrollable output")
+    def add_row(self, new_row):
+        self.insert(tk.END, '\n' + new_row)

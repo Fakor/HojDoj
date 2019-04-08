@@ -2,7 +2,7 @@ import tkinter as tk
 
 
 class Sketch(tk.Canvas):
-    def __init__(self, parent, width, height):
+    def __init__(self, parent, width, height, output=None):
         tk.Canvas.__init__(self, parent, width=width, height=height)
         self.pack()
         self.parent = parent
