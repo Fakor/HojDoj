@@ -2,6 +2,7 @@ import tkinter as tk
 import code
 
 from sketch import Sketch
+from scrollable_output import ScrollableOutput
 
 
 class MainWindow(tk.Text):
@@ -18,12 +19,9 @@ class MainWindow(tk.Text):
         self.sketch = Sketch(self.sketch_window, 300, 300)
         self.sketch.grid()
 
-        self.label_window = tk.Toplevel(self.parent)
-        self.text = tk.StringVar()
-
-        self.label = tk.Label(self.label_window, textvariable=self.text)
-        self.text.set("Not set yet")
-        self.label.grid()
+        self.output_window = tk.Toplevel(self.parent)
+        self.output = ScrollableOutput(self.output_window)
+        self.output.grid()
 
         self.shell = code.InteractiveInterpreter(locals=locals())
 
