@@ -15,13 +15,13 @@ class MainWindow(tk.Text):
         self.grid()
         self.insert(0.0, ">>> ")
 
-        self.sketch_window = tk.Toplevel(self.parent)
-        self.sketch = Sketch(self.sketch_window, 300, 300)
-        self.sketch.grid()
-
         self.output_window = tk.Toplevel(self.parent)
         self.output = ScrollableOutput(self.output_window)
         self.output.grid()
+
+        self.sketch_window = tk.Toplevel(self.parent)
+        self.sketch = Sketch(self.sketch_window, 300, 300, "sketch", output=self.output)
+        self.sketch.grid()
 
         self.shell = code.InteractiveInterpreter(locals=locals())
 

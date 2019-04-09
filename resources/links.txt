@@ -5,3 +5,7 @@ https://stackoverflow.com/questions/9576063/stacking-order-maintenance-in-tkinte
 Stackoverflow discussion on how to implement an interactive python interpreter with tkinter.
 
 https://stackoverflow.com/questions/21811464/how-can-i-embed-a-python-interpreter-frame-in-python-using-tkinter
+
+Guide to decorators
+
+https://www.thecodeship.com/patterns/guide-to-python-function-decorators/
