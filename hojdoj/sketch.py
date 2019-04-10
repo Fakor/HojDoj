@@ -52,7 +52,14 @@ class Sketch(tk.Canvas):
 
     @call_syntax
     def sketch_line(self, x1, y1, x2, y2):
-        new_id = self.create_line(x1, y1, x2, y2)
+        new_id = self.current_tk_paint_command(x1, y1, x2, y2)
+        self.objects.append({"id": new_id,
+                             "command": self.current_tk_paint_command,
+                             "cords":(x1, y1, x2, y2)})
+
+    @call_syntax
+    def sketch_rect(self, x1, y1, x2, y2):
+        new_id = self.current_tk_paint_command(x1, y1, x2, y2)
         self.objects.append({"id": new_id,
                              "command": self.current_tk_paint_command,
                              "cords":(x1, y1, x2, y2)})
@@ -67,6 +74,8 @@ class Sketch(tk.Canvas):
     def current_tk_paint_command(self):
         if self.paint_command == "line":
             return self.create_line
+        elif self.paint_command == "rect":
+            return self.create_rectangle
         else:
             return None
 
@@ -74,6 +83,8 @@ class Sketch(tk.Canvas):
     def current_sketch_command(self):
         if self.paint_command == "line":
             return self.sketch_line
+        elif self.paint_command == "rect":
+            return self.sketch_rect
         else:
             return None
 
