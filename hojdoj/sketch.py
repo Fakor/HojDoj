@@ -17,7 +17,7 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.paint_command = self.create_line
+        self.paint_command = "line"
 
         self.start_point = None
         self.current_object = None
@@ -27,14 +27,14 @@ class Sketch(tk.Canvas):
 
     def on_button_press(self, event):
         self.start_point = (event.x, event.y)
-        self.current_object = self.paint_command(*self.start_point, *self.start_point)
+        self.current_object = self.current_tk_paint_command(*self.start_point, *self.start_point)
 
     def on_move_press(self, event):
         self.coords(self.current_object, *self.start_point, event.x, event.y)
 
     def on_button_release(self, event):
         self.delete(self.current_object)
-        self.sketch_line(*self.start_point, event.x, event.y)
+        self.current_sketch_command(*self.start_point, event.x, event.y)
 
     @call_syntax
     def undo(self):
@@ -54,7 +54,7 @@ class Sketch(tk.Canvas):
     def sketch_line(self, x1, y1, x2, y2):
         new_id = self.create_line(x1, y1, x2, y2)
         self.objects.append({"id": new_id,
-                             "command": self.paint_command,
+                             "command": self.current_tk_paint_command,
                              "cords":(x1, y1, x2, y2)})
 
     def _undo(self, event):
@@ -62,4 +62,18 @@ class Sketch(tk.Canvas):
 
     def _redo(self, event):
         self.redo()
+
+    @property
+    def current_tk_paint_command(self):
+        if self.paint_command == "line":
+            return self.create_line
+        else:
+            return None
+
+    @property
+    def current_sketch_command(self):
+        if self.paint_command == "line":
+            return self.sketch_line
+        else:
+            return None
 
