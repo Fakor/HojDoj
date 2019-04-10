@@ -29,7 +29,12 @@ if __name__ == '__main__':
     output.grid()
 
     sketch_window = tk.Toplevel(root)
-    sk = Sketch(sketch_window, 300, 300, "sk", output=output)
-    sk.grid()
+
+    sk_frame = tk.Frame(sketch_window)
+
+    sk = Sketch(sketch_window, 600, 600, "sk", output=output)
+    sk.pack()
+    button = tk.Button(sketch_window, text="Quit", command=lambda: quit_hojdoj(root), anchor=tk.W)
+    button.pack()
 
     root.mainloop()
