@@ -1,0 +1,1 @@
+Function of current_sketch_command should be easy to modify from command line. So that for example you can make it so that it looks like you are drawing a line but instead you get a rectangle.
