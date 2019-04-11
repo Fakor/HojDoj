@@ -3,6 +3,7 @@ import tkinter as tk
 import main_window
 from scrollable_output import ScrollableOutput
 from sketch import Sketch
+from sketch_control_panel import SketchControlPanel
 
 
 def enter_pressed(console):
@@ -33,8 +34,12 @@ if __name__ == '__main__':
     sk_frame = tk.Frame(sketch_window)
 
     sk = Sketch(sketch_window, 600, 600, "sk", output=output)
-    sk.pack()
-    button = tk.Button(sketch_window, text="Quit", command=lambda: quit_hojdoj(root), anchor=tk.W)
-    button.pack()
+    sk_co = SketchControlPanel(sketch_window, sk)
+    quit_button = tk.Button(sketch_window, text="Quit", command=lambda: quit_hojdoj(root), anchor=tk.W)
+
+    sk_co.grid(row=0, column=0)
+    sk.grid(row=0, column=1)
+    quit_button.grid(row=0, column=2)
+
 
     root.mainloop()

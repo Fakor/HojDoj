@@ -7,7 +7,7 @@ class Sketch(tk.Canvas):
     def __init__(self, parent, width, height, name, output=None):
         tk.Canvas.__init__(self, parent, width=width, height=height)
         self.name = name
-        self.pack()
+        self.grid()
         self.parent = parent
         self.output = output
         self.bind("<Button-1>", self.on_button_press)
