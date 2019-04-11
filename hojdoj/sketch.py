@@ -18,6 +18,7 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-y>', self._redo)
 
         self.paint_command = "line"
+        self.color = "red"
 
         self.start_point = None
         self.current_object = None
@@ -27,14 +28,14 @@ class Sketch(tk.Canvas):
 
     def on_button_press(self, event):
         self.start_point = (event.x, event.y)
-        self.current_object = self.current_tk_paint_command(*self.start_point, *self.start_point)
+        self.current_object = self.current_tk_paint_command(*self.start_point, *self.start_point, fill=self.color)
 
     def on_move_press(self, event):
         self.coords(self.current_object, *self.start_point, event.x, event.y)
 
     def on_button_release(self, event):
         self.delete(self.current_object)
-        self.current_sketch_command(*self.start_point, event.x, event.y)
+        self.current_sketch_command(*self.start_point, event.x, event.y, fill=self.color)
 
     @call_syntax
     def undo(self):
@@ -51,15 +52,15 @@ class Sketch(tk.Canvas):
             self.objects.append(redo_obj)
 
     @call_syntax
-    def sketch_line(self, x1, y1, x2, y2):
-        new_id = self.current_tk_paint_command(x1, y1, x2, y2)
+    def sketch_line(self, x1, y1, x2, y2, **kwargs):
+        new_id = self.current_tk_paint_command(x1, y1, x2, y2, **kwargs)
         self.objects.append({"id": new_id,
                              "command": self.current_tk_paint_command,
                              "cords":(x1, y1, x2, y2)})
 
     @call_syntax
-    def sketch_rect(self, x1, y1, x2, y2):
-        new_id = self.current_tk_paint_command(x1, y1, x2, y2)
+    def sketch_rect(self, x1, y1, x2, y2, **kwargs):
+        new_id = self.current_tk_paint_command(x1, y1, x2, y2, **kwargs)
         self.objects.append({"id": new_id,
                              "command": self.current_tk_paint_command,
                              "cords":(x1, y1, x2, y2)})
