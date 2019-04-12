@@ -19,21 +19,25 @@ def quit_hojdoj(rt):
 
 if __name__ == '__main__':
     root = tk.Tk()
-    root.config(background="red")
 
-    main_window = main_window.MainWindow(root, locals=locals())
+    width = 1680 #   root.winfo_screenwidth()
+    height = 1050 #   root.winfo_screenheight()
+
+    root.geometry('{}x{}+{}+{}'.format(int(width/3), int(height/2), 0, int(height/2)))
+
+    main_window = main_window.MainWindow(root, locals())
     main_window.bind('<Return>', lambda eff: enter_pressed(main_window))
     main_window.bind('<Control-c>', lambda eff: quit_hojdoj(root))
 
     output_window = tk.Toplevel(root)
+    output_window.geometry('{}x{}+{}+{}'.format(int(width/3), int(height/2), 0, 0))
     output = ScrollableOutput(output_window)
     output.grid()
 
     sketch_window = tk.Toplevel(root)
-
+    sketch_window.geometry('{}x{}+{}+{}'.format(int(width * 2 / 3), int(height), int(width/3), 0))
     sk_frame = tk.Frame(sketch_window)
-
-    sk = Sketch(sketch_window, 600, 600, "sk", output=output)
+    sk = Sketch(sketch_window, int(width*5/10), height, "sk", output=output)
     sk_co = SketchControlPanel(sketch_window, sk)
     quit_button = tk.Button(sketch_window, text="Quit", command=lambda: quit_hojdoj(root), anchor=tk.W)
 
