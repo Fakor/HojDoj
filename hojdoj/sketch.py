@@ -1,15 +1,17 @@
 import tkinter as tk
+from PIL import Image, ImageTk
 
 from decorators import call_syntax
 
 
 class Sketch(tk.Canvas):
-    def __init__(self, parent, width, height, name, output=None):
+    def __init__(self, parent, width, height, name, image_root, output=None):
         tk.Canvas.__init__(self, parent, width=width, height=height)
         self.name = name
         self.grid()
         self.parent = parent
         self.output = output
+        self.image_root = image_root
         self.bind("<Button-1>", self.on_button_press)
         self.bind("<B1-Motion>", self.on_move_press)
         self.bind("<ButtonRelease-1>", self.on_button_release)
@@ -20,6 +22,8 @@ class Sketch(tk.Canvas):
         self.paint_command = "line"
         self.color = "red"
 
+        self.current_image = Image.open("{}/baltazar.png".format(image_root))
+        self.img = ImageTk.PhotoImage(self.current_image)
         self.start_point = None
         self.current_object = None
 
@@ -47,7 +51,7 @@ class Sketch(tk.Canvas):
     def redo(self):
         if len(self.inactive_objects) != 0:
             redo_obj = self.inactive_objects.pop(-1)
-            new_id = redo_obj["command"](redo_obj["cords"])
+            new_id = redo_obj["command"](*redo_obj["cords"])
             redo_obj["id"] = new_id
             self.objects.append(redo_obj)
 
@@ -64,6 +68,14 @@ class Sketch(tk.Canvas):
         self.objects.append({"id": new_id,
                              "command": self.current_tk_paint_command,
                              "cords":(x1, y1, x2, y2)})
+
+    @call_syntax
+    def sketch_current_image(self, x1, y1):
+        new_id = self.create_image(x1, y1, image=self.img)
+
+        self.objects.append({"id": new_id,
+                             "command": self.sketch_current_image,
+                             "cords":(x1, y1)})
 
     def _undo(self, event):
         self.undo()

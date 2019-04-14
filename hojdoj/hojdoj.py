@@ -1,5 +1,7 @@
 import tkinter as tk
 
+import sys
+
 import main_window
 from scrollable_output import ScrollableOutput
 from sketch import Sketch
@@ -18,6 +20,8 @@ def quit_hojdoj(rt):
 
 
 if __name__ == '__main__':
+    image_root = sys.argv[1]
+
     root = tk.Tk()
 
     width = 1680 #   root.winfo_screenwidth()
@@ -37,13 +41,12 @@ if __name__ == '__main__':
     sketch_window = tk.Toplevel(root)
     sketch_window.geometry('{}x{}+{}+{}'.format(int(width * 2 / 3), int(height), int(width/3), 0))
     sk_frame = tk.Frame(sketch_window)
-    sk = Sketch(sketch_window, int(width*5/10), height, "sk", output=output)
+    sk = Sketch(sketch_window, int(width*5/10), height, "sk", image_root, output=output)
     sk_co = SketchControlPanel(sketch_window, sk)
     quit_button = tk.Button(sketch_window, text="Quit", command=lambda: quit_hojdoj(root), anchor=tk.W)
 
     sk_co.grid(row=0, column=0)
     sk.grid(row=0, column=1)
     quit_button.grid(row=0, column=2)
-
 
     root.mainloop()
