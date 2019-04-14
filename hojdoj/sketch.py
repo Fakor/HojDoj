@@ -51,7 +51,7 @@ class Sketch(tk.Canvas):
     def redo(self):
         if len(self.inactive_objects) != 0:
             redo_obj = self.inactive_objects.pop(-1)
-            new_id = redo_obj["command"](self, *redo_obj["args"])
+            new_id = redo_obj["command"](self, *redo_obj["args"], **redo_obj["kwargs"])
             redo_obj["id"] = new_id
             self.objects.append(redo_obj)
 

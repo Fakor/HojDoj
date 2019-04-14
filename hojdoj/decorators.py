@@ -25,7 +25,8 @@ def object_call(base_func):
             new_id = base_func(self, *args, **kwargs)
             self.objects.append({"id": new_id,
                                  "command": base_func,
-                                 "args":args}
+                                 "args":args,
+                                 "kwargs": kwargs}
             )
             text = "{}.{}(".format(self.name, func.__name__)
             if len(args) > 0:
