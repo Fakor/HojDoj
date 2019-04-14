@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-from decorators import call_syntax
+from decorators import base_call, object_call
 
 
 class Sketch(tk.Canvas):
@@ -41,41 +41,33 @@ class Sketch(tk.Canvas):
         self.delete(self.current_object)
         self.current_sketch_command(*self.start_point, event.x, event.y, fill=self.color)
 
-    @call_syntax
+    @base_call
     def undo(self):
         if len(self.objects) != 0:
             self.delete(self.objects[-1]["id"])
             self.inactive_objects.append(self.objects.pop(-1))
 
-    @call_syntax
+    @base_call
     def redo(self):
         if len(self.inactive_objects) != 0:
             redo_obj = self.inactive_objects.pop(-1)
-            new_id = redo_obj["command"](*redo_obj["cords"])
+            new_id = redo_obj["command"](self, *redo_obj["args"])
             redo_obj["id"] = new_id
             self.objects.append(redo_obj)
 
-    @call_syntax
+    @object_call(tk.Canvas.create_line)
     def sketch_line(self, x1, y1, x2, y2, **kwargs):
-        new_id = self.current_tk_paint_command(x1, y1, x2, y2, **kwargs)
-        self.objects.append({"id": new_id,
-                             "command": self.current_tk_paint_command,
-                             "cords":(x1, y1, x2, y2)})
+        pass
 
-    @call_syntax
+    @object_call(tk.Canvas.create_rectangle)
     def sketch_rect(self, x1, y1, x2, y2, **kwargs):
-        new_id = self.current_tk_paint_command(x1, y1, x2, y2, **kwargs)
-        self.objects.append({"id": new_id,
-                             "command": self.current_tk_paint_command,
-                             "cords":(x1, y1, x2, y2)})
+        pass
 
-    @call_syntax
     def sketch_current_image(self, x1, y1):
         new_id = self.create_image(x1, y1, image=self.img)
-
         self.objects.append({"id": new_id,
                              "command": self.sketch_current_image,
-                             "cords":(x1, y1)})
+                             "args":(x1, y1)})
 
     def _undo(self, event):
         self.undo()
