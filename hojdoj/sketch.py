@@ -22,13 +22,12 @@ class Sketch(tk.Canvas):
         self.paint_command = "line"
         self.color = "red"
 
-        self.current_image = Image.open("{}/baltazar.png".format(image_root))
-        self.img = ImageTk.PhotoImage(self.current_image)
-        self.start_point = None
         self.current_object = None
 
+        self.start_point = None
         self.objects = []
         self.inactive_objects = []
+        self.images = []
 
     def on_button_press(self, event):
         self.start_point = (event.x, event.y)
@@ -63,11 +62,14 @@ class Sketch(tk.Canvas):
     def sketch_rect(self, x1, y1, x2, y2, **kwargs):
         pass
 
-    def sketch_current_image(self, x1, y1):
-        new_id = self.create_image(x1, y1, image=self.img)
-        self.objects.append({"id": new_id,
-                             "command": self.sketch_current_image,
-                             "args":(x1, y1)})
+    def _sketch_image(self, x, y, name):
+        current_image = Image.open("{}/{}".format(self.image_root, name))
+        self.images.append(ImageTk.PhotoImage(current_image))
+        return self.create_image(x, y, image=self.images[-1])
+
+    @object_call(_sketch_image)
+    def sketch_image(self, x1, y1, name):
+        pass
 
     def _undo(self, event):
         self.undo()
