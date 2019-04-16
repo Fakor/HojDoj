@@ -3,6 +3,8 @@ from PIL import Image, ImageTk
 
 from decorators import base_call, object_call
 
+import Commands
+
 
 class Sketch(tk.Canvas):
     def __init__(self, parent, width, height, name, image_root, output=None):
@@ -19,8 +21,8 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.paint_command = "line"
-        self.color = "red"
+        self.interactive_command = Commands.SketchLineInteractive
+        self.fill_color = "red"
 
         self.current_object = None
 
@@ -30,20 +32,19 @@ class Sketch(tk.Canvas):
         self.images = []
 
     def on_button_press(self, event):
-        self.start_point = (event.x, event.y)
-        self.current_object = self.current_tk_paint_command(*self.start_point, *self.start_point, fill=self.color)
+        self.current_object = self.interactive_command(self, event)
 
     def on_move_press(self, event):
-        self.coords(self.current_object, *self.start_point, event.x, event.y)
+        self.current_object.on_move(event)
 
     def on_button_release(self, event):
-        self.delete(self.current_object)
-        self.current_sketch_command(*self.start_point, event.x, event.y, fill=self.color)
+        self.delete(self.current_object.id)
+        self.current_object.on_release(event)
 
     @base_call
     def undo(self):
         if len(self.objects) != 0:
-            self.delete(self.objects[-1]["id"])
+            self.delete(self.objects[-1]['id'])
             self.inactive_objects.append(self.objects.pop(-1))
 
     @base_call
@@ -76,22 +77,3 @@ class Sketch(tk.Canvas):
 
     def _redo(self, event):
         self.redo()
-
-    @property
-    def current_tk_paint_command(self):
-        if self.paint_command == "line":
-            return self.create_line
-        elif self.paint_command == "rect":
-            return self.create_rectangle
-        else:
-            return None
-
-    @property
-    def current_sketch_command(self):
-        if self.paint_command == "line":
-            return self.sketch_line
-        elif self.paint_command == "rect":
-            return self.sketch_rect
-        else:
-            return None
-

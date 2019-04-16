@@ -1,5 +1,6 @@
 import tkinter as tk
 
+import Commands
 
 class SketchControlPanel(tk.Frame):
     def __init__(self, parent, sketch):
@@ -20,13 +21,13 @@ class SketchControlPanel(tk.Frame):
         red_button.grid(row=3, column=1)
 
     def line_tool_active(self):
-        self.sketch.paint_command = "line"
+        self.sketch.interactive_command = Commands.SketchLineInteractive
 
     def rect_tool_active(self):
-        self.sketch.paint_command = "rect"
+        self.sketch.interactive_command = Commands.SketchRectInteractive
 
     def color_blue_active(self):
-        self.sketch.color = "blue"
+        self.sketch.fill_color = "blue"
 
     def color_red_active(self):
-        self.sketch.color = "red"
+        self.sketch.fill_color = "red"
