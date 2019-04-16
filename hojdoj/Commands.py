@@ -18,6 +18,7 @@ class SketchLineInteractive:
 
     def on_release(self, event):
         if self.id is not None:
+            self.sketch.delete(self.id)
             self.sketch.sketch_line(*self.start_point, event.x, event.y, **self.kwargs)
 
 
@@ -38,4 +39,18 @@ class SketchRectInteractive:
 
     def on_release(self, event):
         if self.id is not None:
+            self.sketch.delete(self.id)
             self.sketch.sketch_rect(*self.start_point, event.x, event.y, **self.kwargs)
+
+
+class SketchImageInteractive:
+    def __init__(self, sketch, event):
+        self.sketch = sketch
+        self.start_point = (event.x, event.y)
+        self.id = self.sketch.sketch_image(*self.start_point, self.sketch.current_image)
+
+    def on_move(self, event):
+        pass
+
+    def on_release(self, event):
+        pass

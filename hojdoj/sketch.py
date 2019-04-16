@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 from decorators import base_call, object_call
 
 import Commands
+import image_paths
 
 
 class Sketch(tk.Canvas):
@@ -13,7 +14,6 @@ class Sketch(tk.Canvas):
         self.grid()
         self.parent = parent
         self.output = output
-        self.image_root = image_root
         self.bind("<Button-1>", self.on_button_press)
         self.bind("<B1-Motion>", self.on_move_press)
         self.bind("<ButtonRelease-1>", self.on_button_release)
@@ -31,6 +31,10 @@ class Sketch(tk.Canvas):
         self.inactive_objects = []
         self.images = []
 
+        self.image_paths = image_paths.ImagePaths(image_root)
+        self.current_image = self.image_paths.baltazar
+
+
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, event)
 
@@ -38,7 +42,6 @@ class Sketch(tk.Canvas):
         self.current_object.on_move(event)
 
     def on_button_release(self, event):
-        self.delete(self.current_object.id)
         self.current_object.on_release(event)
 
     @base_call
@@ -63,13 +66,13 @@ class Sketch(tk.Canvas):
     def sketch_rect(self, x1, y1, x2, y2, **kwargs):
         pass
 
-    def _sketch_image(self, x, y, name):
-        current_image = Image.open("{}/{}".format(self.image_root, name))
+    def _sketch_image(self, x, y, path):
+        current_image = Image.open(path)
         self.images.append(ImageTk.PhotoImage(current_image))
         return self.create_image(x, y, image=self.images[-1])
 
     @object_call(_sketch_image)
-    def sketch_image(self, x1, y1, name):
+    def sketch_image(self, x1, y1, path):
         pass
 
     def _undo(self, event):

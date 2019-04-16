@@ -27,6 +27,8 @@ if __name__ == '__main__':
     width = 1680 #   root.winfo_screenwidth()
     height = 1050 #   root.winfo_screenheight()
 
+
+
     root.geometry('{}x{}+{}+{}'.format(int(width/3), int(height/2), 0, int(height/2)))
 
     main_window = main_window.MainWindow(root, locals())
