@@ -17,15 +17,24 @@ class SketchControlPanel(tk.Frame):
         self.balt_img = self.balt_img.resize((B_WIDTH, B_HEIGHT), PIL.Image.ANTIALIAS)
         self.balt_image_button = PIL.ImageTk.PhotoImage(self.balt_img)
 
+        self.tummen_img = PIL.Image.open(self.sketch.image_paths.tummen)
+        self.tummen_img = self.tummen_img.resize((B_WIDTH, B_HEIGHT), PIL.Image.ANTIALIAS)
+        self.tummen_image_button = PIL.ImageTk.PhotoImage(self.tummen_img)
+
         line_button = tk.Button(self, text="Line", command=self.line_tool_active)
         rect_button = tk.Button(self, text="Rectangle", command=self.rect_tool_active)
         balt_button = tk.Button(self, image=self.balt_image_button,
-                                command=self.image_tool_active,
+                                command=lambda: self.image_tool_active(self.sketch.image_paths.baltazar),
                                 height=B_HEIGHT, width=B_WIDTH)
+        tummen_button = tk.Button(self, image=self.tummen_image_button,
+                                command=lambda: self.image_tool_active(self.sketch.image_paths.tummen),
+                                height=B_HEIGHT, width=B_WIDTH)
+
 
         line_button.grid(row=0, column=0)
         rect_button.grid(row=0, column=1)
         balt_button.grid(row=1, column=0)
+        tummen_button.grid(row=1, column=1)
 
         blue_button = tk.Button(self, bg="blue", command=self.color_blue_active)
         red_button = tk.Button(self, bg="red", command=self.color_red_active)
@@ -39,7 +48,8 @@ class SketchControlPanel(tk.Frame):
     def rect_tool_active(self):
         self.sketch.interactive_command = Commands.SketchRectInteractive
 
-    def image_tool_active(self):
+    def image_tool_active(self, path):
+        self.sketch.current_image = path
         self.sketch.interactive_command = Commands.SketchImageInteractive
 
     def color_blue_active(self):

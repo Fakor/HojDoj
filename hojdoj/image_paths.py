@@ -8,3 +8,7 @@ class ImagePaths:
     @property
     def baltazar(self):
         return "{}/baltazar.png".format(self.image_root)
+
+    @property
+    def tummen(self):
+        return "{}/tummen.png".format(self.image_root)
