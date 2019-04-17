@@ -34,7 +34,6 @@ class Sketch(tk.Canvas):
         self.image_paths = image_paths.ImagePaths(image_root)
         self.current_image = self.image_paths.baltazar
 
-
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, event)
 
@@ -66,13 +65,14 @@ class Sketch(tk.Canvas):
     def sketch_rect(self, x1, y1, x2, y2, **kwargs):
         pass
 
-    def _sketch_image(self, x, y, path):
+    def _sketch_image(self, x, y, width, height, path):
         current_image = Image.open(path)
+        current_image = current_image.resize((width,height), Image.ANTIALIAS)
         self.images.append(ImageTk.PhotoImage(current_image))
         return self.create_image(x, y, image=self.images[-1])
 
     @object_call(_sketch_image)
-    def sketch_image(self, x1, y1, path):
+    def sketch_image(self, x, y, width, height, path):
         pass
 
     def _undo(self, event):

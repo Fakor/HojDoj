@@ -3,8 +3,8 @@ import PIL
 
 import Commands
 
-B_WIDTH = 50
-B_HEIGHT = 50
+B_WIDTH = 70
+B_HEIGHT = 70
 
 
 class SketchControlPanel(tk.Frame):
@@ -14,7 +14,7 @@ class SketchControlPanel(tk.Frame):
         self.sketch = sketch
 
         self.balt_img = PIL.Image.open(self.sketch.image_paths.baltazar)
-        self.balt_img.resize((B_WIDTH, B_HEIGHT), PIL.Image.ANTIALIAS)
+        self.balt_img = self.balt_img.resize((B_WIDTH, B_HEIGHT), PIL.Image.ANTIALIAS)
         self.balt_image_button = PIL.ImageTk.PhotoImage(self.balt_img)
 
         line_button = tk.Button(self, text="Line", command=self.line_tool_active)
