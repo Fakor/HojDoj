@@ -1,5 +1,5 @@
 import tkinter as tk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageOps
 
 from decorators import base_call, object_call
 
@@ -65,14 +65,17 @@ class Sketch(tk.Canvas):
     def sketch_rect(self, x1, y1, x2, y2, **kwargs):
         pass
 
-    def _sketch_image(self, x, y, width, height, path):
+    def _sketch_image(self, x, y, width, height, path, rotate=0, mirror=False):
         current_image = Image.open(path)
         current_image = current_image.resize((width,height), Image.ANTIALIAS)
+        current_image = current_image.rotate(rotate)
+        if mirror:
+            current_image = ImageOps.mirror(current_image)
         self.images.append(ImageTk.PhotoImage(current_image))
         return self.create_image(x, y, image=self.images[-1])
 
     @object_call(_sketch_image)
-    def sketch_image(self, x, y, width, height, path):
+    def sketch_image(self, x, y, width, height, path, rotate, mirror):
         pass
 
     def _undo(self, event):

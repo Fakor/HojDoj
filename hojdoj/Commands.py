@@ -1,4 +1,5 @@
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageOps
+
 
 class SketchLineInteractive:
 
@@ -59,17 +60,35 @@ class SketchImageInteractive:
             return
         self.image = Image.open(self.path)
         self.image = self.image.resize((self.width, self.height), Image.ANTIALIAS)
+        self.image = self.image.rotate(self.rotate)
+        if self.mirror:
+            self.image = ImageOps.mirror(self.image)
         self.photo_image = ImageTk.PhotoImage(self.image)
         self.id = self.sketch.create_image(self.x, self.y, image=self.photo_image)
 
     def on_release(self, event):
         if self.id is not None:
             self.sketch.delete(self.id)
-            self.sketch.sketch_image(self.x, self.y, self.width, self.height, self.path)
+            self.sketch.sketch_image(self.x, self.y, self.width, self.height,
+                                     self.path, rotate=self.rotate, mirror=self.mirror)
 
     def _prepare_shape(self, event):
         self.width = abs(event.x - self.start_x)
         self.height = abs(event.y - self.start_y)
 
-        self.x = (event.x + self.start_x) / 2
-        self.y = (event.y + self.start_y) / 2
+        if event.y < self.start_y:
+            self.rotate = 180
+            if event.x > self.start_x:
+                self.mirror = True
+            else:
+                self.mirror = False
+        else:
+            self.rotate = 0
+            if event.x < self.start_x:
+                self.mirror = True
+            else:
+                self.mirror = False
+
+        self.x = int((event.x + self.start_x) / 2)
+        self.y = int((event.y + self.start_y) / 2)
+
