@@ -6,6 +6,7 @@ import main_window
 from scrollable_output import ScrollableOutput
 from sketch import Sketch
 from sketch_control_panel import SketchControlPanel
+from configuration import Config
 
 
 def enter_pressed(console):
@@ -24,26 +25,22 @@ if __name__ == '__main__':
 
     root = tk.Tk()
 
-    width = 1680 #   root.winfo_screenwidth()
-    height = 1050 #   root.winfo_screenheight()
+    config = Config(root.winfo_screenwidth(), root.winfo_screenheight())
 
-
-
-    root.geometry('{}x{}+{}+{}'.format(int(width/3), int(height/2), 0, int(height/2)))
-
+    root.geometry(config.get_command_window_geometry())
     main_window = main_window.MainWindow(root, locals())
     main_window.bind('<Return>', lambda eff: enter_pressed(main_window))
     main_window.bind('<Control-c>', lambda eff: quit_hojdoj(root))
 
     output_window = tk.Toplevel(root)
-    output_window.geometry('{}x{}+{}+{}'.format(int(width/3), int(height/2), 0, 0))
+    output_window.geometry(config.get_output_window_geometry())
     output = ScrollableOutput(output_window)
     output.grid()
 
     sketch_window = tk.Toplevel(root)
-    sketch_window.geometry('{}x{}+{}+{}'.format(int(width * 2 / 3), int(height), int(width/3), 0))
+    sketch_window.geometry(config.get_sketch_window_geometry())
     sk_frame = tk.Frame(sketch_window)
-    sk = Sketch(sketch_window, int(width*5/10), height, "sk", image_root, output=output)
+    sk = Sketch(sketch_window, int(config.width*5/12), config.height, "sk", image_root, output=output)
     sk_co = SketchControlPanel(sketch_window, sk)
     quit_button = tk.Button(sketch_window, text="Quit", command=lambda: quit_hojdoj(root), anchor=tk.W)
 

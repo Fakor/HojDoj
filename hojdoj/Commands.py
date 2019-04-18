@@ -67,6 +67,8 @@ class SketchImageInteractive:
         self.id = self.sketch.create_image(self.x, self.y, image=self.photo_image)
 
     def on_release(self, event):
+        if self.width == 0 or self.height == 0:
+            return
         if self.id is not None:
             self.sketch.delete(self.id)
             self.sketch.sketch_image(self.x, self.y, self.width, self.height,
@@ -91,4 +93,3 @@ class SketchImageInteractive:
 
         self.x = int((event.x + self.start_x) / 2)
         self.y = int((event.y + self.start_y) / 2)
-
