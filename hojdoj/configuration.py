@@ -4,7 +4,6 @@ import os
 
 GEOMETRY='{}x{}+{}+{}'
 
-
 class Config:
     def __init__(self, width, height):
         self.width = width
@@ -41,3 +40,7 @@ class Config:
         width = conf.get("width", int(self.width * 2/ 3))
         height = conf.get("height", int(self.height))
         return GEOMETRY.format(width, height, x, y)
+
+    def sketch_width(self):
+        conf = self.custom_config.get("sketch", {})
+        return int(conf.get('width', int(self.width * 2/ 3)) * conf.get('ratio',  5 / 12))

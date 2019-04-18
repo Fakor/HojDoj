@@ -32,6 +32,7 @@ if __name__ == '__main__':
     main_window.bind('<Return>', lambda eff: enter_pressed(main_window))
     main_window.bind('<Control-c>', lambda eff: quit_hojdoj(root))
 
+
     output_window = tk.Toplevel(root)
     output_window.geometry(config.get_output_window_geometry())
     output = ScrollableOutput(output_window)
@@ -40,7 +41,7 @@ if __name__ == '__main__':
     sketch_window = tk.Toplevel(root)
     sketch_window.geometry(config.get_sketch_window_geometry())
     sk_frame = tk.Frame(sketch_window)
-    sk = Sketch(sketch_window, int(config.width*5/12), config.height, "sk", image_root, output=output)
+    sk = Sketch(sketch_window, config.sketch_width(), config.height, "sk", image_root, output=output)
     sk_co = SketchControlPanel(sketch_window, sk)
     quit_button = tk.Button(sketch_window, text="Quit", command=lambda: quit_hojdoj(root), anchor=tk.W)
 
