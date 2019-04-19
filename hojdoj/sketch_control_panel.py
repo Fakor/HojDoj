@@ -8,6 +8,7 @@ B_HEIGHT = 70
 
 COLUMNS = 2
 
+
 class SketchControlPanel(tk.Frame):
     def __init__(self, parent, sketch):
         tk.Frame.__init__(self, parent)
@@ -24,7 +25,6 @@ class SketchControlPanel(tk.Frame):
 
         line_button = tk.Button(self, text="Line", command=self.line_tool_active)
         rect_button = tk.Button(self, text="Rectangle", command=self.rect_tool_active)
-
 
         line_button.grid(row=0, column=0)
         rect_button.grid(row=0, column=1)
