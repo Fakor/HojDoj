@@ -17,6 +17,8 @@ def enter_pressed(console):
 
 
 def quit_hojdoj(rt):
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
     print("Quiting HojDoj!!")
     rt.quit()
 
