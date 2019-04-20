@@ -10,12 +10,6 @@ from configuration import Config
 from main_control_panel import MainControlPanel
 
 
-def enter_pressed(console):
-    line_private___ = console.get(1.4, tk.END).strip()
-    if line_private___[-1] != ":":
-        console.shell.runcode(line_private___)
-
-
 def quit_hojdoj(rt):
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
@@ -32,7 +26,6 @@ if __name__ == '__main__':
 
     root.geometry(config.get_command_window_geometry())
     main_window = main_window.MainWindow(root, locals())
-    main_window.bind('<Return>', lambda eff: enter_pressed(main_window))
 
     output_window = tk.Toplevel(root)
     output_window.geometry(config.get_output_window_geometry())
