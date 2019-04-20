@@ -14,7 +14,7 @@ def base_call(func):
                 else:
                     text = text + ',' + str(key) + '=' + value_to_string(value)
         text = text + ")"
-        self.output.add_row(text)
+        self.output.add_command(text)
         return func(self, *args, **kwargs)
     return wrapper
 
@@ -41,7 +41,7 @@ def object_call(base_func):
                     else:
                         text = text + ',' + str(key) + '=' + value_to_string(value)
             text = text + ")"
-            self.output.add_row(text)
+            self.output.add_command(text)
             return func(self, *args, **kwargs)
         return wrapper
     return object_call_wrapper
