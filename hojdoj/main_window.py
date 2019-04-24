@@ -32,7 +32,6 @@ class MainWindow(tk.Text):
         self.tag_configure(STDOUT, foreground='blue')
         self.tag_configure(STDERR, foreground='red')
 
-
         self.bind('<Control-c>', self.quit_app)
         self.bind('<Return>', self.enter_pressed)
 
@@ -48,13 +47,16 @@ class MainWindow(tk.Text):
         row = int(self.index(tk.END).split('.')[0])-1
         pos = "{}.{}".format(row, len(self.ROW_START))
         line_private___ = self.get(pos, tk.END).strip()
-        if line_private___[-1] != ":":
+        if len(line_private___) == 0:
+            pass
+        elif line_private___[-1] != ":":
             self.shell.runcode(line_private___)
         self.insert(tk.END, '\n{}'.format(self.ROW_START))
+        self.mark_set("insert", tk.END)
         return 'break'
 
     def add_stdout(self, text):
         self.insert(tk.END, '\n' + text.strip(), STDOUT)
 
     def add_stderr(self, text):
-        self.insert(tk.END, '\n' + text, STDERR)
+        self.insert(tk.END, '\n' + text.strip(), STDERR)
