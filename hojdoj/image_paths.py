@@ -12,3 +12,7 @@ class ImagePaths:
     @property
     def tummen(self):
         return "{}/tummen.png".format(self.image_root)
+
+    @property
+    def door1(self):
+        return "{}/door1.png".format(self.image_root)

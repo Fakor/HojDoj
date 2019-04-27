@@ -22,6 +22,7 @@ class SketchControlPanel(tk.Frame):
 
         self.add_image_button(self.sketch.image_paths.baltazar)
         self.add_image_button(self.sketch.image_paths.tummen)
+        self.add_image_button(self.sketch.image_paths.door1)
 
         line_button = tk.Button(self, text="Line", command=self.line_tool_active)
         rect_button = tk.Button(self, text="Rectangle", command=self.rect_tool_active)
