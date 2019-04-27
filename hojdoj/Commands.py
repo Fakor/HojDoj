@@ -1,12 +1,13 @@
 from PIL import Image, ImageTk, ImageOps
 
+from tools import image_replace_white
 
 class SketchLineInteractive:
 
     def __init__(self, sketch, event):
         self.sketch = sketch
         self.start_point = (event.x, event.y)
-        self.kwargs = {'fill': self.sketch.fill_color}
+        self.kwargs = {'fill': self.sketch.fill_color['tk']}
         self.id = None
 
     def on_move(self, event):
@@ -27,7 +28,7 @@ class SketchRectInteractive:
     def __init__(self, sketch, event):
         self.sketch = sketch
         self.start_point = (event.x, event.y)
-        self.kwargs = {'fill': self.sketch.fill_color}
+        self.kwargs = {'fill': self.sketch.fill_color['tk']}
         self.id = None
 
     def on_move(self, event):
@@ -49,6 +50,10 @@ class SketchImageInteractive:
         self.start_x = event.x
         self.start_y = event.y
         self.path = self.sketch.current_image
+        self.color = self.sketch.fill_color['RGB']
+        self.org_image = Image.open(self.path)
+        self.org_image = self.org_image.convert('RGBA')
+        self.org_image = image_replace_white(self.org_image, self.color)
         self.id = None
 
     def on_move(self, event):
@@ -58,8 +63,8 @@ class SketchImageInteractive:
             self.sketch.delete(self.id)
         if self.width == 0 or self.height == 0:
             return
-        self.image = Image.open(self.path)
-        self.image = self.image.resize((self.width, self.height), Image.ANTIALIAS)
+
+        self.image = self.org_image.resize((self.width, self.height), Image.ANTIALIAS)
         self.image = self.image.rotate(self.rotate)
         if self.mirror:
             self.image = ImageOps.mirror(self.image)
@@ -72,7 +77,7 @@ class SketchImageInteractive:
         if self.id is not None:
             self.sketch.delete(self.id)
             self.sketch.sketch_image(self.x, self.y, self.width, self.height,
-                                     self.path, rotate=self.rotate, mirror=self.mirror)
+                                     self.path, self.color, rotate=self.rotate, mirror=self.mirror)
 
     def _prepare_shape(self, event):
         self.width = abs(event.x - self.start_x)

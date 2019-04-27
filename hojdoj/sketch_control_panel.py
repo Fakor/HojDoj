@@ -2,6 +2,7 @@ import tkinter as tk
 import PIL
 
 import Commands
+from tools import Colors
 
 B_WIDTH = 70
 B_HEIGHT = 70
@@ -47,10 +48,10 @@ class SketchControlPanel(tk.Frame):
         self.sketch.interactive_command = Commands.SketchImageInteractive
 
     def color_blue_active(self):
-        self.sketch.fill_color = "blue"
+        self.sketch.fill_color = Colors.BLUE
 
     def color_red_active(self):
-        self.sketch.fill_color = "red"
+        self.sketch.fill_color = Colors.RED
 
     def add_image_button(self, path):
         img = PIL.Image.open(path)

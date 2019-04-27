@@ -1,3 +1,11 @@
+import numpy as np
+from PIL import Image
+
+
+class Colors:
+    RED = {'RGB': (255.99609375, 0.0, 0.0), 'tk': '#ff0000'}
+    GREEN = {'RGB': (0.0, 255.99609375, 0.0), 'tk': '#00ff00'}
+    BLUE = {'RGB': (0.0, 0.0, 255.99609375), 'tk': '#0000ff'}
 
 def base_call(func):
     def wrapper(self, *args, **kwargs):
@@ -51,3 +59,11 @@ def value_to_string(value):
     if isinstance(value, str):
         return '"{}"'.format(value)
     return str(value)
+
+
+def image_replace_white(image, new):
+    data = np.array(image)
+    red, green, blue, alpha = data.T
+    white_areas = (red == 255) & (blue == 255) & (green == 255)
+    data[..., :-1][white_areas.T] = new
+    return Image.fromarray(data)

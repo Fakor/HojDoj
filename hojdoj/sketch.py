@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk, ImageOps
 
-from decorators import base_call, object_call
+from tools import base_call, object_call, Colors, image_replace_white
 
 import Commands
 import image_paths
@@ -22,7 +22,7 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-y>', self._redo)
 
         self.interactive_command = Commands.SketchLineInteractive
-        self.fill_color = "red"
+        self.fill_color = Colors.RED
 
         self.current_object = None
 
@@ -65,8 +65,10 @@ class Sketch(tk.Canvas):
     def sketch_rect(self, x1, y1, x2, y2, **kwargs):
         pass
 
-    def _sketch_image(self, x, y, width, height, path, rotate=0, mirror=False):
+    def _sketch_image(self, x, y, width, height, path, color, rotate=0, mirror=False):
         current_image = Image.open(path)
+        current_image = current_image.convert('RGBA')
+        current_image = image_replace_white(current_image, color)
         current_image = current_image.resize((width,height), Image.ANTIALIAS)
         current_image = current_image.rotate(rotate)
         if mirror:
@@ -75,7 +77,7 @@ class Sketch(tk.Canvas):
         return self.create_image(x, y, image=self.images[-1])
 
     @object_call(_sketch_image)
-    def sketch_image(self, x, y, width, height, path, rotate, mirror):
+    def sketch_image(self, x, y, width, height, path, color, rotate=0, mirror=False):
         pass
 
     def _undo(self, event):
