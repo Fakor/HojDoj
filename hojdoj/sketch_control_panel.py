@@ -19,23 +19,24 @@ class SketchControlPanel(tk.Frame):
         self.image_row = 1
         self.image_col = 0
 
+        self.color_row = 7
+        self.color_col = 0
+
         self.p_images = []
 
         self.add_image_button(self.sketch.image_paths.baltazar)
         self.add_image_button(self.sketch.image_paths.tummen)
         self.add_image_button(self.sketch.image_paths.door1)
 
+        self.add_color_button(Colors.RED)
+        self.add_color_button(Colors.BLUE)
+        self.add_color_button(Colors.GREEN)
+
         line_button = tk.Button(self, text="Line", command=self.line_tool_active)
         rect_button = tk.Button(self, text="Rectangle", command=self.rect_tool_active)
 
         line_button.grid(row=0, column=0)
         rect_button.grid(row=0, column=1)
-
-        blue_button = tk.Button(self, bg="blue", command=self.color_blue_active)
-        red_button = tk.Button(self, bg="red", command=self.color_red_active)
-
-        blue_button.grid(row = 3, column=0)
-        red_button.grid(row=3, column=1)
 
     def line_tool_active(self):
         self.sketch.interactive_command = Commands.SketchLineInteractive
@@ -47,11 +48,8 @@ class SketchControlPanel(tk.Frame):
         self.sketch.current_image = path
         self.sketch.interactive_command = Commands.SketchImageInteractive
 
-    def color_blue_active(self):
-        self.sketch.fill_color = Colors.BLUE
-
-    def color_red_active(self):
-        self.sketch.fill_color = Colors.RED
+    def color_active(self, color):
+        self.sketch.fill_color = color
 
     def add_image_button(self, path):
         img = PIL.Image.open(path)
@@ -68,3 +66,11 @@ class SketchControlPanel(tk.Frame):
         else:
             self.image_col = self.image_col + 1
 
+    def add_color_button(self, color):
+        button = tk.Button(self, bg=color['tk'], command=lambda: self.color_active(color))
+        button.grid(row=self.color_row, column=self.color_col)
+        if self.color_col == COLUMNS - 1:
+            self.color_col = 0
+            self.color_row = self.color_row + 1
+        else:
+            self.color_col = self.color_col + 1
