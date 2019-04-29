@@ -3,9 +3,11 @@ from PIL import Image
 
 
 class Colors:
-    RED = {'RGB': (255.99609375, 0.0, 0.0), 'tk': '#ff0000'}
-    GREEN = {'RGB': (0.0, 255.99609375, 0.0), 'tk': '#00ff00'}
-    BLUE = {'RGB': (0.0, 0.0, 255.99609375), 'tk': '#0000ff'}
+    RED = {'RGB': (255, 0.0, 0.0), 'tk': '#ff0000'}
+    GREEN = {'RGB': (0.0, 255, 0.0), 'tk': '#00ff00'}
+    BLUE = {'RGB': (0.0, 0.0, 255), 'tk': '#0000ff'}
+    WHITE = {'RGB': (255, 255, 255), 'tk': '#ffffff'}
+    BLACK = {'RGB': (0, 0, 0), 'tk': '#000000'}
 
 def base_call(func):
     def wrapper(self, *args, **kwargs):
