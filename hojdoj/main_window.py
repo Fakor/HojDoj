@@ -26,9 +26,6 @@ class MainWindow(tk.Text):
         self.parent = parent
         tk.Text.__init__(self, parent)
 
-        sys.stderr = IORedirector(self.add_stderr)
-        sys.stdout = IORedirector(self.add_stdout)
-
         self.tag_configure(STDOUT, foreground='blue')
         self.tag_configure(STDERR, foreground='red')
 
@@ -42,6 +39,10 @@ class MainWindow(tk.Text):
 
     def quit_app(self, event):
         self.parent.event_generate('<<quit_now>>')
+
+    def set_as_console(self):
+        sys.stderr = IORedirector(self.add_stderr)
+        sys.stdout = IORedirector(self.add_stdout)
 
     def enter_pressed(self, event):
         row = int(self.index(tk.END).split('.')[0])-1
