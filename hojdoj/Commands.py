@@ -52,7 +52,7 @@ class SketchImageInteractive:
         self.path = self.sketch.current_image
         self.color = self.sketch.fill_color['RGB']
         self.org_image = Image.open(self.path)
-        self.org_image = self.org_image.convert('RGBA')
+
         self.org_image = image_replace_white(self.org_image, self.color)
         self.id = None
 

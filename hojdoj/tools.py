@@ -1,5 +1,5 @@
 import numpy as np
-from PIL import Image
+import PIL
 
 
 class Colors:
@@ -8,6 +8,7 @@ class Colors:
     BLUE = {'RGB': (0.0, 0.0, 255), 'tk': '#0000ff'}
     WHITE = {'RGB': (255, 255, 255), 'tk': '#ffffff'}
     BLACK = {'RGB': (0, 0, 0), 'tk': '#000000'}
+
 
 def base_call(func):
     def wrapper(self, *args, **kwargs):
@@ -64,8 +65,44 @@ def value_to_string(value):
 
 
 def image_replace_white(image, new):
+    image = image.convert('RGBA')
     data = np.array(image)
     red, green, blue, alpha = data.T
     white_areas = (red == 255) & (blue == 255) & (green == 255)
     data[..., :-1][white_areas.T] = new
-    return Image.fromarray(data)
+    return PIL.Image.fromarray(data)
+
+
+def elastic_background(image, size):
+    data = np.array(image)
+    rows, cols, K = data.shape
+
+    new_rows, new_cols = size
+
+    new_data = np.zeros((new_rows, new_cols, K), dtype=np.uint8)
+
+    current_row = 0
+    current_col = 0
+
+    org_col = 0
+    while True:
+        M = np.min((rows, new_rows - current_row))
+        N = np.min((new_cols - current_col, cols-org_col))
+        try:
+            new_data[current_row:current_row+M-1,current_col:current_col+N-1,:] = data[0:M-1,org_col:org_col+N-1,:]
+        except:
+            break
+        if current_col+N == new_cols:
+            if current_row + M == new_rows:
+                break
+            current_col = 0
+            current_row = current_row + M
+        else:
+            current_col = current_col + N
+        if org_col == cols:
+            org_col = 0
+        else:
+            org_col = org_col + N
+    img = PIL.Image.fromarray(new_data)
+
+    return PIL.ImageTk.PhotoImage(img)

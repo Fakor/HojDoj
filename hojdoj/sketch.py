@@ -33,6 +33,7 @@ class Sketch(tk.Canvas):
 
         self.image_paths = image_paths.ImagePaths(image_root)
         self.current_image = self.image_paths.baltazar
+        self.elastic_bg = None
 
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, event)

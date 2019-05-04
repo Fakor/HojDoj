@@ -44,6 +44,6 @@ if __name__ == '__main__':
     main_control_panel.grid(row=0, column=2)
 
     root.bind('<<quit_now>>', lambda eff: quit_hojdoj(root))
-    output.set_as_console()
+    main_window.set_as_console()
 
     root.mainloop()
