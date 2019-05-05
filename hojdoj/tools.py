@@ -88,10 +88,7 @@ def elastic_background(image, size):
     while True:
         M = np.min((rows, new_rows - current_row))
         N = np.min((new_cols - current_col, cols-org_col))
-        try:
-            new_data[current_row:current_row+M-1,current_col:current_col+N-1,:] = data[0:M-1,org_col:org_col+N-1,:]
-        except:
-            break
+        new_data[current_row:current_row+M-1,current_col:current_col+N-1,:] = data[0:M-1,org_col:org_col+N-1,:]
         if current_col+N == new_cols:
             if current_row + M == new_rows:
                 break
@@ -99,10 +96,8 @@ def elastic_background(image, size):
             current_row = current_row + M
         else:
             current_col = current_col + N
+        org_col = org_col + N
         if org_col == cols:
             org_col = 0
-        else:
-            org_col = org_col + N
     img = PIL.Image.fromarray(new_data)
-
     return PIL.ImageTk.PhotoImage(img)
