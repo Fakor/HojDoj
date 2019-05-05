@@ -28,7 +28,6 @@ class SketchControlPanel(tk.Frame):
         self.add_image_button(self.sketch.image_paths.tummen)
         self.add_image_button(self.sketch.image_paths.door1)
 
-
         self.add_color_button(Colors.WHITE)
         self.add_color_button(Colors.BLACK)
         self.add_color_button(Colors.RED)

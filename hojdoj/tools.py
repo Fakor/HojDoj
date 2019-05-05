@@ -88,7 +88,7 @@ def elastic_background(image, size):
     while True:
         M = np.min((rows, new_rows - current_row))
         N = np.min((new_cols - current_col, cols-org_col))
-        new_data[current_row:current_row+M-1,current_col:current_col+N-1,:] = data[0:M-1,org_col:org_col+N-1,:]
+        new_data[current_row:current_row+M,current_col:current_col+N,:] = data[0:M,org_col:org_col+N,:]
         if current_col+N == new_cols:
             if current_row + M == new_rows:
                 break
