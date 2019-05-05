@@ -2,6 +2,7 @@ from PIL import Image, ImageTk, ImageOps
 
 from tools import image_replace_white
 
+
 class SketchLineInteractive:
 
     def __init__(self, sketch, event):

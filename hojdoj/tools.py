@@ -73,8 +73,9 @@ def image_replace_white(image, new):
     return PIL.Image.fromarray(data)
 
 
-def elastic_background(image, size):
-    data = np.array(image)
+def elastic_background(path, size):
+    img = PIL.Image.open(path)
+    data = np.array(img)
     rows, cols, K = data.shape
 
     new_rows, new_cols = size
