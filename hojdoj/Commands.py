@@ -8,7 +8,7 @@ class SketchLineInteractive:
     def __init__(self, sketch, event):
         self.sketch = sketch
         self.start_point = (event.x, event.y)
-        self.kwargs = {'fill': self.sketch.fill_color['tk']}
+        self.kwargs = {'fill': self.sketch.fill_color['tk'], 'width':8}
         self.id = None
 
     def on_move(self, event):
