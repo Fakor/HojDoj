@@ -34,7 +34,7 @@ class SketchControlPanel(tk.Frame):
         self.add_color_button(Colors.BLUE)
         self.add_color_button(Colors.GREEN)
 
-        self.add_elastic_bg_button(self.sketch.image_paths.brick_wall)
+        self.add_elastic_image_button(self.sketch.image_paths.brick_wall)
 
         line_button = tk.Button(self, text="Line", command=self.line_tool_active)
         rect_button = tk.Button(self, text="Rectangle", command=self.rect_tool_active)
@@ -55,8 +55,9 @@ class SketchControlPanel(tk.Frame):
     def color_active(self, color):
         self.sketch.fill_color = color
 
-    def elastic_bg_active(self, image):
-        self.sketch.elastic_bg = image
+    def elastic_image_active(self, path):
+        self.sketch.elastic_image = path
+        self.sketch.interactive_command = Commands.SketchElasticImageInteractive
 
     def add_image_button(self, path):
         img = PIL.Image.open(path)
@@ -82,12 +83,12 @@ class SketchControlPanel(tk.Frame):
         else:
             self.color_col = self.color_col + 1
 
-    def add_elastic_bg_button(self, path):
+    def add_elastic_image_button(self, path):
         image_button = elastic_background(path, (B_WIDTH, B_HEIGHT))
 
         self.p_images.append(image_button)
 
-        button = tk.Button(self, image=self.p_images[-1], command=lambda: self.elastic_bg_active(img))
+        button = tk.Button(self, image=self.p_images[-1], command=lambda: self.elastic_image_active(path))
 
         button.grid(row=self.color_row, column=self.color_col)
         if self.color_col == COLUMNS - 1:

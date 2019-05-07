@@ -1,8 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk, ImageOps
 
-#from tools import base_call, object_call, Colors, image_replace_white
-
 import tools
 
 import Commands
@@ -35,7 +33,7 @@ class Sketch(tk.Canvas):
 
         self.image_paths = image_paths.ImagePaths(image_root)
         self.current_image = self.image_paths.baltazar
-        self.elastic_bg = None
+        self.elastic_image = None
 
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, event)

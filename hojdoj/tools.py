@@ -78,7 +78,7 @@ def elastic_background(path, size):
     data = np.array(img)
     rows, cols, K = data.shape
 
-    new_rows, new_cols = size
+    new_cols, new_rows = size
 
     new_data = np.zeros((new_rows, new_cols, K), dtype=np.uint8)
 
