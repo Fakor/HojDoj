@@ -3,6 +3,7 @@ import PIL
 
 import Commands
 from tools import Colors, elastic_background
+import fillers
 
 B_WIDTH = 70
 B_HEIGHT = 70
@@ -36,14 +37,9 @@ class SketchControlPanel(tk.Frame):
 
         self.add_elastic_image_button(self.sketch.image_paths.brick_wall)
 
-        line_button = tk.Button(self, text="Line", command=self.line_tool_active)
         rect_button = tk.Button(self, text="Rectangle", command=self.rect_tool_active)
 
-        line_button.grid(row=0, column=0)
-        rect_button.grid(row=0, column=1)
-
-    def line_tool_active(self):
-        self.sketch.interactive_command = Commands.SketchLineInteractive
+        rect_button.grid(row=0, column=0)
 
     def rect_tool_active(self):
         self.sketch.interactive_command = Commands.SketchRectInteractive
@@ -52,12 +48,11 @@ class SketchControlPanel(tk.Frame):
         self.sketch.current_image = path
         self.sketch.interactive_command = Commands.SketchImageInteractive
 
-    def color_active(self, color):
-        self.sketch.fill_color = color
+    def color_filler_active(self, color):
+        self.sketch.filler = fillers.ColorFiller(self.sketch, color)
 
-    def elastic_image_active(self, path):
-        self.sketch.elastic_image = path
-        self.sketch.interactive_command = Commands.SketchElasticImageInteractive
+    def elastic_image_filler_active(self, path):
+        self.sketch.filler = fillers.ElasticImageFiller(self.sketch, path)
 
     def add_image_button(self, path):
         img = PIL.Image.open(path)
@@ -75,7 +70,7 @@ class SketchControlPanel(tk.Frame):
             self.image_col = self.image_col + 1
 
     def add_color_button(self, color):
-        button = tk.Button(self, bg=color['tk'], command=lambda: self.color_active(color))
+        button = tk.Button(self, bg=color['tk'], command=lambda: self.color_filler_active(color))
         button.grid(row=self.color_row, column=self.color_col)
         if self.color_col == COLUMNS - 1:
             self.color_col = 0
@@ -88,7 +83,7 @@ class SketchControlPanel(tk.Frame):
 
         self.p_images.append(image_button)
 
-        button = tk.Button(self, image=self.p_images[-1], command=lambda: self.elastic_image_active(path))
+        button = tk.Button(self, image=self.p_images[-1], command=lambda: self.elastic_image_filler_active(path))
 
         button.grid(row=self.color_row, column=self.color_col)
         if self.color_col == COLUMNS - 1:

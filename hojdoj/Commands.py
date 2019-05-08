@@ -1,27 +1,6 @@
 from PIL import Image, ImageTk, ImageOps
 
-from tools import image_replace_white, elastic_background
-
-
-class SketchLineInteractive:
-
-    def __init__(self, sketch, event):
-        self.sketch = sketch
-        self.start_point = (event.x, event.y)
-        self.kwargs = {'fill': self.sketch.fill_color['tk'], 'width':8}
-        self.id = None
-
-    def on_move(self, event):
-        args = (*self.start_point, event.x, event.y)
-        if self.id is None:
-            self.id = self.sketch.create_line(*args, **self.kwargs)
-        else:
-            self.sketch.coords(self.id, *args)
-
-    def on_release(self, event):
-        if self.id is not None:
-            self.sketch.delete(self.id)
-            self.sketch.sketch_line(*self.start_point, event.x, event.y, **self.kwargs)
+from tools import elastic_background
 
 
 class SketchRectInteractive:
@@ -29,20 +8,12 @@ class SketchRectInteractive:
     def __init__(self, sketch, event):
         self.sketch = sketch
         self.start_point = (event.x, event.y)
-        self.kwargs = {'fill': self.sketch.fill_color['tk']}
-        self.id = None
 
     def on_move(self, event):
-        args = (*self.start_point, event.x, event.y)
-        if self.id is None:
-            self.id = self.sketch.create_rectangle(*args, **self.kwargs)
-        else:
-            self.sketch.coords(self.id, *args)
+        self.sketch.filler.update(self.start_point, event)
 
     def on_release(self, event):
-        if self.id is not None:
-            self.sketch.delete(self.id)
-            self.sketch.sketch_rect(*self.start_point, event.x, event.y, **self.kwargs)
+        self.sketch.filler.make_sketch(self.start_point, event)
 
 
 class SketchImageInteractive:
@@ -51,10 +22,8 @@ class SketchImageInteractive:
         self.start_x = event.x
         self.start_y = event.y
         self.path = self.sketch.current_image
-        self.color = self.sketch.fill_color['RGB']
-        self.org_image = Image.open(self.path)
-
-        self.org_image = image_replace_white(self.org_image, self.color)
+        self.org_image = self.sketch.filler.fill_image(self.path)
+        self.image = None
         self.id = None
 
     def on_move(self, event):
@@ -78,7 +47,7 @@ class SketchImageInteractive:
         if self.id is not None:
             self.sketch.delete(self.id)
             self.sketch.sketch_image(self.x, self.y, self.width, self.height,
-                                     self.path, self.color, rotate=self.rotate, mirror=self.mirror)
+                                     self.path, self.sketch.filler.color['RGB'], rotate=self.rotate, mirror=self.mirror)
 
     def _prepare_shape(self, event):
         self.width = abs(event.x - self.start_x)

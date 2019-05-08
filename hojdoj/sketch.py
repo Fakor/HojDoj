@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk, ImageOps
 
 import tools
+import fillers
 
 import Commands
 import image_paths
@@ -21,8 +22,8 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.interactive_command = Commands.SketchLineInteractive
-        self.fill_color = tools.Colors.RED
+        self.interactive_command = Commands.SketchRectInteractive
+        self.filler = fillers.ColorFiller(self, tools.Colors.RED)
 
         self.current_object = None
 
