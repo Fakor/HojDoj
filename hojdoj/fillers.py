@@ -3,6 +3,7 @@ from PIL import Image
 from tools import elastic_background, image_replace_white
 from tools import Colors
 
+
 class ColorFiller:
     def __init__(self, sketch, color):
         self.sketch = sketch
