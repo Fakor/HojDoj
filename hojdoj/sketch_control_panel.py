@@ -8,7 +8,9 @@ import fillers
 B_WIDTH = 70
 B_HEIGHT = 70
 
-COLUMNS = 2
+IMAGE_COLUMNS = 2
+COLOR_COLUMNS = 2
+ELASTIC_COLUMNS = 2
 
 
 class SketchControlPanel(tk.Frame):
@@ -22,6 +24,9 @@ class SketchControlPanel(tk.Frame):
 
         self.color_row = 7
         self.color_col = 0
+
+        self.elastic_row = 10
+        self.elastic_col = 0
 
         self.p_images = []
 
@@ -63,7 +68,7 @@ class SketchControlPanel(tk.Frame):
                            command=lambda: self.image_tool_active(path),
                            height=B_HEIGHT, width=B_WIDTH)
         button.grid(row=self.image_row, column=self.image_col)
-        if self.image_col == COLUMNS - 1:
+        if self.image_col == IMAGE_COLUMNS - 1:
             self.image_col = 0
             self.image_row = self.image_row + 1
         else:
@@ -72,7 +77,7 @@ class SketchControlPanel(tk.Frame):
     def add_color_button(self, color):
         button = tk.Button(self, bg=color['tk'], command=lambda: self.color_filler_active(color))
         button.grid(row=self.color_row, column=self.color_col)
-        if self.color_col == COLUMNS - 1:
+        if self.color_col == COLOR_COLUMNS - 1:
             self.color_col = 0
             self.color_row = self.color_row + 1
         else:
@@ -85,9 +90,9 @@ class SketchControlPanel(tk.Frame):
 
         button = tk.Button(self, image=self.p_images[-1], command=lambda: self.elastic_image_filler_active(path))
 
-        button.grid(row=self.color_row, column=self.color_col)
-        if self.color_col == COLUMNS - 1:
-            self.color_col = 0
-            self.color_row = self.color_row + 1
+        button.grid(row=self.elastic_row, column=self.elastic_col)
+        if self.elastic_col == ELASTIC_COLUMNS - 1:
+            self.elastic_col = 0
+            self.elastic_row = self.elastic_row + 1
         else:
-            self.color_col = self.color_col + 1
+            self.elastic_col = self.elastic_col + 1
