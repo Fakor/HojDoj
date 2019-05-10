@@ -11,14 +11,14 @@ class ColorFiller:
         self.id = None
         self.image = None
 
-    def update(self, start_point, event):
+    def update_rect(self, start_point, event):
         args = (*start_point, event.x, event.y)
         if self.id is None:
             self.id = self.sketch.create_rectangle(*args, fill=self.color['tk'])
         else:
             self.sketch.coords(self.id, *args)
 
-    def make_sketch(self, start_point, event):
+    def make_rect_sketch(self, start_point, event):
         if self.id is not None:
             self.sketch.delete(self.id)
             self.sketch.sketch_rect(*start_point, event.x, event.y, fill=self.color['tk'])
@@ -37,7 +37,7 @@ class ElasticImageFiller:
         self.id =None
         self.color = Colors.WHITE
 
-    def update(self, start_point, event):
+    def update_rect(self, start_point, event):
         self._prepare_shape(start_point, event)
         if self.id is not None:
             self.sketch.delete(self.id)
@@ -46,7 +46,7 @@ class ElasticImageFiller:
         self.image = elastic_background(self.path, (self.width, self.height))
         self.id = self.sketch.create_image(self.x, self.y, image=self.image)
 
-    def make_sketch(self, start_point, event):
+    def make_rect_sketch(self, start_point, event):
         if self.id is not None:
             self._prepare_shape(start_point, event)
             if self.width == 0 or self.height == 0:

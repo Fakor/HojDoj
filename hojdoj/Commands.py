@@ -2,16 +2,15 @@ from PIL import Image, ImageTk, ImageOps
 
 
 class SketchRectInteractive:
-
     def __init__(self, sketch, event):
         self.sketch = sketch
         self.start_point = (event.x, event.y)
 
     def on_move(self, event):
-        self.sketch.filler.update(self.start_point, event)
+        self.sketch.filler.update_rect(self.start_point, event)
 
     def on_release(self, event):
-        self.sketch.filler.make_sketch(self.start_point, event)
+        self.sketch.filler.make_rect_sketch(self.start_point, event)
 
 
 class SketchImageInteractive:

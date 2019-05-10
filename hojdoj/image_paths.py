@@ -20,3 +20,7 @@ class ImagePaths:
     @property
     def brick_wall(self):
         return "{}/brick_wall.png".format(self.image_root)
+
+    @property
+    def circle(self):
+        return "{}/circle.png".format(self.image_root)

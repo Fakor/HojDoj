@@ -59,10 +59,6 @@ class Sketch(tk.Canvas):
             redo_obj["id"] = new_id
             self.objects.append(redo_obj)
 
-    @tools.object_call(tk.Canvas.create_oval)
-    def sketch_circle(self, x1, y1, x2, y2, **kwargs):
-        pass
-
     @tools.object_call(tk.Canvas.create_rectangle)
     def sketch_rect(self, x1, y1, x2, y2, **kwargs):
         pass
