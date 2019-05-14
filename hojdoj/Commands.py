@@ -19,7 +19,6 @@ class SketchImageInteractive:
         self.start_x = event.x
         self.start_y = event.y
         self.path = self.sketch.current_image
-        self.org_image = self.sketch.filler.fill_image(self.path)
         self.image = None
         self.id = None
 
@@ -30,8 +29,9 @@ class SketchImageInteractive:
             self.sketch.delete(self.id)
         if self.width == 0 or self.height == 0:
             return
-
-        self.image = self.org_image.resize((self.width, self.height), Image.ANTIALIAS)
+        self.image = Image.open(self.path)
+        self.image = self.image.resize((self.width, self.height), Image.ANTIALIAS)
+        self.image = self.sketch.filler.fill_image(self.image)
         self.image = self.image.rotate(self.rotate)
         if self.mirror:
             self.image = ImageOps.mirror(self.image)
@@ -39,12 +39,13 @@ class SketchImageInteractive:
         self.id = self.sketch.create_image(self.x, self.y, image=self.photo_image)
 
     def on_release(self, event):
+        self._prepare_shape(event)
         if self.width == 0 or self.height == 0:
             return
         if self.id is not None:
             self.sketch.delete(self.id)
-            self.sketch.sketch_image(self.x, self.y, self.width, self.height,
-                                     self.path, self.sketch.filler.color['RGB'], rotate=self.rotate, mirror=self.mirror)
+            kwargs = self.sketch.filler.get_arguments(event, (self.start_x, self.start_y))
+            self.sketch.sketch_image(self.x, self.y, self.width, self.height, self.path, **kwargs)
 
     def _prepare_shape(self, event):
         self.width = abs(event.x - self.start_x)

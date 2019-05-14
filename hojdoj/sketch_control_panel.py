@@ -85,7 +85,8 @@ class SketchControlPanel(tk.Frame):
             self.color_col = self.color_col + 1
 
     def add_elastic_image_button(self, path):
-        image_button = elastic_background(path, (B_WIDTH, B_HEIGHT))
+        elastic_image = PIL.Image.open(path)
+        image_button = elastic_background(elastic_image, (B_WIDTH, B_HEIGHT))
 
         self.p_images.append(image_button)
 

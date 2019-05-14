@@ -63,11 +63,16 @@ class Sketch(tk.Canvas):
     def sketch_rect(self, x1, y1, x2, y2, **kwargs):
         pass
 
-    def _sketch_image(self, x, y, width, height, path, color, rotate=0, mirror=False):
+    def _sketch_image(self, x, y, width, height, path, color=None, rotate=0, mirror=False, elastic_image_path=None):
         current_image = Image.open(path)
-        current_image = current_image.convert('RGBA')
-        current_image = tools.image_replace_white(current_image, color)
-        current_image = current_image.resize((width,height), Image.ANTIALIAS)
+
+        current_image = current_image.resize((width, height), Image.ANTIALIAS)
+        if elastic_image_path:
+            el_image = Image.open(elastic_image_path)
+            current_image = tools.image_replace_elastic(current_image, el_image)
+        else:
+            current_image = tools.image_replace_white(current_image, color)
+
         current_image = current_image.rotate(rotate)
         if mirror:
             current_image = ImageOps.mirror(current_image)
@@ -75,13 +80,19 @@ class Sketch(tk.Canvas):
         return self.create_image(x, y, image=self.images[-1])
 
     @tools.object_call(_sketch_image)
-    def sketch_image(self, x, y, width, height, path, color, rotate=0, mirror=False):
+    def sketch_image(self, *args, **kwargs):
         pass
 
-    def _sketch_elastic_image(self, x, y, width, height, path):
-        img = tools.elastic_background(path, (width, height))
-        self.images.append(img)
-        return self.create_image(x,y, image=self.images[-1])
+    def _sketch_elastic_image(self, x, y, width, height, path, elastic_path, rotate=0, mirror=False):
+        img = Image.open(path)
+        elastic_image = Image.open(elastic_path)
+
+        img = tools.image_replace_elastic(img, elastic_image)
+        current_image = img.rotate(rotate)
+        if mirror:
+            current_image = ImageOps.mirror(current_image)
+        self.images.append(ImageTk.PhotoImage(current_image))
+        return self.create_image(x, y, image=self.images[-1])
 
     @tools.object_call(_sketch_elastic_image)
     def sketch_elastic_image(self, *args, **kwargs):

@@ -73,9 +73,20 @@ def image_replace_white(image, new):
     return PIL.Image.fromarray(data)
 
 
-def elastic_background(path, size):
-    img = PIL.Image.open(path)
-    data = np.array(img)
+def image_replace_elastic(image, elastic_image):
+    image = image.convert('RGBA')
+    data = np.array(image)
+
+    el_back = elastic_background(elastic_image, (data.shape[1], data.shape[0]), as_photo_image=False)
+    elastic_data = np.array(el_back)
+    red, green, blue, alpha = data.T
+    white_areas = (red == 255) & (blue == 255) & (green == 255)
+    data[..., :-1][white_areas.T] = elastic_data[..., :][white_areas.T]
+    return PIL.Image.fromarray(data)
+
+
+def elastic_background(elastic_image, size, as_photo_image=True):
+    data = np.array(elastic_image)
     rows, cols, K = data.shape
 
     new_cols, new_rows = size
@@ -101,4 +112,7 @@ def elastic_background(path, size):
         if org_col == cols:
             org_col = 0
     img = PIL.Image.fromarray(new_data)
-    return PIL.ImageTk.PhotoImage(img)
+
+    if as_photo_image:
+        return PIL.ImageTk.PhotoImage(img)
+    return img
