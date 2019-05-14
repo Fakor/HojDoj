@@ -43,13 +43,6 @@ class SketchControlPanel(tk.Frame):
 
         self.add_elastic_image_button(self.sketch.image_paths.brick_wall)
 
-        rect_button = tk.Button(self, text="Rectangle", command=self.rect_tool_active)
-
-        rect_button.grid(row=0, column=0)
-
-    def rect_tool_active(self):
-        self.sketch.interactive_command = Commands.SketchRectInteractive
-
     def image_tool_active(self, path):
         self.sketch.current_image = path
         self.sketch.interactive_command = Commands.SketchImageInteractive

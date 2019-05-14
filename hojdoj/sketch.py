@@ -22,7 +22,7 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.interactive_command = Commands.SketchRectInteractive
+        self.interactive_command = Commands.SketchImageInteractive
         self.filler = fillers.ColorFiller(self, tools.Colors.RED)
 
         self.current_object = None
@@ -33,7 +33,7 @@ class Sketch(tk.Canvas):
         self.images = []
 
         self.image_paths = image_paths.ImagePaths(image_root)
-        self.current_image = self.image_paths.baltazar
+        self.current_image = self.image_paths.circle
         self.elastic_image = None
 
     def on_button_press(self, event):
@@ -59,10 +59,6 @@ class Sketch(tk.Canvas):
             redo_obj["id"] = new_id
             self.objects.append(redo_obj)
 
-    @tools.object_call(tk.Canvas.create_rectangle)
-    def sketch_rect(self, x1, y1, x2, y2, **kwargs):
-        pass
-
     def _sketch_image(self, x, y, width, height, path, color=None, rotate=0, mirror=False, elastic_image_path=None):
         current_image = Image.open(path)
 
@@ -81,21 +77,6 @@ class Sketch(tk.Canvas):
 
     @tools.object_call(_sketch_image)
     def sketch_image(self, *args, **kwargs):
-        pass
-
-    def _sketch_elastic_image(self, x, y, width, height, path, elastic_path, rotate=0, mirror=False):
-        img = Image.open(path)
-        elastic_image = Image.open(elastic_path)
-
-        img = tools.image_replace_elastic(img, elastic_image)
-        current_image = img.rotate(rotate)
-        if mirror:
-            current_image = ImageOps.mirror(current_image)
-        self.images.append(ImageTk.PhotoImage(current_image))
-        return self.create_image(x, y, image=self.images[-1])
-
-    @tools.object_call(_sketch_elastic_image)
-    def sketch_elastic_image(self, *args, **kwargs):
         pass
 
     def _undo(self, event):
