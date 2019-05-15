@@ -30,10 +30,11 @@ class SketchControlPanel(tk.Frame):
 
         self.p_images = []
 
+        self.add_image_button(self.sketch.image_paths.square)
+        self.add_image_button(self.sketch.image_paths.circle)
         self.add_image_button(self.sketch.image_paths.baltazar)
         self.add_image_button(self.sketch.image_paths.tummen)
         self.add_image_button(self.sketch.image_paths.door1)
-        self.add_image_button(self.sketch.image_paths.circle)
 
         self.add_color_button(Colors.WHITE)
         self.add_color_button(Colors.BLACK)

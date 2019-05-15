@@ -24,3 +24,7 @@ class ImagePaths:
     @property
     def circle(self):
         return "{}/circle.png".format(self.image_root)
+
+    @property
+    def square(self):
+        return "{}/square.png".format(self.image_root)
