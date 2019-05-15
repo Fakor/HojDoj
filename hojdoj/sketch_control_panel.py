@@ -28,6 +28,7 @@ class SketchControlPanel(tk.Frame):
         self.elastic_row = 10
         self.elastic_col = 0
 
+        self.normal_images = []
         self.p_images = []
 
         self.add_image_button(self.sketch.image_paths.square)
@@ -56,10 +57,12 @@ class SketchControlPanel(tk.Frame):
 
     def add_image_button(self, path):
         img = PIL.Image.open(path)
+        img = self.sketch.filler.fill_image(img)
         img = img.resize((B_WIDTH, B_HEIGHT), PIL.Image.ANTIALIAS)
         image_button = PIL.ImageTk.PhotoImage(img)
-        self.p_images.append(image_button)
-        button = tk.Button(self, image=self.p_images[-1],
+
+        self.normal_images.append(image_button)
+        button = tk.Button(self, image=self.normal_images[-1],
                            command=lambda: self.image_tool_active(path),
                            height=B_HEIGHT, width=B_WIDTH)
         button.grid(row=self.image_row, column=self.image_col)
