@@ -9,10 +9,9 @@ import image_paths
 
 
 class Sketch(tk.Canvas):
-    def __init__(self, parent, width, height, name, image_root, output=None):
-        tk.Canvas.__init__(self, parent, width=width, height=height)
+    def __init__(self, parent, name, image_root, output=None):
+        tk.Canvas.__init__(self, parent)
         self.name = name
-        self.grid()
         self.parent = parent
         self.output = output
         self.bind("<Button-1>", self.on_button_press)

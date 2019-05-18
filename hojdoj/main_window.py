@@ -1,63 +1,25 @@
 import tkinter as tk
-import code
-import sys
 
-STDOUT = 'stdout'
-STDERR = 'stderr'
-
-
-class IORedirector:
-
-    def __init__(self, out_func):
-        self.out_func = out_func
-
-    def write(self, str):
-        self.out_func(str)
-
-    def flush(self):
-        pass
+import command_terminal
+import scrollable_output
+import sketch_control_panel
+import sketch
+import main_control_panel
 
 
-class MainWindow(tk.Text):
+class MainWindow(tk.Frame):
+    def __init__(self, parent, image_root, width, height):
+        tk.Frame.__init__(self, parent, width=width, height=height)
+        self.update()
+        parent.update()
+        output_window = scrollable_output.ScrollableOutput(self)
+        sk = sketch.Sketch(self, "sk", image_root, output=output_window)
+        sketch_control = sketch_control_panel.SketchControlPanel(self, sk)
+        main_control = main_control_panel.MainControlPanel(self, parent)
+        command_window = command_terminal.CommandTerminal(self, locals())
 
-    ROW_START = ">>> "
-
-    def __init__(self, parent, loc):
-        self.parent = parent
-        tk.Text.__init__(self, parent)
-
-        self.tag_configure(STDOUT, foreground='blue')
-        self.tag_configure(STDERR, foreground='red')
-
-        self.bind('<Control-c>', self.quit_app)
-        self.bind('<Return>', self.enter_pressed)
-
-        self.grid()
-        self.insert(0.0, self.ROW_START)
-
-        self.shell = code.InteractiveInterpreter(locals=loc)
-
-    def quit_app(self, event):
-        self.parent.event_generate('<<quit_now>>')
-
-    def set_as_console(self):
-        sys.stderr = IORedirector(self.add_stderr)
-        sys.stdout = IORedirector(self.add_stdout)
-
-    def enter_pressed(self, event):
-        row = int(self.index(tk.END).split('.')[0])-1
-        pos = "{}.{}".format(row, len(self.ROW_START))
-        line_private___ = self.get(pos, tk.END).strip()
-        if len(line_private___) == 0:
-            pass
-        elif line_private___[-1] != ":":
-            self.shell.runcode(line_private___)
-        self.insert(tk.END, '\n{}'.format(self.ROW_START))
-        self.mark_set("insert", tk.END)
-        return 'break'
-
-    def add_stdout(self, text):
-        self.insert(tk.END, '\n' + text.strip(), STDOUT)
-
-    def add_stderr(self, text):
-        self.insert(tk.END, '\n' + text.strip(), STDERR)
+        sketch_control.place(x=0,y=0, width=int(width/8), height=int(height*4/5))
+        sk.place(x=int(width/8),y=0, width=int(width*5/7), height=int(height*4/5))
+        main_control.place(x=int(width*7/8),y=0, width=int(width/7), height=int(height*3/4))
+        command_window.place(x=0,y=int(height*4/5), width=int(width/2), height=int(height/5))
+        output_window.place(x=int(width/2), y=int(height*4/5), width=int(width / 2), height=int(height / 5))
