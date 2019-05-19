@@ -55,9 +55,13 @@ class SketchControlPanel(tk.Frame):
 
     def color_filler_active(self, color):
         self.sketch.filler = fillers.ColorFiller(self.sketch, color)
+        for button in self.image_buttons:
+            button.update()
 
     def elastic_image_filler_active(self, path):
         self.sketch.filler = fillers.ElasticImageFiller(self.sketch, path)
+        for button in self.image_buttons:
+            button.update()
 
     def add_image_button(self, path):
         button = image_button.ImageButton(self, path, (B_WIDTH, B_HEIGHT))
