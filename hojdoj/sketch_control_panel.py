@@ -4,6 +4,7 @@ import PIL
 import Commands
 from tools import Colors, elastic_background
 import fillers
+import image_button
 
 B_WIDTH = 70
 B_HEIGHT = 70
@@ -29,6 +30,9 @@ class SketchControlPanel(tk.Frame):
         self.elastic_col = 0
 
         self.normal_images = []
+
+        self.image_buttons = []
+
         self.p_images = []
 
         self.add_image_button(self.sketch.image_paths.square)
@@ -56,15 +60,8 @@ class SketchControlPanel(tk.Frame):
         self.sketch.filler = fillers.ElasticImageFiller(self.sketch, path)
 
     def add_image_button(self, path):
-        img = PIL.Image.open(path)
-        img = self.sketch.filler.fill_image(img)
-        img = img.resize((B_WIDTH, B_HEIGHT), PIL.Image.ANTIALIAS)
-        image_button = PIL.ImageTk.PhotoImage(img)
-
-        self.normal_images.append(image_button)
-        button = tk.Button(self, image=self.normal_images[-1],
-                           command=lambda: self.image_tool_active(path),
-                           height=B_HEIGHT, width=B_WIDTH)
+        button = image_button.ImageButton(self, path, (B_WIDTH, B_HEIGHT))
+        self.image_buttons.append(button)
         button.grid(row=self.image_row, column=self.image_col)
         if self.image_col == IMAGE_COLUMNS - 1:
             self.image_col = 0
