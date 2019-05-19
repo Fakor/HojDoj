@@ -12,6 +12,7 @@ def quit_hojdoj(rt):
     print("Quiting HojDoj!!")
     rt.quit()
 
+
 def get_main_screen_conf():
     main_monitor = get_monitors()[0]
     return main_monitor.width, main_monitor.height, main_monitor.x, main_monitor.y
@@ -21,6 +22,8 @@ if __name__ == '__main__':
     image_root = sys.argv[1]
 
     root = tk.Tk()
+
+    root.attributes("-fullscreen", True)
 
     width, height, x, y = get_main_screen_conf()
     root.geometry('{}x{}+{}+{}'.format(width, height, x, y))
