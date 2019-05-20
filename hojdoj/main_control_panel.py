@@ -2,10 +2,11 @@ import tkinter as tk
 
 
 class MainControlPanel(tk.Frame):
-    def __init__(self, parent, root):
+    def __init__(self, parent, root, sketch):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.root = root
+        self.sketch = sketch
         undo_button = tk.Button(self, text="Undo", command=self.sketch_undo)
         redo_button = tk.Button(self, text="Redo", command=self.sketch_redo)
         quit_button = tk.Button(self, text="Quit", command=self.quit_app)
@@ -19,7 +20,7 @@ class MainControlPanel(tk.Frame):
         self.root.event_generate('<<quit_now>>')
 
     def sketch_undo(self):
-        self.parent.sk.undo()
+        self.sketch.undo(it=1)
 
     def sketch_redo(self):
-        self.parent.sk.redo()
+        self.sketch.redo(it=1)

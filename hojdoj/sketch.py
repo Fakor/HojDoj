@@ -45,18 +45,20 @@ class Sketch(tk.Canvas):
         self.current_object.on_release(event)
 
     @tools.base_call
-    def undo(self):
-        if len(self.objects) != 0:
-            self.delete(self.objects[-1]['id'])
-            self.inactive_objects.append(self.objects.pop(-1))
+    def undo(self, it=1):
+        for i in range(it):
+            if len(self.objects) != 0:
+                self.delete(self.objects[-1]['id'])
+                self.inactive_objects.append(self.objects.pop(-1))
 
     @tools.base_call
-    def redo(self):
-        if len(self.inactive_objects) != 0:
-            redo_obj = self.inactive_objects.pop(-1)
-            new_id = redo_obj["command"](self, *redo_obj["args"], **redo_obj["kwargs"])
-            redo_obj["id"] = new_id
-            self.objects.append(redo_obj)
+    def redo(self, it=1):
+        for i in range(it):
+            if len(self.inactive_objects) != 0:
+                redo_obj = self.inactive_objects.pop(-1)
+                new_id = redo_obj["command"](self, *redo_obj["args"], **redo_obj["kwargs"])
+                redo_obj["id"] = new_id
+                self.objects.append(redo_obj)
 
     def _sketch_image(self, x, y, width, height, path, color=None, rotate=0, mirror=False, elastic_image_path=None):
         current_image = Image.open(path)

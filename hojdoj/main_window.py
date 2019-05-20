@@ -21,14 +21,14 @@ class MainWindow(tk.Frame):
 
         main_control_x = sketch_control_width + sketch_width
 
-        self.output_window = scrollable_output.ScrollableOutput(self)
-        self.sk = sketch.Sketch(self, "sk", image_root, output=self.output_window)
-        self.sketch_control = sketch_control_panel.SketchControlPanel(self, self.sk)
-        self.main_control = main_control_panel.MainControlPanel(self, parent)
-        self.command_window = command_terminal.CommandTerminal(self, locals())
+        output_window = scrollable_output.ScrollableOutput(self)
+        sk = sketch.Sketch(self, "sk", image_root, output=output_window)
+        sketch_control = sketch_control_panel.SketchControlPanel(self, sk)
+        main_control = main_control_panel.MainControlPanel(self, parent, sk)
+        command_window = command_terminal.CommandTerminal(self, locals())
 
-        self.sketch_control.place(x=0,y=0, width=sketch_control_width, height=sketch_height)
-        self.sk.place(x=sketch_control_width,y=0, width=sketch_width, height=sketch_height)
-        self.main_control.place(x=main_control_x,y=0, width=main_control_width, height=sketch_height)
-        self.command_window.place(x=0,y=sketch_height, width=command_window_width, height=console_height)
-        self.output_window.place(x=command_window_width, y=sketch_height, width=output_window_width, height=console_height)
+        sketch_control.place(x=0,y=0, width=sketch_control_width, height=sketch_height)
+        sk.place(x=sketch_control_width,y=0, width=sketch_width, height=sketch_height)
+        main_control.place(x=main_control_x,y=0, width=main_control_width, height=sketch_height)
+        command_window.place(x=0,y=sketch_height, width=command_window_width, height=console_height)
+        output_window.place(x=command_window_width, y=sketch_height, width=output_window_width, height=console_height)
