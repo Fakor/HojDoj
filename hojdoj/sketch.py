@@ -63,7 +63,7 @@ class Sketch(tk.Canvas):
     def _sketch_image(self, x, y, width, height, path, color=None, rotate=0, mirror=False, elastic_image_path=None):
         current_image = Image.open(path)
 
-        current_image = current_image.resize((width, height), Image.ANTIALIAS)
+        current_image = current_image.resize((width, height), Image.NEAREST)
         if elastic_image_path:
             el_image = Image.open(elastic_image_path)
             current_image = tools.image_replace_elastic(current_image, el_image)

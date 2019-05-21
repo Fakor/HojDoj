@@ -19,7 +19,8 @@ class SketchImageInteractive:
         if self.width == 0 or self.height == 0:
             return
         self.image = Image.open(self.path)
-        self.image = self.image.resize((self.width, self.height), Image.ANTIALIAS)
+
+        self.image = self.image.resize((self.width, self.height), Image.NEAREST)
         self.image = self.sketch.filler.fill_image(self.image)
         self.image = self.image.rotate(self.rotate)
         if self.mirror:
