@@ -1,0 +1,15 @@
+{
+    "default_image_template": "$HOJDOJ_HOME/images/templates/square.png",
+    "image_templates":[
+	"$HOJDOJ_HOME/images/templates/circle.png",
+	"$HOJDOJ_HOME/images/templates/square.png",
+	"$HOJDOJ_HOME/images/templates/baltazar.png",
+	"$HOJDOJ_HOME/images/templates/tummen.png"
+    ],
+    "image_elastics":[
+	"$HOJDOJ_HOME/images/elastics/brick_wall.png"
+    ],
+    "terminal": {
+	"enabled": true
+    }
+}

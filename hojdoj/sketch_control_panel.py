@@ -15,7 +15,7 @@ ELASTIC_COLUMNS = 2
 
 
 class SketchControlPanel(tk.Frame):
-    def __init__(self, parent, sketch):
+    def __init__(self, parent, sketch, image_templates, image_elastics):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.sketch = sketch
@@ -35,11 +35,8 @@ class SketchControlPanel(tk.Frame):
 
         self.p_images = []
 
-        self.add_image_button(self.sketch.image_paths.square)
-        self.add_image_button(self.sketch.image_paths.circle)
-        self.add_image_button(self.sketch.image_paths.baltazar)
-        self.add_image_button(self.sketch.image_paths.tummen)
-        self.add_image_button(self.sketch.image_paths.door1)
+        for template in image_templates:
+            self.add_image_button(template)
 
         self.add_color_button(Colors.WHITE)
         self.add_color_button(Colors.BLACK)
@@ -47,7 +44,8 @@ class SketchControlPanel(tk.Frame):
         self.add_color_button(Colors.BLUE)
         self.add_color_button(Colors.GREEN)
 
-        self.add_elastic_image_button(self.sketch.image_paths.brick_wall)
+        for elastic in image_elastics:
+            self.add_elastic_image_button(elastic)
 
     def image_tool_active(self, path):
         self.sketch.current_image = path

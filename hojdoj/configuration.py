@@ -1,46 +1,23 @@
 import json
-import pathlib
-import os
 
 GEOMETRY='{}x{}+{}+{}'
 
+
 class Config:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
+    def __init__(self, hojdoj_home, config_path):
+        with open(config_path) as f:
+            text = f.read()
+        text = text.replace("$HOJDOJ_HOME", hojdoj_home)
+        self.conf = json.loads(text)
 
-        self.custom_config_path = os.path.join(pathlib.Path.home(), ".hojdoj_config.json")
+    @property
+    def default_image_template(self):
+        return self.conf["default_image_template"]
 
-        if os.path.isfile(self.custom_config_path):
-            with open(self.custom_config_path) as f:
-                self.custom_config = json.load(f)
-        else:
-            self.custom_config = {}
+    @property
+    def image_templates(self):
+        return self.conf["image_templates"]
 
-    def get_command_window_geometry(self):
-        conf = self.custom_config.get("command", {})
-        x = conf.get('x', 0)
-        y = conf.get('y', int(self.height/2))
-        width = conf.get("width", int(self.width / 3))
-        height = conf.get("height", int(self.height / 2))
-        return GEOMETRY.format(width, height, x, y)
-
-    def get_output_window_geometry(self):
-        conf = self.custom_config.get("output", {})
-        x = conf.get('x', 0)
-        y = conf.get('y', 0)
-        width = conf.get("width", int(self.width / 3))
-        height = conf.get("height", int(self.height / 2))
-        return GEOMETRY.format(width, height, x, y)
-
-    def get_sketch_window_geometry(self):
-        conf = self.custom_config.get("sketch", {})
-        x = conf.get('x', int(self.width/3))
-        y = conf.get('y', 0)
-        width = conf.get("width", int(self.width * 2/ 3))
-        height = conf.get("height", int(self.height))
-        return GEOMETRY.format(width, height, x, y)
-
-    def sketch_width(self):
-        conf = self.custom_config.get("sketch", {})
-        return int(conf.get('width', int(self.width * 2/ 3)) * conf.get('ratio',  5 / 12))
+    @property
+    def image_elastics(self):
+        return self.conf["image_elastics"]

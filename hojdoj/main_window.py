@@ -5,10 +5,11 @@ import scrollable_output
 import sketch_control_panel
 import sketch
 import main_control_panel
+import configuration
 
 
 class MainWindow(tk.Frame):
-    def __init__(self, parent, image_root, width, height):
+    def __init__(self, parent, config, width, height):
         tk.Frame.__init__(self, parent, width=width, height=height)
 
         console_height = int(height/5)
@@ -22,8 +23,13 @@ class MainWindow(tk.Frame):
         main_control_x = sketch_control_width + sketch_width
 
         output_window = scrollable_output.ScrollableOutput(self)
-        sk = sketch.Sketch(self, "sk", image_root, output=output_window)
-        sketch_control = sketch_control_panel.SketchControlPanel(self, sk)
+        sk = sketch.Sketch(self, "sk", config.default_image_template, output=output_window)
+        sketch_control = sketch_control_panel.SketchControlPanel(
+            self,
+            sk,
+            image_templates=config.image_templates,
+            image_elastics=config.image_elastics
+        )
         main_control = main_control_panel.MainControlPanel(self, parent, sk)
         command_window = command_terminal.CommandTerminal(self, locals())
 

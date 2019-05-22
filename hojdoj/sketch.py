@@ -9,7 +9,7 @@ import image_paths
 
 
 class Sketch(tk.Canvas):
-    def __init__(self, parent, name, image_root, output=None):
+    def __init__(self, parent, name, default_image, output=None):
         tk.Canvas.__init__(self, parent)
         self.name = name
         self.parent = parent
@@ -31,8 +31,8 @@ class Sketch(tk.Canvas):
         self.inactive_objects = []
         self.images = []
 
-        self.image_paths = image_paths.ImagePaths(image_root)
-        self.current_image = self.image_paths.circle
+        #self.image_paths = image_paths.ImagePaths(image_root)
+        self.current_image = default_image #self.image_paths.circle
         self.elastic_image = None
 
     def on_button_press(self, event):

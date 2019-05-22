@@ -3,6 +3,7 @@ import tkinter as tk
 import sys
 
 import main_window
+import configuration
 from screeninfo import get_monitors
 
 
@@ -19,7 +20,10 @@ def get_main_screen_conf():
 
 
 if __name__ == '__main__':
-    image_root = sys.argv[1]
+    hojdoj_home = sys.argv[1]
+    config_path = sys.argv[2]
+
+    config = configuration.Config(hojdoj_home, config_path)
 
     root = tk.Tk()
 
@@ -28,7 +32,7 @@ if __name__ == '__main__':
     width, height, x, y = get_main_screen_conf()
     root.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
-    main_window = main_window.MainWindow(root, image_root, width=width, height=height)
+    main_window = main_window.MainWindow(root, config, width=width, height=height)
     main_window.pack()
 
     root.bind('<<quit_now>>', lambda eff: quit_hojdoj(root))
