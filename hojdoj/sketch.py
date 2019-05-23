@@ -5,7 +5,6 @@ import tools
 import fillers
 
 import Commands
-import image_paths
 
 
 class Sketch(tk.Canvas):
@@ -31,8 +30,7 @@ class Sketch(tk.Canvas):
         self.inactive_objects = []
         self.images = []
 
-        #self.image_paths = image_paths.ImagePaths(image_root)
-        self.current_image = default_image #self.image_paths.circle
+        self.current_image = default_image
         self.elastic_image = None
 
     def on_button_press(self, event):

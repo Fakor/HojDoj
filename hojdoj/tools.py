@@ -3,11 +3,11 @@ import PIL
 
 
 class Colors:
-    RED = {'RGB': (255, 0.0, 0.0), 'tk': '#ff0000'}
-    GREEN = {'RGB': (0.0, 255, 0.0), 'tk': '#00ff00'}
-    BLUE = {'RGB': (0.0, 0.0, 255), 'tk': '#0000ff'}
-    WHITE = {'RGB': (255, 255, 255), 'tk': '#ffffff'}
-    BLACK = {'RGB': (0, 0, 0), 'tk': '#000000'}
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    BLUE = (0, 0, 255)
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
 
 
 def base_call(func):
@@ -62,6 +62,10 @@ def value_to_string(value):
     if isinstance(value, str):
         return '"{}"'.format(value)
     return str(value)
+
+
+def color_to_tk(color):
+    return '#{}{}{}'.format(*["{0:#0{1}x}".format(el, 4).replace("0x", "") for el in color])
 
 
 def image_replace_white(image, new):

@@ -2,7 +2,7 @@ import tkinter as tk
 import PIL
 
 import Commands
-from tools import Colors, elastic_background
+from tools import Colors, elastic_background, color_to_tk
 import fillers
 import image_button
 
@@ -72,7 +72,7 @@ class SketchControlPanel(tk.Frame):
             self.image_col = self.image_col + 1
 
     def add_color_button(self, color):
-        button = tk.Button(self, bg=color['tk'], command=lambda: self.color_filler_active(color))
+        button = tk.Button(self, bg=color_to_tk(color), command=lambda: self.color_filler_active(color))
         button.grid(row=self.color_row, column=self.color_col)
         if self.color_col == COLOR_COLUMNS - 1:
             self.color_col = 0

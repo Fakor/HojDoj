@@ -1,6 +1,6 @@
 from PIL import Image
 
-from tools import elastic_background, image_replace_white, image_replace_elastic
+from tools import image_replace_white, image_replace_elastic
 from tools import Colors
 
 
@@ -12,11 +12,11 @@ class ColorFiller:
         self.image = None
 
     def fill_image(self, image):
-        return image_replace_white(image, self.color['RGB'])
+        return image_replace_white(image, self.color)
 
     def get_arguments(self, event, start_point):
         self._prepare_shape(start_point, event)
-        return {'color': self.color['RGB'], 'rotate': self.rotate, 'mirror': self.mirror}
+        return {'color': self.color, 'rotate': self.rotate, 'mirror': self.mirror}
 
     def _prepare_shape(self, start_point, event):
         start_x, start_y = start_point
