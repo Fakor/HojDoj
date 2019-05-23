@@ -21,3 +21,7 @@ class Config:
     @property
     def image_elastics(self):
         return self.conf["image_elastics"]
+
+    @property
+    def sketch_colors(self):
+        return [tuple(el) for el in self.conf["sketch_colors"]]

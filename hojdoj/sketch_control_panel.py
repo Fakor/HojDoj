@@ -15,7 +15,7 @@ ELASTIC_COLUMNS = 2
 
 
 class SketchControlPanel(tk.Frame):
-    def __init__(self, parent, sketch, image_templates, image_elastics):
+    def __init__(self, parent, sketch, image_templates, image_elastics, colors):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.sketch = sketch
@@ -38,11 +38,8 @@ class SketchControlPanel(tk.Frame):
         for template in image_templates:
             self.add_image_button(template)
 
-        self.add_color_button(Colors.WHITE)
-        self.add_color_button(Colors.BLACK)
-        self.add_color_button(Colors.RED)
-        self.add_color_button(Colors.BLUE)
-        self.add_color_button(Colors.GREEN)
+        for color in colors:
+            self.add_color_button(color)
 
         for elastic in image_elastics:
             self.add_elastic_image_button(elastic)

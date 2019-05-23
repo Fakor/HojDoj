@@ -28,7 +28,8 @@ class MainWindow(tk.Frame):
             self,
             sk,
             image_templates=config.image_templates,
-            image_elastics=config.image_elastics
+            image_elastics=config.image_elastics,
+            colors=config.sketch_colors
         )
         main_control = main_control_panel.MainControlPanel(self, parent, sk)
         command_window = command_terminal.CommandTerminal(self, locals())
