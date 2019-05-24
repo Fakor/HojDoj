@@ -4,10 +4,12 @@
 	"$HOJDOJ_HOME/images/templates/circle.png",
 	"$HOJDOJ_HOME/images/templates/square.png",
 	"$HOJDOJ_HOME/images/templates/baltazar.png",
-	"$HOJDOJ_HOME/images/templates/tummen.png"
+	"$HOJDOJ_HOME/images/templates/tummen.png",
+	"$HOJDOJ_HOME/images/templates/door1.png"
     ],
     "image_elastics":[
-	"$HOJDOJ_HOME/images/elastics/brick_wall.png"
+	"$HOJDOJ_HOME/images/elastics/brick_wall.png",
+	"$HOJDOJ_HOME/images/elastics/mahogany_wood.png"
     ],
     "sketch_colors":[
 	[0, 0, 0],
