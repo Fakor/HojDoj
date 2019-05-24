@@ -2,7 +2,7 @@ import tkinter as tk
 import PIL
 
 import Commands
-from tools import Colors, elastic_background, color_to_tk
+from tools import elastic_background, color_to_tk
 import fillers
 import image_button
 
@@ -15,7 +15,7 @@ ELASTIC_COLUMNS = 2
 
 
 class SketchControlPanel(tk.Frame):
-    def __init__(self, parent, sketch, image_templates, image_elastics, colors):
+    def __init__(self, parent, sketch, config):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.sketch = sketch
@@ -35,13 +35,13 @@ class SketchControlPanel(tk.Frame):
 
         self.p_images = []
 
-        for template in image_templates:
+        for template in config.image_templates:
             self.add_image_button(template)
 
-        for color in colors:
+        for color in config.sketch_colors:
             self.add_color_button(color)
 
-        for elastic in image_elastics:
+        for elastic in config.image_elastics:
             self.add_elastic_image_button(elastic)
 
     def image_tool_active(self, path):

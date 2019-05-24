@@ -1,7 +1,6 @@
 from PIL import Image
 
 from tools import image_replace_white, image_replace_elastic
-from tools import Colors
 
 
 class ColorFiller:
@@ -48,7 +47,6 @@ class ElasticImageFiller:
 
         self.image = None
         self.id =None
-        self.color = Colors.WHITE
 
     def _prepare_shape(self, start_point, event):
         start_x, start_y = start_point

@@ -2,14 +2,6 @@ import numpy as np
 import PIL
 
 
-class Colors:
-    RED = (255, 0, 0)
-    GREEN = (0, 255, 0)
-    BLUE = (0, 0, 255)
-    WHITE = (255, 255, 255)
-    BLACK = (0, 0, 0)
-
-
 def base_call(func):
     def wrapper(self, *args, **kwargs):
         text = "{}.{}(".format(self.name, func.__name__)

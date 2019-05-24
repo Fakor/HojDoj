@@ -5,7 +5,6 @@ import scrollable_output
 import sketch_control_panel
 import sketch
 import main_control_panel
-import configuration
 
 
 class MainWindow(tk.Frame):
@@ -23,14 +22,8 @@ class MainWindow(tk.Frame):
         main_control_x = sketch_control_width + sketch_width
 
         output_window = scrollable_output.ScrollableOutput(self)
-        sk = sketch.Sketch(self, "sk", config.default_image_template, output=output_window)
-        sketch_control = sketch_control_panel.SketchControlPanel(
-            self,
-            sk,
-            image_templates=config.image_templates,
-            image_elastics=config.image_elastics,
-            colors=config.sketch_colors
-        )
+        sk = sketch.Sketch(self, "sk", config.default_image_template, config, output=output_window)
+        sketch_control = sketch_control_panel.SketchControlPanel(self, sk, config)
         main_control = main_control_panel.MainControlPanel(self, parent, sk)
         command_window = command_terminal.CommandTerminal(self, locals())
 

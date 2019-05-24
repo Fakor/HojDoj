@@ -25,3 +25,7 @@ class Config:
     @property
     def sketch_colors(self):
         return [tuple(el) for el in self.conf["sketch_colors"]]
+
+    @property
+    def default_color(self):
+        return self.conf["default_color"]

@@ -8,7 +8,7 @@ import Commands
 
 
 class Sketch(tk.Canvas):
-    def __init__(self, parent, name, default_image, output=None):
+    def __init__(self, parent, name, default_image, config, output=None):
         tk.Canvas.__init__(self, parent)
         self.name = name
         self.parent = parent
@@ -21,7 +21,7 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-y>', self._redo)
 
         self.interactive_command = Commands.SketchImageInteractive
-        self.filler = fillers.ColorFiller(self, tools.Colors.RED)
+        self.filler = fillers.ColorFiller(self, config.default_color)
 
         self.current_object = None
 
