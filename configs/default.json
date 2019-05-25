@@ -19,7 +19,7 @@
 	[0, 0, 255],
 	[123,123,123]
     ],
-    "default_color": [0,0,0],
+    "default_color": [255,255,255],
     "terminal": {
 	"enabled": true
     }
