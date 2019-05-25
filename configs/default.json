@@ -8,8 +8,14 @@
 	"$HOJDOJ_HOME/images/templates/door1.png"
     ],
     "image_elastics":[
-	"$HOJDOJ_HOME/images/elastics/brick_wall.png",
-	"$HOJDOJ_HOME/images/elastics/mahogany_wood.png"
+	{
+	    "path": "$HOJDOJ_HOME/images/elastics/brick_wall.png",
+	    "orientation": "horizontal"
+	},
+	{
+	    "path":"$HOJDOJ_HOME/images/elastics/mahogany_wood.png",
+	    "orientation": "vertical"
+	}
     ],
     "sketch_colors":[
 	[0, 0, 0],

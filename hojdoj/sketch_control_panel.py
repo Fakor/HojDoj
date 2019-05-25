@@ -2,7 +2,7 @@ import tkinter as tk
 import PIL
 
 import Commands
-from tools import elastic_background, color_to_tk
+from tools import elastic_background_horizontal, color_to_tk
 import fillers
 import image_button
 
@@ -53,8 +53,8 @@ class SketchControlPanel(tk.Frame):
         for button in self.image_buttons:
             button.update()
 
-    def elastic_image_filler_active(self, path):
-        self.sketch.filler = fillers.ElasticImageFiller(self.sketch, path)
+    def elastic_image_filler_active(self, path, orientation):
+        self.sketch.filler = fillers.ElasticImageFiller(self.sketch, path, orientation)
         for button in self.image_buttons:
             button.update()
 
@@ -77,13 +77,17 @@ class SketchControlPanel(tk.Frame):
         else:
             self.color_col = self.color_col + 1
 
-    def add_elastic_image_button(self, path):
+    def add_elastic_image_button(self, elastic):
+        path = elastic["path"]
+        orientation = elastic["orientation"]
         elastic_image = PIL.Image.open(path)
-        image_button = elastic_background(elastic_image, (B_WIDTH, B_HEIGHT))
+        image_button = elastic_background_horizontal(elastic_image, (B_WIDTH, B_HEIGHT))
 
         self.p_images.append(image_button)
 
-        button = tk.Button(self, image=self.p_images[-1], command=lambda: self.elastic_image_filler_active(path))
+        button = tk.Button(self,
+                           image=self.p_images[-1],
+                           command=lambda: self.elastic_image_filler_active(path, orientation))
 
         button.grid(row=self.elastic_row, column=self.elastic_col)
         if self.elastic_col == ELASTIC_COLUMNS - 1:
