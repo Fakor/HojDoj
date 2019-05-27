@@ -5,7 +5,8 @@
 	"$HOJDOJ_HOME/images/templates/square.png",
 	"$HOJDOJ_HOME/images/templates/baltazar.png",
 	"$HOJDOJ_HOME/images/templates/tummen.png",
-	"$HOJDOJ_HOME/images/templates/door1.png"
+	"$HOJDOJ_HOME/images/templates/door1.png",
+	"$HOJDOJ_HOME/images/templates/excevator.png"
     ],
     "image_elastics":[
 	{
@@ -23,7 +24,8 @@
 	[255, 0, 0],
 	[0, 255, 0],
 	[0, 0, 255],
-	[123,123,123]
+	[123,123,123],
+	[255,255,0]
     ],
     "default_color": [255,255,255],
     "terminal": {

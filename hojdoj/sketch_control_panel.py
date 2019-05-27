@@ -26,7 +26,7 @@ class SketchControlPanel(tk.Frame):
         self.color_row = 7
         self.color_col = 0
 
-        self.elastic_row = 10
+        self.elastic_row = 12
         self.elastic_col = 0
 
         self.normal_images = []
