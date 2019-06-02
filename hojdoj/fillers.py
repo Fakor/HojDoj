@@ -75,4 +75,4 @@ class ElasticImageFiller:
 
     def get_arguments(self, event, start_point):
         self._prepare_shape(start_point, event)
-        return {'elastic_image_path': self.path, 'rotate': self.rotate, 'mirror': self.mirror}
+        return {'elastic_image_path': self.path, 'rotate': self.rotate, 'mirror': self.mirror, 'vertical': self.vertical}

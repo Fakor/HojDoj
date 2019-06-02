@@ -58,13 +58,16 @@ class Sketch(tk.Canvas):
                 redo_obj["id"] = new_id
                 self.objects.append(redo_obj)
 
-    def _sketch_image(self, x, y, width, height, path, color=None, rotate=0, mirror=False, elastic_image_path=None):
+    def _sketch_image(self, x, y, width,
+                      height, path, color=None,
+                      rotate=0, mirror=False, elastic_image_path=None,
+                      vertical=False):
         current_image = Image.open(path)
 
         current_image = current_image.resize((width, height), Image.NEAREST)
         if elastic_image_path:
             el_image = Image.open(elastic_image_path)
-            current_image = tools.image_replace_elastic(current_image, el_image)
+            current_image = tools.image_replace_elastic(current_image, el_image, vertical)
         else:
             current_image = tools.image_replace_white(current_image, color)
 
