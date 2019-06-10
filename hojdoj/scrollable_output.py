@@ -13,3 +13,7 @@ class ScrollableOutput(tk.Text):
     def add_command(self, text):
         self.insert(tk.END, '\n' + text, COMMAND)
 
+
+class NormalOutput:
+    def add_command(self, text):
+        print(text)

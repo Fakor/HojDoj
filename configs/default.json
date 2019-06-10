@@ -29,7 +29,7 @@
 	[255,255,0]
     ],
     "default_color": [255,255,255],
-    "terminal": {
-	"enabled": true
+    "console": {
+	"enabled": false
     }
 }

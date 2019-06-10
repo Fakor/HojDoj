@@ -29,3 +29,6 @@ class Config:
     @property
     def default_color(self):
         return self.conf["default_color"]
+
+    def __getitem__(self, item):
+        return self.conf[item]

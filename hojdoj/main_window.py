@@ -11,7 +11,12 @@ class MainWindow(tk.Frame):
     def __init__(self, parent, config, width, height):
         tk.Frame.__init__(self, parent, width=width, height=height)
 
-        console_height = int(height/5)
+        if config["console"]["enabled"]:
+            console_height = int(height/5)
+            output_window = scrollable_output.ScrollableOutput(self)
+        else:
+            console_height = 0
+            output_window = scrollable_output.NormalOutput()
         sketch_height = height-console_height
         sketch_control_width = int(width/10)
         main_control_width = int(width/10)
@@ -21,7 +26,6 @@ class MainWindow(tk.Frame):
 
         main_control_x = sketch_control_width + sketch_width
 
-        output_window = scrollable_output.ScrollableOutput(self)
         sk = sketch.Sketch(self, "sk", config.default_image_template, config, output=output_window)
         sketch_control = sketch_control_panel.SketchControlPanel(self, sk, config)
         main_control = main_control_panel.MainControlPanel(self, parent, sk)
@@ -30,5 +34,9 @@ class MainWindow(tk.Frame):
         sketch_control.place(x=0,y=0, width=sketch_control_width, height=sketch_height)
         sk.place(x=sketch_control_width,y=0, width=sketch_width, height=sketch_height)
         main_control.place(x=main_control_x,y=0, width=main_control_width, height=sketch_height)
-        command_window.place(x=0,y=sketch_height, width=command_window_width, height=console_height)
-        output_window.place(x=command_window_width, y=sketch_height, width=output_window_width, height=console_height)
+
+
+        if config["console"]["enabled"]:
+            output_window.place(x=command_window_width, y=sketch_height, width=output_window_width,
+                                height=console_height)
+            command_window.place(x=0,y=sketch_height, width=command_window_width, height=console_height)
