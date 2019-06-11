@@ -1,62 +1,39 @@
 import tkinter as tk
 import code
-import sys
-
-STDOUT = 'stdout'
-STDERR = 'stderr'
 
 
-class IORedirector:
-
-    def __init__(self, out_func):
-        self.out_func = out_func
-
-    def write(self, str):
-        self.out_func(str)
-
-    def flush(self):
-        pass
-
-
-class CommandTerminal(tk.Text):
-
-    ROW_START = ">>> "
-
-    def __init__(self, parent, loc):
+class InputEntry(tk.Entry):
+    def __init__(self, parent):
+        tk.Entry.__init__(self, parent)
         self.parent = parent
-        tk.Text.__init__(self, parent)
-
-        self.tag_configure(STDOUT, foreground='blue')
-        self.tag_configure(STDERR, foreground='red')
-
-        self.bind('<Control-c>', self.quit_app)
         self.bind('<Return>', self.enter_pressed)
 
-        self.insert(0.0, self.ROW_START)
+    def enter_pressed(self, event):
+        self.parent.run_command(self.get())
+        self.delete(0,tk.END)
+
+
+class CommandTerminal(tk.Frame):
+    def __init__(self, parent, loc):
+        tk.Frame.__init__(self, parent)
+        self.content = tk.StringVar()
+        self.input = InputEntry(self)
+        self.output = tk.Entry(self, textvariable=self.content)
+
+        self.input.grid(row=0,column=0)
+        self.output.grid(row=1,column=0)
 
         self.shell = code.InteractiveInterpreter(locals=loc)
 
-    def quit_app(self, event):
-        self.parent.event_generate('<<quit_now>>')
+    def add_command(self, text):
+        self.content.set(text)
 
-    def set_as_console(self):
-        sys.stderr = IORedirector(self.add_stderr)
-        sys.stdout = IORedirector(self.add_stdout)
+    def run_command(self, text):
+        self.shell.runcode(text)
 
-    def enter_pressed(self, event):
-        row = int(self.index(tk.END).split('.')[0])-1
-        pos = "{}.{}".format(row, len(self.ROW_START))
-        line_private___ = self.get(pos, tk.END).strip()
-        if len(line_private___) == 0:
-            pass
-        elif line_private___[-1] != ":":
-            self.shell.runcode(line_private___)
-        self.insert(tk.END, '\n{}'.format(self.ROW_START))
-        self.mark_set("insert", tk.END)
-        return 'break'
+    def place(self, **kwargs):
+        self.output.config(width=int(kwargs["width"]/2))
 
-    def add_stdout(self, text):
-        self.insert(tk.END, '\n' + text.strip(), STDOUT)
+        self.input.config(width=int(kwargs["width"] / 2))
 
-    def add_stderr(self, text):
-        self.insert(tk.END, '\n' + text.strip(), STDERR)
+        tk.Frame.place(self, **kwargs)

@@ -30,6 +30,6 @@
     ],
     "default_color": [255,255,255],
     "console": {
-	"enabled": false
+	"enabled": true
     }
 }
