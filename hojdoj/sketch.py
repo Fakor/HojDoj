@@ -9,7 +9,7 @@ import Commands
 
 class Sketch(tk.Canvas):
     def __init__(self, parent, name, default_image, config, output=None):
-        tk.Canvas.__init__(self, parent)
+        tk.Canvas.__init__(self, parent, borderwidth=4, relief=tk.GROOVE)
         self.name = name
         self.parent = parent
         self.output = output
