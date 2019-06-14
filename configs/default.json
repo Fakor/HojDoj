@@ -1,22 +1,40 @@
 {
-    "default_image_template": "$HOJDOJ_HOME/images/templates/square.png",
     "image_templates":[
-	"$HOJDOJ_HOME/images/templates/circle.png",
-	"$HOJDOJ_HOME/images/templates/square.png",
-	"$HOJDOJ_HOME/images/templates/baltazar.png",
-	"$HOJDOJ_HOME/images/templates/tummen.png",
-	"$HOJDOJ_HOME/images/templates/door1.png",
-	"$HOJDOJ_HOME/images/templates/excevator.png",
-	"$HOJDOJ_HOME/images/templates/skoda.png"
+	{
+	    "path": "$HOJDOJ_HOME/images/templates/circle.png",
+	    "name": "CIRKEL"
+	},
+	{
+	    "path": "$HOJDOJ_HOME/images/templates/square.png",
+	    "name": "FYRKANT"
+	},
+	{
+	    "path": "$HOJDOJ_HOME/images/templates/baltazar.png",
+	    "name": "BALTAZAR"
+	},
+	{
+	    "path": "$HOJDOJ_HOME/images/templates/door1.png",
+	    "name": "DÖRR"
+	},
+	{
+	    "path": "$HOJDOJ_HOME/images/templates/excevator.png",
+	    "name": "GRÄVMASKIN"
+	},
+	{
+	    "path": "$HOJDOJ_HOME/images/templates/skoda.png",
+	    "name": "SKODA"
+	}
     ],
     "image_elastics":[
 	{
 	    "path": "$HOJDOJ_HOME/images/elastics/brick_wall.png",
-	    "orientation": "horizontal"
+	    "vertical": false,
+	    "name": "MUR"
 	},
 	{
 	    "path":"$HOJDOJ_HOME/images/elastics/mahogany_wood.png",
-	    "orientation": "vertical"
+	    "vertical": true,
+	    "name": "MAHOGNY"
 	}
     ],
     "sketch_colors":[

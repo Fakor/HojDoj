@@ -44,8 +44,8 @@ class SketchControlPanel(tk.Frame):
         for elastic in config.image_elastics:
             self.add_elastic_image_button(elastic)
 
-    def image_tool_active(self, path):
-        self.sketch.current_image = path
+    def image_tool_active(self, image_meta):
+        self.sketch.current_image = image_meta
         self.sketch.interactive_command = Commands.SketchImageInteractive
 
     def color_filler_active(self, color):
@@ -53,8 +53,8 @@ class SketchControlPanel(tk.Frame):
         for button in self.image_buttons:
             button.update()
 
-    def elastic_image_filler_active(self, path, orientation):
-        self.sketch.filler = fillers.ElasticImageFiller(self.sketch, path, orientation)
+    def elastic_image_filler_active(self, elastic_meta):
+        self.sketch.filler = fillers.ElasticImageFiller(self.sketch, elastic_meta)
         for button in self.image_buttons:
             button.update()
 
@@ -79,7 +79,6 @@ class SketchControlPanel(tk.Frame):
 
     def add_elastic_image_button(self, elastic):
         path = elastic["path"]
-        orientation = elastic["orientation"]
         elastic_image = PIL.Image.open(path)
         image_button = elastic_background_horizontal(elastic_image, (B_WIDTH, B_HEIGHT))
 
@@ -87,7 +86,7 @@ class SketchControlPanel(tk.Frame):
 
         button = tk.Button(self,
                            image=self.p_images[-1],
-                           command=lambda: self.elastic_image_filler_active(path, orientation))
+                           command=lambda: self.elastic_image_filler_active(elastic))
 
         button.grid(row=self.elastic_row, column=self.elastic_col)
         if self.elastic_col == ELASTIC_COLUMNS - 1:

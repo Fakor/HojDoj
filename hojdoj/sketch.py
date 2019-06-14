@@ -8,11 +8,13 @@ import Commands
 
 
 class Sketch(tk.Canvas):
-    def __init__(self, parent, name, default_image, config, output=None):
+    def __init__(self, parent, name, config, output=None):
         tk.Canvas.__init__(self, parent, borderwidth=4, relief=tk.GROOVE)
         self.name = name
         self.parent = parent
         self.output = output
+        self.config = config
+
         self.bind("<Button-1>", self.on_button_press)
         self.bind("<B1-Motion>", self.on_move_press)
         self.bind("<ButtonRelease-1>", self.on_button_release)
@@ -30,7 +32,7 @@ class Sketch(tk.Canvas):
         self.inactive_objects = []
         self.images = []
 
-        self.current_image = default_image
+        self.current_image = self.config.image_templates[0]
         self.elastic_image = None
 
     def on_button_press(self, event):
@@ -59,15 +61,15 @@ class Sketch(tk.Canvas):
                 self.objects.append(redo_obj)
 
     def _sketch_image(self, x, y, width,
-                      height, path, color=None,
-                      rotate=0, mirror=False, elastic_image_path=None,
-                      vertical=False):
-        current_image = Image.open(path)
-
+                      height, image_name, color=None,
+                      rotate=0, mirror=False, elastic_name=None):
+        image_meta = self.config.get_image_meta(image_name)
+        current_image = Image.open(image_meta['path'])
         current_image = current_image.resize((width, height), Image.NEAREST)
-        if elastic_image_path:
-            el_image = Image.open(elastic_image_path)
-            current_image = tools.image_replace_elastic(current_image, el_image, vertical)
+        if elastic_name:
+            elastic_meta = self.config.get_elastic_meta(elastic_name)
+            el_image = Image.open(elastic_meta['path'])
+            current_image = tools.image_replace_elastic(current_image, el_image, elastic_meta['vertical'])
         else:
             current_image = tools.image_replace_white(current_image, color)
 

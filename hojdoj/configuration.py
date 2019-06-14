@@ -32,3 +32,15 @@ class Config:
 
     def __getitem__(self, item):
         return self.conf[item]
+
+    def get_image_meta(self, name):
+        for m in self.conf['image_templates']:
+            if m['name'] == name:
+                return m
+        raise AttributeError("Image with name {} not found!", name)
+
+    def get_elastic_meta(self, name):
+        for m in self.conf['image_elastics']:
+            if m['name'] == name:
+                return m
+        raise AttributeError("Image with name {} not found!", name)

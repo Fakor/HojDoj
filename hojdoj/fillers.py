@@ -40,11 +40,10 @@ class ColorFiller:
 
 
 class ElasticImageFiller:
-    def __init__(self, sketch, path, orientation):
+    def __init__(self, sketch, elastic_meta):
         self.sketch = sketch
-        self.path = path
-        self.vertical = orientation == "vertical"
-        self.elastic_image = Image.open(self.path)
+        self.meta = elastic_meta
+        self.elastic_image = Image.open(self.meta['path'])
 
         self.image = None
         self.id =None
@@ -71,8 +70,8 @@ class ElasticImageFiller:
         self.y = int((event.y + start_y) / 2)
 
     def fill_image(self, image):
-        return image_replace_elastic(image, self.elastic_image, self.vertical)
+        return image_replace_elastic(image, self.elastic_image, self.meta['vertical'])
 
     def get_arguments(self, event, start_point):
         self._prepare_shape(start_point, event)
-        return {'elastic_image_path': self.path, 'rotate': self.rotate, 'mirror': self.mirror, 'vertical': self.vertical}
+        return {'elastic_name': self.meta['name'], 'rotate': self.rotate, 'mirror': self.mirror}

@@ -20,7 +20,7 @@ class MainWindow(tk.Frame):
 
         main_control_x = sketch_control_width + sketch_width
 
-        sk = sketch.Sketch(self, "sk", config.default_image_template, config, output=output_window)
+        sk = sketch.Sketch(self, "sk", config, output=output_window)
         sketch_control = sketch_control_panel.SketchControlPanel(self, sk, config)
         main_control = main_control_panel.MainControlPanel(self, parent, sk)
         command_window = command_terminal.CommandTerminal(self, locals())
