@@ -9,7 +9,8 @@ import Commands
 
 class Sketch(tk.Canvas):
     def __init__(self, parent, name, config, output=None):
-        tk.Canvas.__init__(self, parent, borderwidth=4, relief=tk.GROOVE)
+        bg_color = tools.color_to_tk(config['background_color'])
+        tk.Canvas.__init__(self, parent, borderwidth=4, relief=tk.GROOVE, background=bg_color)
         self.name = name
         self.parent = parent
         self.output = output

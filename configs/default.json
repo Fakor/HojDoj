@@ -1,13 +1,14 @@
 {
     "image_templates":[
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/circle.png",
-	    "name": "CIRKEL"
-	},
-	{
 	    "path": "$HOJDOJ_HOME/images/templates/square.png",
 	    "name": "FYRKANT"
 	},
+	{
+	    "path": "$HOJDOJ_HOME/images/templates/circle.png",
+	    "name": "CIRKEL"
+	},
+
 	{
 	    "path": "$HOJDOJ_HOME/images/templates/baltazar.png",
 	    "name": "BALTAZAR"
@@ -46,7 +47,8 @@
 	[123,123,123],
 	[255,255,0]
     ],
-    "default_color": [255,255,255],
+    "default_color": [0,0,0],
+    "background_color": [255,255,255],
     "console": {
 	"enabled": true
     }
