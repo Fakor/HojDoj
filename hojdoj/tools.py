@@ -25,12 +25,7 @@ def base_call(func):
 def object_call(base_func):
     def object_call_wrapper(func):
         def wrapper(self, *args, **kwargs):
-            new_id = base_func(self, *args, **kwargs)
-            self.objects.append({"id": new_id,
-                                 "command": base_func,
-                                 "args":args,
-                                 "kwargs": kwargs}
-            )
+            base_func(self, *args, **kwargs)
             text = "{}.{}(".format(self.name, func.__name__)
             if len(args) > 0:
                 text = text + value_to_string(args[0])

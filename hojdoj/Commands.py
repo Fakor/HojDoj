@@ -35,7 +35,8 @@ class SketchImageInteractive:
         if self.id is not None:
             self.sketch.delete(self.id)
             kwargs = self.sketch.filler.get_arguments(event, (self.start_x, self.start_y))
-            self.sketch.sketch_image(self.x, self.y, self.width, self.height, self.image_meta['name'], **kwargs)
+            index = self.sketch.next_image_index()
+            self.sketch.sketch_image(index, self.x, self.y, self.width, self.height, self.image_meta['name'], **kwargs)
 
     def _prepare_shape(self, event):
         self.width = abs(event.x - self.start_x)
