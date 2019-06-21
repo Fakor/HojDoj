@@ -4,7 +4,7 @@ from PIL import Image, ImageTk, ImageOps
 import tools
 import fillers
 
-import Commands
+import sketch_image_tool
 
 
 class Sketch(tk.Canvas):
@@ -23,7 +23,7 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.interactive_command = Commands.SketchImageInteractive
+        self.interactive_command = sketch_image_tool.SketchImageTool
         self.filler = fillers.ColorFiller(self, config.default_color)
 
         self.current_object = None
