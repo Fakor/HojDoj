@@ -1,5 +1,5 @@
 import tkinter as tk
-from PIL import Image, ImageTk, ImageOps
+from sketch_image_command import SketchImageCommand
 
 import tools
 import fillers
@@ -29,7 +29,7 @@ class Sketch(tk.Canvas):
         self.current_object = None
 
         self.start_point = None
-        self.objects = {}
+        self.commands = {}
         self.inactive_objects = []
         self.images = []
 
@@ -58,33 +58,12 @@ class Sketch(tk.Canvas):
     def redo(self, it=1):
         pass
 
-    def _sketch_image(self, index, x, y, width,
-                      height, image_name, color=None,
-                      rotate=0, mirror=False, elastic_name=None):
-        image_meta = self.config.get_image_meta(image_name)
-        current_image = Image.open(image_meta['path'])
-        current_image = current_image.resize((width, height), Image.NEAREST)
-        if elastic_name:
-            elastic_meta = self.config.get_elastic_meta(elastic_name)
-            el_image = Image.open(elastic_meta['path'])
-            current_image = tools.image_replace_elastic(current_image, el_image, elastic_meta['vertical'])
+    @tools.base_call
+    def sketch_image(self, index, *args, **kwargs):
+        if index in self.commands:
+            self.commands[index].update(*args, **kwargs)
         else:
-            current_image = tools.image_replace_white(current_image, color)
-
-        current_image = current_image.rotate(rotate)
-        if mirror:
-            current_image = ImageOps.mirror(current_image)
-        self.images.append(ImageTk.PhotoImage(current_image))
-
-        if index in self.objects:
-            self.delete(self.objects[index])
-
-        new_id = self.create_image(x, y, image=self.images[-1])
-        self.objects[index] = new_id
-
-    @tools.object_call(_sketch_image)
-    def sketch_image(self, *args, **kwargs):
-        pass
+            self.commands[index] = SketchImageCommand(self, *args, **kwargs)
 
     def _undo(self, event):
         self.undo()
