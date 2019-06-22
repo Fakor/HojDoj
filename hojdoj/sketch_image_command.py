@@ -3,10 +3,20 @@ import tools
 
 
 class SketchImageCommand:
-    def __init__(self, sketch, *args, **kwargs):
+    def __init__(self, sketch, index, x, y, width,
+                 height, image_name, color=None,
+                 rotate=0, mirror=False, elastic_name=None):
         self.sketch = sketch
-
-        self.new_values(*args, **kwargs)
+        self.index = index
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.image_name = image_name
+        self.color = color
+        self.rotate = rotate
+        self.mirror = mirror
+        self.elastic_name = elastic_name
 
         self.image = None
         self.id = None
@@ -29,20 +39,7 @@ class SketchImageCommand:
         self.image = PIL.ImageTk.PhotoImage(current_image)
 
         self.id = self.sketch.create_image(self.x, self.y, image=self.image)
+        self.sketch.objects[self.index] = self.id
 
-    def update(self, *args, **kwargs):
-        self.new_values(*args, **kwargs)
-        self.run()
-
-    def new_values(self, x, y, width,
-                 height, image_name, color=None,
-                 rotate=0, mirror=False, elastic_name=None):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.image_name = image_name
-        self.color = color
-        self.rotate = rotate
-        self.mirror = mirror
-        self.elastic_name = elastic_name
+    def undo(self):
+        self.sketch.delete(self.sketch.objects[self.index])

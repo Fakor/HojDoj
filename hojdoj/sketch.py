@@ -29,13 +29,15 @@ class Sketch(tk.Canvas):
         self.current_object = None
 
         self.start_point = None
-        self.commands = {}
+        self.objects = {}
         self.inactive_objects = []
         self.images = []
 
         self.current_image = self.config.image_templates[0]
         self.elastic_image = None
         self.image_index = 0
+        self.command_index = 0
+        self.commands = []
 
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, event)
@@ -52,18 +54,21 @@ class Sketch(tk.Canvas):
 
     @tools.base_call
     def undo(self, it=1):
-        pass
+        for i in range(it):
+            self.command_index = self.command_index - 1
+            self.commands[self.command_index].undo()
 
     @tools.base_call
     def redo(self, it=1):
-        pass
+        for i in range(it):
+            if self.command_index >= len(self.commands):
+                break
+            self.commands[self.command_index].run()
+            self.command_index = self.command_index + 1
 
     @tools.base_call
     def sketch_image(self, index, *args, **kwargs):
-        if index in self.commands:
-            self.commands[index].update(*args, **kwargs)
-        else:
-            self.commands[index] = SketchImageCommand(self, *args, **kwargs)
+        self.commands.append(SketchImageCommand(self, index, *args, **kwargs))
 
     def _undo(self, event):
         self.undo()
