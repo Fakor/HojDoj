@@ -8,6 +8,7 @@ class SketchImageCommand:
                  rotate=0, mirror=False, elastic_name=None):
         self.sketch = sketch
         self.index = index
+        self.sketch.used_image_indexes.add(self.index)
         self.x = x
         self.y = y
         self.width = width

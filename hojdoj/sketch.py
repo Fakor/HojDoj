@@ -36,6 +36,7 @@ class Sketch(tk.Canvas):
         self.current_image = self.config.image_templates[0]
         self.elastic_image = None
         self.image_index = 0
+        self.used_image_indexes = set()
         self.command_index = 0
         self.commands = []
 
@@ -49,7 +50,9 @@ class Sketch(tk.Canvas):
         self.current_object.on_release(event)
 
     def next_image_index(self):
-        self.image_index = self.image_index + 1
+        while self.image_index in self.used_image_indexes:
+            self.image_index = self.image_index + 1
+        self.used_image_indexes.add(self.image_index)
         return self.image_index
 
     @tools.base_call
