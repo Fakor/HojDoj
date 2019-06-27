@@ -44,3 +44,22 @@ class SketchImageCommand:
 
     def undo(self):
         self.sketch.delete(self.sketch.objects[self.index])
+
+
+class MoveImageCommand:
+    def __init__(self, sketch, index, dx, dy):
+        self.sketch = sketch
+        self.index = index
+        obj_index = self.sketch.objects[self.index]
+        self.init_x, self.init_y = self.sketch.coords(obj_index)
+        self.x = self.init_x + dx
+        self.y = self.init_y + dy
+        self.run()
+
+    def run(self):
+        obj_index = self.sketch.objects[self.index]
+        self.sketch.coords(obj_index, self.x, self.y)
+
+    def undo(self):
+        obj_index = self.sketch.objects[self.index]
+        self.sketch.coords(obj_index, self.init_x, self.init_y)

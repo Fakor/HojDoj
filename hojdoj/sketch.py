@@ -1,5 +1,5 @@
 import tkinter as tk
-from sketch_image_command import SketchImageCommand
+from sketch_image_command import SketchImageCommand, MoveImageCommand
 
 import tools
 import fillers
@@ -72,6 +72,10 @@ class Sketch(tk.Canvas):
     @tools.base_call
     def sketch_image(self, index, *args, **kwargs):
         self.commands.append(SketchImageCommand(self, index, *args, **kwargs))
+
+    @tools.base_call
+    def move_image(self, index, *args, **kwargs):
+        self.commands.append(MoveImageCommand(self, index, *args, **kwargs))
 
     def _undo(self, event):
         self.undo()
