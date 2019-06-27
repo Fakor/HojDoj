@@ -1,3 +1,4 @@
+import tkinter as tk
 import PIL
 import tools
 
@@ -54,6 +55,7 @@ class MoveImageCommand:
         self.init_x, self.init_y = self.sketch.coords(obj_index)
         self.x = self.init_x + dx
         self.y = self.init_y + dy
+
         self.run()
 
     def run(self):
@@ -63,3 +65,18 @@ class MoveImageCommand:
     def undo(self):
         obj_index = self.sketch.objects[self.index]
         self.sketch.coords(obj_index, self.init_x, self.init_y)
+
+class DeleteImageCommand:
+    def __init__(self, sketch, index):
+        self.sketch = sketch
+        self.index = index
+
+        self.run()
+
+    def run(self):
+        obj_index = self.sketch.objects[self.index]
+        self.sketch.itemconfigure(obj_index, state=tk.HIDDEN)
+
+    def undo(self):
+        obj_index = self.sketch.objects[self.index]
+        self.sketch.itemconfigure(obj_index, state=tk.NORMAL)
