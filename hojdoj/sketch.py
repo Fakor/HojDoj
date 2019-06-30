@@ -1,5 +1,5 @@
 import tkinter as tk
-from sketch_image_command import SketchImageCommand, MoveImageCommand, DeleteImageCommand
+from commands import SketchImageCommand, MoveImageCommand, DeleteImageCommand
 
 import tools
 import fillers
@@ -80,14 +80,8 @@ class Sketch(tk.Canvas):
             self.commands[self.command_index].run()
             self.command_index = self.command_index + 1
 
-    def sketch_image(self, index, *args, **kwargs):
-        self.commands.append(SketchImageCommand(self, index, *args, **kwargs))
-
-    def move_image(self, index, *args, **kwargs):
-        self.commands.append(MoveImageCommand(self, index, *args, **kwargs))
-
-    def delete_image(self, index, *args, **kwargs):
-        self.commands.append(DeleteImageCommand(self, index, *args, **kwargs))
+    def add_command(self, command, *args, **kwargs):
+        self.commands.append(command(self, *args, **kwargs))
 
     def erase(self, index):
         if index in self.objects:
