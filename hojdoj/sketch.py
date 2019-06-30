@@ -40,6 +40,19 @@ class Sketch(tk.Canvas):
         self.command_index = 0
         self.commands = []
 
+        self.move_command = None
+        self.sketch_command = None
+        self.delete_command = None
+        self.undo_command = None
+        self.redo_command = None
+
+    def set_command_functions(self, move, sketch, delete, undo, redo):
+        self.move_command = move
+        self.sketch_command = sketch
+        self.delete_command = delete
+        self.undo_command = undo
+        self.redo_command = redo
+
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, event)
 
@@ -55,13 +68,11 @@ class Sketch(tk.Canvas):
         self.used_image_indexes.add(self.image_index)
         return self.image_index
 
-    @tools.base_call
     def undo(self, it=1):
         for i in range(it):
             self.command_index = self.command_index - 1
             self.commands[self.command_index].undo()
 
-    @tools.base_call
     def redo(self, it=1):
         for i in range(it):
             if self.command_index >= len(self.commands):
@@ -69,20 +80,17 @@ class Sketch(tk.Canvas):
             self.commands[self.command_index].run()
             self.command_index = self.command_index + 1
 
-    @tools.base_call
     def sketch_image(self, index, *args, **kwargs):
         self.commands.append(SketchImageCommand(self, index, *args, **kwargs))
 
-    @tools.base_call
     def move_image(self, index, *args, **kwargs):
         self.commands.append(MoveImageCommand(self, index, *args, **kwargs))
 
-    @tools.base_call
     def delete_image(self, index, *args, **kwargs):
         self.commands.append(DeleteImageCommand(self, index, *args, **kwargs))
 
     def _undo(self, event):
-        self.undo()
+        self.undo_command()
 
     def _redo(self, event):
-        self.redo()
+        self.redo_command()

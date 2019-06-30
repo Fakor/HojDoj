@@ -2,8 +2,10 @@ import tkinter as tk
 
 import command_terminal
 import sketch_control_panel
-import sketch
+from sketch import Sketch
 import main_control_panel
+
+from command_terminal import command
 
 
 class MainWindow(tk.Frame):
@@ -20,9 +22,33 @@ class MainWindow(tk.Frame):
 
         main_control_x = sketch_control_width + sketch_width
 
-        sk = sketch.Sketch(self, "sk", config, output=output_window)
+        sk = Sketch(self, "sk", config, output=output_window)
+
         sketch_control = sketch_control_panel.SketchControlPanel(self, sk, config)
         main_control = main_control_panel.MainControlPanel(self, parent, sk)
+
+        @command(output_window)
+        def move(*args, **kwargs):
+            sk.move_image(*args, **kwargs)
+
+        @command(output_window)
+        def sketch(*args, **kwargs):
+            sk.sketch_image(*args, **kwargs)
+
+        @command(output_window)
+        def delete(*args, **kwargs):
+            sk.delete_image(*args, **kwargs)
+
+        @command(output_window)
+        def undo(*args, **kwargs):
+            sk.undo(*args, **kwargs)
+
+        @command(output_window)
+        def redo(*args, **kwargs):
+            sk.redo(*args, **kwargs)
+
+        sk.set_command_functions(move, sketch, delete, undo, redo)
+
         command_window = command_terminal.CommandTerminal(self, locals())
 
         sketch_control.place(x=0,y=0, width=sketch_control_width, height=sketch_height)

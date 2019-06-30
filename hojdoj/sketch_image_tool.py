@@ -36,7 +36,7 @@ class SketchImageTool:
             self.sketch.delete(self.id)
             kwargs = self.sketch.filler.get_arguments(event, (self.start_x, self.start_y))
             index = self.sketch.next_image_index()
-            self.sketch.sketch_image(index, self.x, self.y, self.width, self.height, self.image_meta['name'], **kwargs)
+            self.sketch.sketch_command(index, self.x, self.y, self.width, self.height, self.image_meta['name'], **kwargs)
 
     def _prepare_shape(self, event):
         self.width = abs(event.x - self.start_x)
