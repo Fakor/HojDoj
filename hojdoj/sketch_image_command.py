@@ -40,6 +40,7 @@ class SketchImageCommand:
             current_image = PIL.ImageOps.mirror(current_image)
         self.image = PIL.ImageTk.PhotoImage(current_image)
 
+        self.sketch.erase(self.index)
         self.id = self.sketch.create_image(self.x, self.y, image=self.image)
         self.sketch.objects[self.index] = self.id
 
@@ -65,6 +66,7 @@ class MoveImageCommand:
     def undo(self):
         obj_index = self.sketch.objects[self.index]
         self.sketch.coords(obj_index, self.init_x, self.init_y)
+
 
 class DeleteImageCommand:
     def __init__(self, sketch, index):

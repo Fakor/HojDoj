@@ -89,6 +89,10 @@ class Sketch(tk.Canvas):
     def delete_image(self, index, *args, **kwargs):
         self.commands.append(DeleteImageCommand(self, index, *args, **kwargs))
 
+    def erase(self, index):
+        if index in self.objects:
+            self.delete(self.objects[index])
+
     def _undo(self, event):
         self.undo_command()
 
