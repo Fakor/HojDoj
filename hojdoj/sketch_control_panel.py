@@ -1,7 +1,7 @@
 import tkinter as tk
 import PIL
 
-import sketch_image_tool
+import sketch_interactive
 from tools import elastic_background_horizontal, color_to_tk
 import fillers
 import image_button
@@ -46,7 +46,7 @@ class SketchControlPanel(tk.Frame):
 
     def image_tool_active(self, image_meta):
         self.sketch.current_image = image_meta
-        self.sketch.interactive_command = sketch_image_tool.SketchImageTool
+        self.sketch.interactive_command = sketch_interactive.SketchInteractive
 
     def color_filler_active(self, color):
         self.sketch.filler = fillers.ColorFiller(self.sketch, color)

@@ -1,7 +1,7 @@
 from PIL import Image, ImageTk, ImageOps
 
 
-class SketchImageTool:
+class SketchInteractive:
     def __init__(self, sketch, event):
         self.sketch = sketch
         self.start_x = event.x

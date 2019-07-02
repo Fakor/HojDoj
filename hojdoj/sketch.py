@@ -4,7 +4,7 @@ from commands import SketchImageCommand, MoveImageCommand, DeleteImageCommand
 import tools
 import fillers
 
-import sketch_image_tool
+import sketch_interactive
 
 
 class Sketch(tk.Canvas):
@@ -23,7 +23,7 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.interactive_command = sketch_image_tool.SketchImageTool
+        self.interactive_command = sketch_interactive.SketchInteractive
         self.filler = fillers.ColorFiller(self, config.default_color)
 
         self.current_object = None
