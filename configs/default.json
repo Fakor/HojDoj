@@ -14,6 +14,10 @@
 	    "name": "BALTAZAR"
 	},
 	{
+	    "path": "$HOJDOJ_HOME/images/templates/tummen.png",
+	    "name": "TUMMEN"
+	},
+	{
 	    "path": "$HOJDOJ_HOME/images/templates/door1.png",
 	    "name": "DÖRR"
 	},

@@ -1,5 +1,6 @@
 import tkinter as tk
-from commands import SketchImageCommand, MoveImageCommand, DeleteImageCommand
+
+from collections import OrderedDict
 
 import tools
 import fillers
@@ -29,7 +30,7 @@ class Sketch(tk.Canvas):
         self.current_object = None
 
         self.start_point = None
-        self.objects = {}
+        self.objects = OrderedDict()
         self.inactive_objects = []
         self.images = []
 
@@ -39,19 +40,22 @@ class Sketch(tk.Canvas):
         self.used_image_indexes = set()
         self.command_index = 0
         self.commands = []
+        self.marked_object_index = None
 
         self.move_command = None
         self.sketch_command = None
         self.delete_command = None
         self.undo_command = None
         self.redo_command = None
+        self.mark_command = None
 
-    def set_command_functions(self, move, sketch, delete, undo, redo):
+    def set_command_functions(self, move, sketch, delete, mark, undo, redo):
         self.move_command = move
         self.sketch_command = sketch
         self.delete_command = delete
         self.undo_command = undo
         self.redo_command = redo
+        self.mark_command = mark
 
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, event)
@@ -86,6 +90,16 @@ class Sketch(tk.Canvas):
     def erase(self, index):
         if index in self.objects:
             self.delete(self.objects[index])
+
+    def mark_object(self, x, y):
+        for index, object in reversed(self.objects.items()):
+            x2, y2 = self.coords(object.object_id)
+            width_half = object.width/2
+            height_half = object.height/2
+            if (x2-width_half <= x <= x2 + width_half) and (y2-height_half<= y <= y2 + height_half):
+                self.marked_object_index = index
+                return
+        self.marked_object_index = None
 
     def _undo(self, event):
         self.undo_command()

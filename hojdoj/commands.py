@@ -1,6 +1,7 @@
 import tkinter as tk
 import PIL
 import tools
+import sketch_object
 
 
 class SketchImageCommand:
@@ -42,17 +43,17 @@ class SketchImageCommand:
 
         self.sketch.erase(self.index)
         self.id = self.sketch.create_image(self.x, self.y, image=self.image)
-        self.sketch.objects[self.index] = self.id
+        self.sketch.objects[self.index] = sketch_object.SketchObject(self.id, self.width, self.height)
 
     def undo(self):
-        self.sketch.delete(self.sketch.objects[self.index])
+        self.sketch.delete(self.sketch.objects[self.index].object_id)
 
 
 class MoveImageCommand:
     def __init__(self, sketch, index, dx, dy):
         self.sketch = sketch
         self.index = index
-        obj_index = self.sketch.objects[self.index]
+        obj_index = self.sketch.objects[self.index].object_id
         self.init_x, self.init_y = self.sketch.coords(obj_index)
         self.x = self.init_x + dx
         self.y = self.init_y + dy
@@ -60,11 +61,11 @@ class MoveImageCommand:
         self.run()
 
     def run(self):
-        obj_index = self.sketch.objects[self.index]
+        obj_index = self.sketch.objects[self.index].object_id
         self.sketch.coords(obj_index, self.x, self.y)
 
     def undo(self):
-        obj_index = self.sketch.objects[self.index]
+        obj_index = self.sketch.objects[self.index].object_id
         self.sketch.coords(obj_index, self.init_x, self.init_y)
 
 
@@ -76,9 +77,25 @@ class DeleteImageCommand:
         self.run()
 
     def run(self):
-        obj_index = self.sketch.objects[self.index]
+        obj_index = self.sketch.objects[self.index].object_id
         self.sketch.itemconfigure(obj_index, state=tk.HIDDEN)
 
     def undo(self):
-        obj_index = self.sketch.objects[self.index]
+        obj_index = self.sketch.objects[self.index].object_id
         self.sketch.itemconfigure(obj_index, state=tk.NORMAL)
+
+
+class MarkImageCommand:
+    def __init__(self, sketch, x, y):
+        self.sketch = sketch
+        self.x = x
+        self.y = y
+        self.marked_before = self.sketch.marked_object_index
+        self.run()
+
+    def run(self):
+        self.sketch.mark_object(self.x,self.y)
+
+    def undo(self):
+        self.sketch.marked_object_index = self.marked_before
+

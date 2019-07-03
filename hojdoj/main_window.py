@@ -6,7 +6,7 @@ from sketch import Sketch
 import main_control_panel
 
 from command_terminal import command
-from commands import SketchImageCommand, MoveImageCommand, DeleteImageCommand
+from commands import SketchImageCommand, MoveImageCommand, DeleteImageCommand, MarkImageCommand
 
 
 class MainWindow(tk.Frame):
@@ -41,6 +41,10 @@ class MainWindow(tk.Frame):
             sk.add_command(DeleteImageCommand, *args, **kwargs)
 
         @command(output_window)
+        def mark(*args, **kwargs):
+            sk.add_command(MarkImageCommand, *args, **kwargs)
+
+        @command(output_window)
         def undo(*args, **kwargs):
             sk.undo(*args, **kwargs)
 
@@ -48,7 +52,7 @@ class MainWindow(tk.Frame):
         def redo(*args, **kwargs):
             sk.redo(*args, **kwargs)
 
-        sk.set_command_functions(move, sketch, delete, undo, redo)
+        sk.set_command_functions(move, sketch, delete, mark, undo, redo)
 
         command_window = command_terminal.CommandTerminal(self, locals())
 
