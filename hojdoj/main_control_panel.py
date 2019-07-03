@@ -3,6 +3,7 @@ import tkinter as tk
 import sketch_interactive
 import delete_interactive
 import mark_interactive
+import move_interactive
 
 
 class MainControlPanel(tk.Frame):
@@ -18,6 +19,7 @@ class MainControlPanel(tk.Frame):
         sketch_button = tk.Button(self, text="Sketch", command=self.interactive_sketch)
         delete_button = tk.Button(self, text="Delete", command=self.interactive_delete)
         mark_button = tk.Button(self, text="Mark", command=self.interactive_mark)
+        move_button = tk.Button(self, text="Move", command=self.interactive_move)
 
         quit_button.grid(row=0, column=0)
         undo_button.grid(row=1, column=0)
@@ -25,6 +27,7 @@ class MainControlPanel(tk.Frame):
         sketch_button.grid(row=3, column=0)
         delete_button.grid(row=4, column=0)
         mark_button.grid(row=5, column=0)
+        move_button.grid(row=6, column=0)
 
     def quit_app(self):
         self.root.event_generate('<<quit_now>>')
@@ -43,3 +46,6 @@ class MainControlPanel(tk.Frame):
 
     def interactive_mark(self):
         self.sketch.interactive_command = mark_interactive.MarkInteractive
+
+    def interactive_move(self):
+        self.sketch.interactive_command = move_interactive.MoveInteractive
