@@ -18,6 +18,10 @@
 	    "name": "TUMMEN"
 	},
 	{
+	    "path": "$HOJDOJ_HOME/images/templates/alfons.png",
+	    "name": "ALFONS"
+	},
+	{
 	    "path": "$HOJDOJ_HOME/images/templates/door1.png",
 	    "name": "DÖRR"
 	},
