@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+HOJDOJ_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+HOJDOJ_HOME=$HOME/.hojdoj_home
+VIRTUAL_ENV_HOME=$HOJDOJ_HOME/venv
+BIN_PATH=/usr/local/bin/hojdoj
+CONFIG_PATH=$HOJDOJ_HOME/config
+
+rm -rf $VIRTUAL_ENV_HOME
+
+python -m venv $VIRTUAL_ENV_HOME
+source $VIRTUAL_ENV_HOME/bin/activate
+
+pip install -r requirements.txt
+
+cp configs/default.json $CONFIG_PATH
+
+echo "#!/bin/bash" > $BIN_PATH
+echo "source $VIRTUAL_ENV_HOME/bin/activate" >> $BIN_PATH
+echo "python  $HOJDOJ_PATH/hojdoj/hojdoj.py $HOJDOJ_PATH $CONFIG_PATH" >> $BIN_PATH
+
+chmod 755 $BIN_PATH
