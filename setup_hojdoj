@@ -6,17 +6,23 @@ VIRTUAL_ENV_HOME=$HOJDOJ_HOME/venv
 BIN_PATH=/usr/local/bin/hojdoj
 CONFIG_PATH=$HOJDOJ_HOME/config
 
+mkdir -p $HOJDOJ_HOME
+
 rm -rf $VIRTUAL_ENV_HOME
 
-python -m venv $VIRTUAL_ENV_HOME
+python3 -m venv $VIRTUAL_ENV_HOME || exit 1
+
 source $VIRTUAL_ENV_HOME/bin/activate
 
-pip install -r requirements.txt
+pip install -r requirements.txt || exit 1
 
-cp configs/default.json $CONFIG_PATH
+cp configs/default.json $CONFIG_PATH || exit 1
 
 echo "#!/bin/bash" > $BIN_PATH
 echo "source $VIRTUAL_ENV_HOME/bin/activate" >> $BIN_PATH
-echo "python  $HOJDOJ_PATH/hojdoj/hojdoj.py $HOJDOJ_PATH $CONFIG_PATH" >> $BIN_PATH
+echo "python3  $HOJDOJ_PATH/hojdoj/hojdoj.py $HOJDOJ_PATH $CONFIG_PATH" >> $BIN_PATH
 
 chmod 755 $BIN_PATH
+
+echo
+echo "HojDoj installed, have fun!"
