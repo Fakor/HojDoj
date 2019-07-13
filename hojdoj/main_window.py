@@ -11,7 +11,10 @@ from commands import SketchImageCommand, MoveImageCommand, DeleteImageCommand, M
 
 class MainWindow(tk.Frame):
     def __init__(self, parent, config, width, height):
+        self.parent = parent
         tk.Frame.__init__(self, parent, width=width, height=height)
+
+        self.parent.bind('<Control-c>', self.quit)
 
         output_window_height = 50
         output_window = command_terminal.CommandTerminal(self, locals())
@@ -63,3 +66,6 @@ class MainWindow(tk.Frame):
         if config["console"]["enabled"]:
             output_window.place(x=sketch_control_width, y=sketch_height, width=output_window_width,
                                 height=output_window_height)
+
+    def quit(self, event):
+        self.parent.event_generate('<<quit_now>>')
