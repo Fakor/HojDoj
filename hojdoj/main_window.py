@@ -26,7 +26,7 @@ class MainWindow(tk.Frame):
 
         main_control_x = sketch_control_width + sketch_width
 
-        sk = Sketch(self, "sk", config, output=output_window)
+        sk = Sketch(self, config, output=output_window)
 
         sketch_control = sketch_control_panel.SketchControlPanel(self, sk, config)
         main_control = main_control_panel.MainControlPanel(self, parent, sk)

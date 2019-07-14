@@ -9,10 +9,9 @@ import sketch_interactive
 
 
 class Sketch(tk.Canvas):
-    def __init__(self, parent, name, config, output=None):
+    def __init__(self, parent, config, output=None):
         bg_color = tools.color_to_tk(config['background_color'])
         tk.Canvas.__init__(self, parent, borderwidth=4, relief=tk.GROOVE, background=bg_color)
-        self.name = name
         self.parent = parent
         self.output = output
         self.config = config
