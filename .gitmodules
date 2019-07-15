@@ -1,0 +1,3 @@
+[submodule "hojdoj/DTools"]
+	path = hojdoj/DTools
+	url = https://github.com/Fakor/DTools.git

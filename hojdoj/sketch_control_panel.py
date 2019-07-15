@@ -2,7 +2,8 @@ import tkinter as tk
 import PIL
 
 import sketch_interactive
-from tools import elastic_background_horizontal, color_to_tk
+from tools import elastic_background_horizontal
+from DTools.tk_tools import color_to_tk
 import fillers
 import image_button
 

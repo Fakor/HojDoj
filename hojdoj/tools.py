@@ -8,10 +8,6 @@ def value_to_string(value):
     return str(value)
 
 
-def color_to_tk(color):
-    return '#{}{}{}'.format(*["{0:#0{1}x}".format(el, 4).replace("0x", "") for el in color])
-
-
 def image_replace_white(image, new):
     image = image.convert('RGBA')
     data = np.array(image)

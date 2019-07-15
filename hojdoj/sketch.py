@@ -2,7 +2,7 @@ import tkinter as tk
 
 from collections import OrderedDict
 
-import tools
+from DTools.tk_tools import color_to_tk
 import fillers
 
 import sketch_interactive
@@ -10,7 +10,7 @@ import sketch_interactive
 
 class Sketch(tk.Canvas):
     def __init__(self, parent, config, output=None):
-        bg_color = tools.color_to_tk(config['background_color'])
+        bg_color = color_to_tk(config['background_color'])
         tk.Canvas.__init__(self, parent, borderwidth=4, relief=tk.GROOVE, background=bg_color)
         self.parent = parent
         self.output = output
