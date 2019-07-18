@@ -3,7 +3,7 @@ import tkinter as tk
 import sys
 
 import main_window
-import configuration
+import DTools.configuration
 import DTools.tk_tools
 
 
@@ -19,8 +19,7 @@ if __name__ == '__main__':
     hojdoj_home = sys.argv[1]
     config_path = sys.argv[2]
 
-    config = configuration.Config(hojdoj_home, config_path)
-
+    config = DTools.configuration.Config(hojdoj_home, config_path)
     root = tk.Tk()
 
     root.attributes("-fullscreen", True)

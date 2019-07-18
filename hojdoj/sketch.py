@@ -10,7 +10,7 @@ import sketch_interactive
 
 class Sketch(tk.Canvas):
     def __init__(self, parent, config, output=None):
-        bg_color = color_to_tk(config['background_color'])
+        bg_color = color_to_tk(config.get_value('background_color'))
         tk.Canvas.__init__(self, parent, borderwidth=4, relief=tk.GROOVE, background=bg_color)
         self.parent = parent
         self.output = output
@@ -24,7 +24,7 @@ class Sketch(tk.Canvas):
         self.parent.bind('<Control-y>', self._redo)
 
         self.interactive_command = sketch_interactive.SketchInteractive
-        self.filler = fillers.ColorFiller(self, config.default_color)
+        self.filler = fillers.ColorFiller(self, config['default_color'])
 
         self.current_object = None
 
@@ -33,7 +33,7 @@ class Sketch(tk.Canvas):
         self.inactive_objects = []
         self.images = []
 
-        self.current_image = self.config.image_templates[0]
+        self.current_image = self.config.get_value('image_templates', 0)
         self.elastic_image = None
         self.image_index = 0
         self.used_image_indexes = set()

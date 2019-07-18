@@ -26,11 +26,11 @@ class SketchImageCommand:
         self.run()
 
     def run(self):
-        image_meta = self.sketch.config.get_image_meta(self.image_name)
+        image_meta = self.sketch.config.get_first_value('image_templates', name=self.image_name)
         current_image = PIL.Image.open(image_meta['path'])
         current_image = current_image.resize((self.width, self.height), PIL.Image.NEAREST)
         if self.elastic_name:
-            elastic_meta = self.sketch.config.get_elastic_meta(self.elastic_name)
+            elastic_meta = self.sketch.config.get_first_value('image_elastics', name=self.elastic_name)
             el_image = PIL.Image.open(elastic_meta['path'])
             current_image = tools.image_replace_elastic(current_image, el_image, elastic_meta['vertical'])
         else:

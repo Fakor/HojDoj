@@ -36,13 +36,13 @@ class SketchControlPanel(tk.Frame):
 
         self.p_images = []
 
-        for template in config.image_templates:
+        for template in config['image_templates']:
             self.add_image_button(template)
 
-        for color in config.sketch_colors:
+        for color in config['sketch_colors']:
             self.add_color_button(color)
 
-        for elastic in config.image_elastics:
+        for elastic in config['image_elastics']:
             self.add_elastic_image_button(elastic)
 
     def image_tool_active(self, image_meta):

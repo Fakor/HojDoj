@@ -1,47 +1,47 @@
 {
     "image_templates":[
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/square.png",
+	    "path": "$PROJ_HOME/images/templates/square.png",
 	    "name": "FYRKANT"
 	},
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/circle.png",
+	    "path": "$PROJ_HOME/images/templates/circle.png",
 	    "name": "CIRKEL"
 	},
 
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/baltazar.png",
+	    "path": "$PROJ_HOME/images/templates/baltazar.png",
 	    "name": "BALTAZAR"
 	},
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/tummen.png",
+	    "path": "$PROJ_HOME/images/templates/tummen.png",
 	    "name": "TUMMEN"
 	},
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/alfons.png",
+	    "path": "$PROJ_HOME/images/templates/alfons.png",
 	    "name": "ALFONS"
 	},
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/door1.png",
+	    "path": "$PROJ_HOME/images/templates/door1.png",
 	    "name": "DÖRR"
 	},
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/excevator.png",
+	    "path": "$PROJ_HOME/images/templates/excevator.png",
 	    "name": "GRÄVMASKIN"
 	},
 	{
-	    "path": "$HOJDOJ_HOME/images/templates/skoda.png",
+	    "path": "$PROJ_HOME/images/templates/skoda.png",
 	    "name": "SKODA"
 	}
     ],
     "image_elastics":[
 	{
-	    "path": "$HOJDOJ_HOME/images/elastics/brick_wall.png",
+	    "path": "$PROJ_HOME/images/elastics/brick_wall.png",
 	    "vertical": false,
 	    "name": "MUR"
 	},
 	{
-	    "path":"$HOJDOJ_HOME/images/elastics/mahogany_wood.png",
+	    "path":"$PROJ_HOME/images/elastics/mahogany_wood.png",
 	    "vertical": true,
 	    "name": "MAHOGNY"
 	}
