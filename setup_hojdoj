@@ -20,6 +20,7 @@ cp configs/default.json $CONFIG_PATH || exit 1
 
 echo "#!/bin/bash" > $BIN_PATH
 echo "source $VIRTUAL_ENV_HOME/bin/activate" >> $BIN_PATH
+echo "export PYTHONPATH=$HOJDOJ_PATH/hojdoj/DTools"
 echo "python3  $HOJDOJ_PATH/hojdoj/hojdoj.py $HOJDOJ_PATH $CONFIG_PATH" >> $BIN_PATH
 
 chmod 755 $BIN_PATH
