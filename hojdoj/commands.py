@@ -46,27 +46,24 @@ class SketchImageCommand:
         self.sketch.objects[self.index] = sketch_object.SketchObject(self.id, self.width, self.height)
 
     def undo(self):
-        self.sketch.delete(self.sketch.objects[self.index].object_id)
+        self.sketch.delete(self.index)
 
 
 class MoveImageCommand:
     def __init__(self, sketch, index, dx, dy):
         self.sketch = sketch
         self.index = index
-        obj_index = self.sketch.objects[self.index].object_id
-        self.init_x, self.init_y = self.sketch.coords(obj_index)
+        self.init_x, self.init_y = self.sketch.get_coords(self.index)
         self.x = self.init_x + dx
         self.y = self.init_y + dy
 
         self.run()
 
     def run(self):
-        obj_index = self.sketch.objects[self.index].object_id
-        self.sketch.coords(obj_index, self.x, self.y)
+        self.sketch.set_coords(self.index, self.x, self.y)
 
     def undo(self):
-        obj_index = self.sketch.objects[self.index].object_id
-        self.sketch.coords(obj_index, self.init_x, self.init_y)
+        self.sketch.set_coords(self.index, self.init_x, self.init_y)
 
 
 class DeleteImageCommand:
@@ -77,12 +74,10 @@ class DeleteImageCommand:
         self.run()
 
     def run(self):
-        obj_index = self.sketch.objects[self.index].object_id
-        self.sketch.itemconfigure(obj_index, state=tk.HIDDEN)
+        self.sketch.item_configure(self.index, state=tk.HIDDEN)
 
     def undo(self):
-        obj_index = self.sketch.objects[self.index].object_id
-        self.sketch.itemconfigure(obj_index, state=tk.NORMAL)
+        self.sketch.item_configure(self.index, state=tk.NORMAL)
 
 
 class MarkImageCommand:

@@ -26,8 +26,7 @@ if __name__ == '__main__':
 
     root.geometry(DTools.tk_tools.get_screen_geometry(SCREEN_INDEX))
 
-    main_window = main_window.MainWindow(root, config, *DTools.tk_tools.get_screen_size(SCREEN_INDEX)) #, width=width, height=height)
-    main_window.pack()
+    main_window = main_window.MainWindow(root, config, *DTools.tk_tools.get_screen_size(SCREEN_INDEX))
 
     root.bind('<<quit_now>>', lambda eff: quit_hojdoj(root))
 

@@ -15,7 +15,7 @@ class SketchInteractive:
         self._prepare_shape(event)
 
         if self.id is not None:
-            self.sketch.delete(self.id)
+            self.sketch.raw_delete(self.id)
         if self.width == 0 or self.height == 0:
             return
         self.image = Image.open(self.image_meta['path'])
@@ -33,7 +33,7 @@ class SketchInteractive:
         if self.width == 0 or self.height == 0:
             return
         if self.id is not None:
-            self.sketch.delete(self.id)
+            self.sketch.raw_delete(self.id)
             kwargs = self.sketch.filler.get_arguments(event, (self.start_x, self.start_y))
             index = self.sketch.next_image_index()
             self.sketch.sketch_command(index, self.x, self.y, self.width, self.height, self.image_meta['name'], **kwargs)

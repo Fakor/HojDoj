@@ -17,7 +17,7 @@ class ImageButton(tk.Button):
 
     def update(self):
         img = self.raw_img.resize(self.size, PIL.Image.NEAREST)
-        img = self.parent.sketch.filler.fill_image(img)
+        img = self.parent.filler.fill_image(img)
 
         self.image_button = PIL.ImageTk.PhotoImage(img)
         self.configure(image=self.image_button)
