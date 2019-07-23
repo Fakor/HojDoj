@@ -10,9 +10,7 @@ import fillers
 import sketch_interactive
 import image_button
 
-IMAGE_COLUMNS = 2
-COLOR_COLUMNS = 2
-ELASTIC_COLUMNS = 2
+COLUMNS = 3
 
 
 class Sketch(tk.Frame):
@@ -55,7 +53,7 @@ class Sketch(tk.Frame):
         self.redo_command = None
         self.mark_command = None
 
-        canvas_width = int(width*0.92)
+        canvas_width = int(width*0.87)
         canvas_height = height
 
         control_width = width-canvas_width
@@ -65,7 +63,7 @@ class Sketch(tk.Frame):
 
         self.control = tk.Frame(self)
 
-        self.B_WIDTH = int(control_width*0.47)
+        self.B_WIDTH = int(0.94*control_width/COLUMNS)
         self.B_HEIGHT = self.B_WIDTH
 
         self.image_row = 1
@@ -192,7 +190,7 @@ class Sketch(tk.Frame):
         button = image_button.ImageButton(self, path, (self.B_WIDTH, self.B_HEIGHT))
         self.image_buttons.append(button)
         button.grid(row=self.image_row, column=self.image_col)
-        if self.image_col == IMAGE_COLUMNS - 1:
+        if self.image_col == COLUMNS - 1:
             self.image_col = 0
             self.image_row = self.image_row + 1
         else:
@@ -201,7 +199,7 @@ class Sketch(tk.Frame):
     def add_color_button(self, color):
         button = tk.Button(self, bg=color_to_tk(color), command=lambda: self.color_filler_active(color))
         button.grid(row=self.color_row, column=self.color_col)
-        if self.color_col == COLOR_COLUMNS - 1:
+        if self.color_col == COLUMNS - 1:
             self.color_col = 0
             self.color_row = self.color_row + 1
         else:
@@ -219,7 +217,7 @@ class Sketch(tk.Frame):
                            command=lambda: self.elastic_image_filler_active(elastic))
 
         button.grid(row=self.elastic_row, column=self.elastic_col)
-        if self.elastic_col == ELASTIC_COLUMNS - 1:
+        if self.elastic_col == COLUMNS - 1:
             self.elastic_col = 0
             self.elastic_row = self.elastic_row + 1
         else:
