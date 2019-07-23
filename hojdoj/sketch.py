@@ -10,6 +10,18 @@ import fillers
 import sketch_interactive
 import image_button
 
+import sketch_interactive
+import delete_interactive
+import mark_interactive
+import move_interactive
+
+interactive_commands = [
+    ("Sketch", sketch_interactive.SketchInteractive),
+    ("Move", move_interactive.MoveInteractive),
+    ("Mark", mark_interactive.MarkInteractive),
+    ("Delete", delete_interactive.DeleteInteractive)
+]
+
 COLUMNS = 3
 
 
@@ -66,7 +78,10 @@ class Sketch(tk.Frame):
         self.B_WIDTH = int(0.94*control_width/COLUMNS)
         self.B_HEIGHT = self.B_WIDTH
 
-        self.image_row = 1
+        self.interactive_row = 0
+        self.interactive_col = 0
+
+        self.image_row = 2
         self.image_col = 0
 
         self.color_row = 7
@@ -80,6 +95,9 @@ class Sketch(tk.Frame):
         self.image_buttons = []
 
         self.p_images = []
+
+        for command in interactive_commands:
+            self.add_interactive_command_button(*command)
 
         for template in config['image_templates']:
             self.add_image_button(template)
@@ -185,6 +203,17 @@ class Sketch(tk.Frame):
         self.filler = fillers.ElasticImageFiller(self, elastic_meta)
         for button in self.image_buttons:
             button.update()
+
+    def add_interactive_command_button(self, text, command):
+        def command_func():
+            self.interactive_command = command
+        button = tk.Button(self, command=command_func, text=text)
+        button.grid(row=self.interactive_row, column=self.interactive_col)
+        if self.interactive_col == COLUMNS - 1:
+            self.interactive_col = 0
+            self.interactive_row = self.interactive_row + 1
+        else:
+            self.interactive_col = self.interactive_col + 1
 
     def add_image_button(self, path):
         button = image_button.ImageButton(self, path, (self.B_WIDTH, self.B_HEIGHT))

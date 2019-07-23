@@ -4,11 +4,6 @@ from sketch import Sketch
 from commands import SketchImageCommand, MoveImageCommand, DeleteImageCommand, MarkImageCommand
 from DTools.template import Template
 
-import sketch_interactive
-import delete_interactive
-import mark_interactive
-import move_interactive
-
 
 class MainWindow:
     def __init__(self, parent, config, width, height):
@@ -21,10 +16,6 @@ class MainWindow:
         temp.add_control_button(self.quit, text='Quit')
         temp.add_control_button(self.sketch_undo, text='Undo')
         temp.add_control_button(self.sketch_redo, text='Redo')
-        temp.add_control_button(self.interactive_sketch, text='Sketch')
-        temp.add_control_button(self.interactive_delete, text='Delete')
-        temp.add_control_button(self.interactive_mark, text='Mark')
-        temp.add_control_button(self.interactive_move, text='Move')
 
         temp.place(x=0, y=0, width=width, height=height)
 
@@ -66,15 +57,3 @@ class MainWindow:
 
     def sketch_redo(self):
         self.sketch.redo_command(it=1)
-
-    def interactive_sketch(self):
-        self.sketch.interactive_command = sketch_interactive.SketchInteractive
-
-    def interactive_delete(self):
-        self.sketch.interactive_command = delete_interactive.DeleteInteractive
-
-    def interactive_mark(self):
-        self.sketch.interactive_command = mark_interactive.MarkInteractive
-
-    def interactive_move(self):
-        self.sketch.interactive_command = move_interactive.MoveInteractive
