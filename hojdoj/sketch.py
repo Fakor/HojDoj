@@ -22,10 +22,10 @@ interactive_commands = [
     ("Delete", delete_interactive.DeleteInteractive)
 ]
 
-COLUMNS = 3
-
 
 class Sketch(tk.Frame):
+    COLUMNS = 3
+
     def __init__(self, parent, config, width, height):
         tk.Frame.__init__(self, parent, width=width, height=height)
         bg_color = color_to_tk(config.get_value('background_color'))
@@ -75,7 +75,7 @@ class Sketch(tk.Frame):
 
         self.control = tk.Frame(self)
 
-        self.B_WIDTH = int(0.94*control_width/COLUMNS)
+        self.B_WIDTH = int(0.94*control_width/Sketch.COLUMNS)
         self.B_HEIGHT = self.B_WIDTH
 
         self.interactive_row = 0
@@ -209,7 +209,7 @@ class Sketch(tk.Frame):
             self.interactive_command = command
         button = tk.Button(self, command=command_func, text=text)
         button.grid(row=self.interactive_row, column=self.interactive_col)
-        if self.interactive_col == COLUMNS - 1:
+        if self.interactive_col == Sketch.COLUMNS - 1:
             self.interactive_col = 0
             self.interactive_row = self.interactive_row + 1
         else:
@@ -219,7 +219,7 @@ class Sketch(tk.Frame):
         button = image_button.ImageButton(self, path, (self.B_WIDTH, self.B_HEIGHT))
         self.image_buttons.append(button)
         button.grid(row=self.image_row, column=self.image_col)
-        if self.image_col == COLUMNS - 1:
+        if self.image_col == Sketch.COLUMNS - 1:
             self.image_col = 0
             self.image_row = self.image_row + 1
         else:
@@ -228,7 +228,7 @@ class Sketch(tk.Frame):
     def add_color_button(self, color):
         button = tk.Button(self, bg=color_to_tk(color), command=lambda: self.color_filler_active(color))
         button.grid(row=self.color_row, column=self.color_col)
-        if self.color_col == COLUMNS - 1:
+        if self.color_col == Sketch.COLUMNS - 1:
             self.color_col = 0
             self.color_row = self.color_row + 1
         else:
@@ -246,7 +246,7 @@ class Sketch(tk.Frame):
                            command=lambda: self.elastic_image_filler_active(elastic))
 
         button.grid(row=self.elastic_row, column=self.elastic_col)
-        if self.elastic_col == COLUMNS - 1:
+        if self.elastic_col == Sketch.COLUMNS - 1:
             self.elastic_col = 0
             self.elastic_row = self.elastic_row + 1
         else:
