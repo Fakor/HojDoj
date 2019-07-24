@@ -4,10 +4,10 @@ import PIL
 from collections import OrderedDict
 
 from DTools.tk_tools import color_to_tk
+from DTools.main_program import MainProgram
 from tools import elastic_background_horizontal
 import fillers
 
-import sketch_interactive
 import image_button
 
 import sketch_interactive
@@ -23,15 +23,14 @@ interactive_commands = [
 ]
 
 
-class Sketch(tk.Frame):
+class Sketch(MainProgram):
     COLUMNS = 3
 
     def __init__(self, parent, config, width, height):
-        tk.Frame.__init__(self, parent, width=width, height=height)
+        MainProgram.__init__(self, parent, config, width, height)
         bg_color = color_to_tk(config.get_value('background_color'))
         self.canvas = tk.Canvas(self, borderwidth=4, relief=tk.GROOVE, background=bg_color)
         self.parent = parent
-        self.config = config
 
         self.canvas.bind("<Button-1>", self.on_button_press)
         self.canvas.bind("<B1-Motion>", self.on_move_press)
@@ -54,8 +53,6 @@ class Sketch(tk.Frame):
         self.elastic_image = None
         self.image_index = 0
         self.used_image_indexes = set()
-        self.command_index = 0
-        self.commands = []
         self.marked_object_index = None
 
         self.move_command = None
@@ -110,7 +107,6 @@ class Sketch(tk.Frame):
 
         self.control.place(x=0, y=0, width=control_width, height=control_height)
 
-
     def set_command_functions(self, move, sketch, delete, mark, undo, redo):
         self.move_command = move
         self.sketch_command = sketch
@@ -133,21 +129,6 @@ class Sketch(tk.Frame):
             self.image_index = self.image_index + 1
         self.used_image_indexes.add(self.image_index)
         return self.image_index
-
-    def undo(self, it=1):
-        for i in range(it):
-            self.command_index = self.command_index - 1
-            self.commands[self.command_index].undo()
-
-    def redo(self, it=1):
-        for i in range(it):
-            if self.command_index >= len(self.commands):
-                break
-            self.commands[self.command_index].run()
-            self.command_index = self.command_index + 1
-
-    def add_command(self, command, *args, **kwargs):
-        self.commands.append(command(self, *args, **kwargs))
 
     def erase(self, index):
         if index in self.objects:
