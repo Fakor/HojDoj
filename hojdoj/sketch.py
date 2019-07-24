@@ -151,7 +151,7 @@ class Sketch(tk.Frame):
 
     def erase(self, index):
         if index in self.objects:
-            self.delete(self.objects[index])
+            self.delete(index)
 
     def mark_object(self, x, y):
         for index, object in reversed(self.objects.items()):
