@@ -1,7 +1,11 @@
 from DTools.command_terminal import command
 from sketch import Sketch
 
-from commands import SketchImageCommand, MoveImageCommand, DeleteImageCommand, MarkImageCommand
+from sketch_command import SketchCommand
+from move_command import MoveCommand
+from delete_command import DeleteCommand
+from mark_command import MarkCommand
+
 from DTools.template import Template
 
 
@@ -22,22 +26,6 @@ class MainWindow:
         self.sketch = temp.main
 
         @command(temp.output_panel)
-        def move(*args, **kwargs):
-            self.sketch.add_command(MoveImageCommand, *args, **kwargs)
-
-        @command(temp.output_panel)
-        def sketch(*args, **kwargs):
-            self.sketch.add_command(SketchImageCommand, *args, **kwargs)
-
-        @command(temp.output_panel)
-        def delete(*args, **kwargs):
-            self.sketch.add_command(DeleteImageCommand, *args, **kwargs)
-
-        @command(temp.output_panel)
-        def mark(*args, **kwargs):
-            self.sketch.add_command(MarkImageCommand, *args, **kwargs)
-
-        @command(temp.output_panel)
         def undo(*args, **kwargs):
             self.sketch.undo(*args, **kwargs)
 
@@ -45,9 +33,10 @@ class MainWindow:
         def redo(*args, **kwargs):
             self.sketch.redo(*args, **kwargs)
 
-        self.sketch.set_command_functions(move, sketch, delete, mark, undo, redo)
-
-        temp.update_locals(locals())
+        temp.init_command(SketchCommand)
+        temp.init_command(MoveCommand)
+        temp.init_command(DeleteCommand)
+        temp.init_command(MarkCommand)
 
     def quit(self, event=None):
         self.parent.event_generate('<<quit_now>>')

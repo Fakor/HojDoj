@@ -1,5 +1,6 @@
 import numpy as np
 import PIL
+from PIL import ImageTk
 
 
 def value_to_string(value):
@@ -61,7 +62,7 @@ def elastic_background_horizontal(elastic_image, size, as_photo_image=True):
     img = PIL.Image.fromarray(new_data)
 
     if as_photo_image:
-        return PIL.ImageTk.PhotoImage(img)
+        return ImageTk.PhotoImage(img)
     return img
 
 

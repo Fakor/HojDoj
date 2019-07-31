@@ -10,24 +10,24 @@ import fillers
 
 import image_button
 
-import sketch_interactive
-import delete_interactive
-import mark_interactive
-import move_interactive
+import sketch_command
+import delete_command
+import mark_command
+import move_command
 
 interactive_commands = [
-    ("Sketch", sketch_interactive.SketchInteractive),
-    ("Move", move_interactive.MoveInteractive),
-    ("Mark", mark_interactive.MarkInteractive),
-    ("Delete", delete_interactive.DeleteInteractive)
+    ("Sketch", sketch_command.SketchCommand),
+    ("Move", move_command.MoveCommand),
+    ("Mark", mark_command.MarkCommand),
+    ("Delete", delete_command.DeleteCommand)
 ]
 
 
 class Sketch(MainProgram):
     COLUMNS = 3
 
-    def __init__(self, parent, config, width, height):
-        MainProgram.__init__(self, parent, config, width, height)
+    def __init__(self, parent, config, width, height, output):
+        MainProgram.__init__(self, parent, config, width, height, output)
         bg_color = color_to_tk(config.get_value('background_color'))
         self.canvas = tk.Canvas(self, borderwidth=4, relief=tk.GROOVE, background=bg_color)
         self.parent = parent
@@ -39,7 +39,7 @@ class Sketch(MainProgram):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.interactive_command = sketch_interactive.SketchInteractive
+        self.interactive_command = sketch_command.SketchCommand
         self.filler = fillers.ColorFiller(self, config['default_color'])
 
         self.current_object = None
@@ -54,13 +54,6 @@ class Sketch(MainProgram):
         self.image_index = 0
         self.used_image_indexes = set()
         self.marked_object_index = None
-
-        self.move_command = None
-        self.sketch_command = None
-        self.delete_command = None
-        self.undo_command = None
-        self.redo_command = None
-        self.mark_command = None
 
         canvas_width = int(width*0.87)
         canvas_height = height
@@ -107,22 +100,14 @@ class Sketch(MainProgram):
 
         self.control.place(x=0, y=0, width=control_width, height=control_height)
 
-    def set_command_functions(self, move, sketch, delete, mark, undo, redo):
-        self.move_command = move
-        self.sketch_command = sketch
-        self.delete_command = delete
-        self.undo_command = undo
-        self.redo_command = redo
-        self.mark_command = mark
-
     def on_button_press(self, event):
-        self.current_object = self.interactive_command(self, event)
+        self.current_object = self.interactive_command(self, x=event.x, y=event.y) #.from_event(event) #self.interactive_command(self, event)
 
     def on_move_press(self, event):
-        self.current_object.on_move(event)
+        self.current_object.on_move(event.x, event.y)
 
     def on_button_release(self, event):
-        self.current_object.on_release(event)
+        self.current_object.on_release(event.x, event.y)
 
     def next_image_index(self):
         while self.image_index in self.used_image_indexes:
@@ -173,7 +158,7 @@ class Sketch(MainProgram):
 
     def image_tool_active(self, image_meta):
         self.current_image = image_meta
-        self.interactive_command = sketch_interactive.SketchInteractive
+        self.interactive_command = sketch_command.SketchCommand
 
     def color_filler_active(self, color):
         self.filler = fillers.ColorFiller(self, color)
