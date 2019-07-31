@@ -27,7 +27,16 @@ class DeleteCommand:
         pass
 
     def on_release(self, x, y):
+        if self.kwargs['index'] is None:
+            return
         self.sketch.add_command(self)
 
     def do(self):
+        if self.kwargs['index'] is None:
+            return
         self.sketch.item_configure(self.kwargs['index'], state=tk.HIDDEN)
+
+    def undo(self):
+        if self.kwargs['index'] is None:
+            return
+        self.sketch.item_configure(self.kwargs['index'], state=tk.NORMAL)
