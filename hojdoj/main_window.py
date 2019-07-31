@@ -42,7 +42,7 @@ class MainWindow:
         self.parent.event_generate('<<quit_now>>')
 
     def sketch_undo(self):
-        self.sketch.undo_command(it=1)
+        self.sketch.undo(it=1)
 
     def sketch_redo(self):
-        self.sketch.redo_command(it=1)
+        self.sketch.redo(it=1)

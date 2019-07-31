@@ -77,6 +77,9 @@ class SketchCommand:
         self.id = self.sketch.create_image(self.kwargs['x'], self.kwargs['y'], image=self.image)
         self.sketch.objects[self.kwargs['index']] = sketch_object.SketchObject(self.id, self.kwargs['width'], self.kwargs['height'])
 
+    def undo(self):
+        self.sketch.erase(self.kwargs['index'])
+
     def _prepare_shape(self, x, y):
         self.kwargs['width'] = abs(x - self.start_x)
         self.kwargs['height'] = abs(y - self.start_y)
