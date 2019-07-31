@@ -13,6 +13,8 @@ class MarkCommand:
         self.name = MarkCommand.name
         self.sketch = sketch
 
+        self.orig_marked = self.sketch.marked_object_index
+
         if self.kwargs['index'] is None:
             self.sketch.mark_object(x, y)
             self.kwargs['index'] = self.sketch.marked_object_index
@@ -31,3 +33,6 @@ class MarkCommand:
             self.sketch.mark_object(self.kwargs['index'],self.kwargs['index'])
         else:
             self.sketch.marked_object_index = self.kwargs['index']
+
+    def undo(self):
+        self.sketch.marked_object_index = self.orig_marked
