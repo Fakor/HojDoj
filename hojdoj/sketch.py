@@ -163,12 +163,12 @@ class Sketch(MainProgram):
     def color_filler_active(self, color):
         self.filler = fillers.ColorFiller(self, color)
         for button in self.image_buttons:
-            button.update()
+            button.update(self.filler)
 
     def elastic_image_filler_active(self, elastic_meta):
         self.filler = fillers.ElasticImageFiller(self, elastic_meta)
         for button in self.image_buttons:
-            button.update()
+            button.update(self.filler)
 
     def add_interactive_command_button(self, text, command):
         def command_func():
@@ -182,7 +182,7 @@ class Sketch(MainProgram):
             self.interactive_col = self.interactive_col + 1
 
     def add_image_button(self, path):
-        button = image_button.ImageButton(self, path, (self.B_WIDTH, self.B_HEIGHT))
+        button = image_button.ImageButton(self, path, (self.B_WIDTH, self.B_HEIGHT), self.filler)
         self.image_buttons.append(button)
         button.grid(row=self.image_row, column=self.image_col)
         if self.image_col == Sketch.COLUMNS - 1:
