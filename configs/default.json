@@ -8,7 +8,6 @@
 	    "path": "$PROJ_HOME/images/templates/circle.png",
 	    "name": "CIRKEL"
 	},
-
 	{
 	    "path": "$PROJ_HOME/images/templates/baltazar.png",
 	    "name": "BALTAZAR"
@@ -59,6 +58,7 @@
 	[50,50,0],
 	[125,0,255]
     ],
+    "color_button_image_path": "$PROJ_HOME/images/templates/square.png",
     "default_color": [0,0,0],
     "background_color": [255,255,255],
     "console": {

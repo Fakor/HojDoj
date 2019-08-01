@@ -5,7 +5,7 @@ from collections import OrderedDict
 
 from DTools.tk_tools import color_to_tk
 from DTools.main_program import MainProgram
-from tools import elastic_background_horizontal
+from tools import elastic_background_horizontal, image_replace_white
 import fillers
 
 import image_button
@@ -83,6 +83,7 @@ class Sketch(MainProgram):
         self.normal_images = []
 
         self.image_buttons = []
+        self.color_images = []
 
         self.p_images = []
 
@@ -192,7 +193,13 @@ class Sketch(MainProgram):
             self.image_col = self.image_col + 1
 
     def add_color_button(self, color):
-        button = tk.Button(self, bg=color_to_tk(color), command=lambda: self.color_filler_active(color))
+        raw_img = PIL.Image.open(self.config['color_button_image_path'])
+        raw_img = raw_img.resize((self.B_WIDTH, self.B_HEIGHT), PIL.Image.NEAREST)
+        raw_img = image_replace_white(raw_img, color)
+        button_img = PIL.ImageTk.PhotoImage(raw_img)
+        self.color_images.append(button_img)
+        button = tk.Button(self, image=button_img, command=lambda: self.color_filler_active(color))
+
         button.grid(row=self.color_row, column=self.color_col)
         if self.color_col == Sketch.COLUMNS - 1:
             self.color_col = 0
