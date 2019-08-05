@@ -63,5 +63,27 @@
     "background_color": [255,255,255],
     "console": {
 	"enabled": true
-    }
+    },
+    "commands":[
+	{
+	    "name": "Sketch",
+	    "path": "$PROJ_HOME/hojdoj/commands/sketch.py",
+	    "image": "$PROJ_HOME/images/commands/sketch.png"
+	},
+	{
+	    "name": "Move",
+	    "path": "$PROJ_HOME/hojdoj/commands/move.py",
+	    "image": "$PROJ_HOME/images/commands/move.png"
+	},
+	{
+	    "name": "Delete",
+	    "path": "$PROJ_HOME/hojdoj/commands/delete.py",
+	    "image": "$PROJ_HOME/images/commands/delete.png"
+	},
+	{
+	    "name": "Mark",
+	    "path": "$PROJ_HOME/hojdoj/commands/mark.py",
+	    "image": "$PROJ_HOME/images/commands/mark.png"
+	}
+    ]
 }

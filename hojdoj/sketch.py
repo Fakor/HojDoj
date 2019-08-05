@@ -4,21 +4,12 @@ from collections import OrderedDict
 
 from DTools.tk_tools import color_to_tk
 from DTools.main_program import MainProgram
+from DTools.command_basics import command_from_meta
 import fillers
 
 from DTools.button_grid import ButtonGrid
 
-import sketch_command
-import delete_command
-import mark_command
-import move_command
-
-interactive_commands = [
-    ("Sketch", sketch_command.SketchCommand),
-    ("Move", move_command.MoveCommand),
-    ("Mark", mark_command.MarkCommand),
-    ("Delete", delete_command.DeleteCommand)
-]
+from commands import sketch
 
 
 class Sketch(MainProgram):
@@ -37,7 +28,7 @@ class Sketch(MainProgram):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.interactive_command = sketch_command.SketchCommand
+        self.interactive_command = sketch.Command
         self.filler = fillers.ColorFiller(self, config['default_color'])
 
         self.current_object = None
@@ -86,16 +77,21 @@ class Sketch(MainProgram):
 
         self.p_images = []
 
-        for command in interactive_commands:
-            self.add_interactive_command_button(*command)
+        self.command_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Commands", background='white')
+        for command_meta in config['commands']:
+            self.command_buttons.add_button(command_meta['image'],
+                                            fillers.NoFiller(),
+                                            self.set_interactive_command,
+                                            command_meta)
+        self.command_buttons.grid(row=0)
 
         self.image_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Bilder", background='white')
         for image_meta in config['image_templates']:
             self.image_buttons.add_button(image_meta['path'],
-                                     self.filler,
-                                     self.image_tool_active,
-                                     image_meta)
-        self.image_buttons.grid(row=0)
+                                          self.filler,
+                                          self.image_tool_active,
+                                          image_meta)
+        self.image_buttons.grid(row=1)
 
         self.color_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Färger", background='white')
         for color in config['sketch_colors']:
@@ -103,7 +99,7 @@ class Sketch(MainProgram):
                                           fillers.ColorFiller(self, color),
                                           self.color_filler_active,
                                           color)
-        self.color_buttons.grid(row=1)
+        self.color_buttons.grid(row=2)
 
         self.elastic_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header='Elastisk', background='white')
         for elastic in self.config['image_elastics']:
@@ -112,7 +108,7 @@ class Sketch(MainProgram):
                                             self.elastic_image_filler_active,
                                             elastic)
 
-        self.elastic_buttons.grid(row=2)
+        self.elastic_buttons.grid(row=3)
 
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, x=event.x, y=event.y) #.from_event(event) #self.interactive_command(self, event)
@@ -172,7 +168,7 @@ class Sketch(MainProgram):
 
     def image_tool_active(self, image_meta):
         self.current_image = image_meta
-        self.interactive_command = sketch_command.SketchCommand
+        self.interactive_command = sketch.Command
 
     def color_filler_active(self, color):
         self.filler = fillers.ColorFiller(self, color)
@@ -182,13 +178,5 @@ class Sketch(MainProgram):
         self.filler = fillers.ElasticImageFiller(self, elastic_meta)
         self.image_buttons.update_filler(self.filler)
 
-    def add_interactive_command_button(self, text, command):
-        def command_func():
-            self.interactive_command = command
-        button = tk.Button(self, command=command_func, text=text)
-        button.grid(row=self.interactive_row, column=self.interactive_col)
-        if self.interactive_col == Sketch.COLUMNS - 1:
-            self.interactive_col = 0
-            self.interactive_row = self.interactive_row + 1
-        else:
-            self.interactive_col = self.interactive_col + 1
+    def set_interactive_command(self, command_meta):
+        self.interactive_command = command_from_meta(command_meta)

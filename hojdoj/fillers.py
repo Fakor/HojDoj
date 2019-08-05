@@ -31,3 +31,14 @@ class ElasticImageFiller:
 
     def get_arguments(self, command):
         command.kwargs['elastic_name'] = self.meta['name']
+
+
+class NoFiller:
+    def __init__(self):
+        pass
+
+    def fill_image(self, image):
+        return image
+
+    def get_arguments(self, command):
+        pass

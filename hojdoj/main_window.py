@@ -1,11 +1,6 @@
 from DTools.command_terminal import command
 from sketch import Sketch
 
-from sketch_command import SketchCommand
-from move_command import MoveCommand
-from delete_command import DeleteCommand
-from mark_command import MarkCommand
-
 from DTools.template import Template
 
 
@@ -33,10 +28,7 @@ class MainWindow:
         def redo(*args, **kwargs):
             self.sketch.redo(*args, **kwargs)
 
-        temp.init_command(SketchCommand)
-        temp.init_command(MoveCommand)
-        temp.init_command(DeleteCommand)
-        temp.init_command(MarkCommand)
+        temp.init_commands(config['commands'])
 
     def quit(self, event=None):
         self.parent.event_generate('<<quit_now>>')

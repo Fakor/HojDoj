@@ -1,20 +1,19 @@
 import inspect
-import tkinter as tk
 
 
-class DeleteCommand:
-    name = 'delete'
+class Command:
+    name = 'mark'
 
     def __init__(self, sketch, index=None, x=0, y=0):
-        _,_,_,self.kwargs = inspect.getargvalues(inspect.currentframe())
+        _, _, _, self.kwargs = inspect.getargvalues(inspect.currentframe())
 
         self.kwargs.pop('self')
         self.kwargs.pop('sketch')
-        self.kwargs.pop('x')
-        self.kwargs.pop('y')
 
-        self.name = DeleteCommand.name
+        self.name = Command.name
         self.sketch = sketch
+
+        self.orig_marked = self.sketch.marked_object_index
 
         if self.kwargs['index'] is None:
             self.sketch.mark_object(x, y)
@@ -27,16 +26,13 @@ class DeleteCommand:
         pass
 
     def on_release(self, x, y):
-        if self.kwargs['index'] is None:
-            return
         self.sketch.add_command(self)
 
     def do(self):
         if self.kwargs['index'] is None:
-            return
-        self.sketch.item_configure(self.kwargs['index'], state=tk.HIDDEN)
+            self.sketch.mark_object(self.kwargs['index'],self.kwargs['index'])
+        else:
+            self.sketch.marked_object_index = self.kwargs['index']
 
     def undo(self):
-        if self.kwargs['index'] is None:
-            return
-        self.sketch.item_configure(self.kwargs['index'], state=tk.NORMAL)
+        self.sketch.marked_object_index = self.orig_marked

@@ -5,7 +5,7 @@ import sketch_object
 import inspect
 
 
-class SketchCommand:
+class Command:
     name = 'sketch'
 
     def __init__(self, sketch, index=None, x=0, y=0, image_meta=None, width=0,
@@ -16,7 +16,7 @@ class SketchCommand:
         self.kwargs.pop('self')
         self.kwargs.pop('sketch')
 
-        self.name = SketchCommand.name
+        self.name = Command.name
         self.sketch = sketch
         self.start_x = x
         self.start_y = y

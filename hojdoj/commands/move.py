@@ -1,7 +1,7 @@
 import inspect
 
 
-class MoveCommand:
+class Command:
     name = 'move'
 
     def __init__(self, sketch, index=None, dx=0, dy=0, x=0, y=0):
@@ -12,7 +12,7 @@ class MoveCommand:
         self.kwargs.pop('x')
         self.kwargs.pop('y')
 
-        self.name = MoveCommand.name
+        self.name = Command.name
         self.sketch = sketch
 
         if self.kwargs['index'] is None:
