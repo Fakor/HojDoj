@@ -1,14 +1,12 @@
 import tkinter as tk
-import PIL
 
 from collections import OrderedDict
 
 from DTools.tk_tools import color_to_tk
 from DTools.main_program import MainProgram
-from tools import elastic_background_horizontal, image_replace_white
 import fillers
 
-import image_button
+from DTools.button_grid import ButtonGrid
 
 import sketch_command
 import delete_command
@@ -59,11 +57,12 @@ class Sketch(MainProgram):
         canvas_height = height
 
         control_width = width-canvas_width
-        control_height = height-canvas_height
+        control_height = canvas_height
 
         self.canvas.place(x=control_width, y=0, width=canvas_width, height=canvas_height)
 
         self.control = tk.Frame(self)
+        self.control.place(x=0, y=0, width=control_width, height=control_height)  # (column=0, row=0)
 
         self.B_WIDTH = int(0.94*control_width/Sketch.COLUMNS)
         self.B_HEIGHT = self.B_WIDTH
@@ -90,16 +89,30 @@ class Sketch(MainProgram):
         for command in interactive_commands:
             self.add_interactive_command_button(*command)
 
-        for template in config['image_templates']:
-            self.add_image_button(template)
+        self.image_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Bilder", background='white')
+        for image_meta in config['image_templates']:
+            self.image_buttons.add_button(image_meta['path'],
+                                     self.filler,
+                                     self.image_tool_active,
+                                     image_meta)
+        self.image_buttons.grid(row=0)
 
+        self.color_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Färger", background='white')
         for color in config['sketch_colors']:
-            self.add_color_button(color)
+            self.color_buttons.add_button(config['color_button_image_path'],
+                                          fillers.ColorFiller(self, color),
+                                          self.color_filler_active,
+                                          color)
+        self.color_buttons.grid(row=1)
 
-        for elastic in config['image_elastics']:
-            self.add_elastic_image_button(elastic)
+        self.elastic_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header='Elastisk', background='white')
+        for elastic in self.config['image_elastics']:
+            self.elastic_buttons.add_button(config['color_button_image_path'],
+                                            fillers.ElasticImageFiller(self, elastic),
+                                            self.elastic_image_filler_active,
+                                            elastic)
 
-        self.control.place(x=0, y=0, width=control_width, height=control_height)
+        self.elastic_buttons.grid(row=2)
 
     def on_button_press(self, event):
         self.current_object = self.interactive_command(self, x=event.x, y=event.y) #.from_event(event) #self.interactive_command(self, event)
@@ -163,13 +176,11 @@ class Sketch(MainProgram):
 
     def color_filler_active(self, color):
         self.filler = fillers.ColorFiller(self, color)
-        for button in self.image_buttons:
-            button.update(self.filler)
+        self.image_buttons.update_filler(self.filler)
 
     def elastic_image_filler_active(self, elastic_meta):
         self.filler = fillers.ElasticImageFiller(self, elastic_meta)
-        for button in self.image_buttons:
-            button.update(self.filler)
+        self.image_buttons.update_filler(self.filler)
 
     def add_interactive_command_button(self, text, command):
         def command_func():
@@ -181,46 +192,3 @@ class Sketch(MainProgram):
             self.interactive_row = self.interactive_row + 1
         else:
             self.interactive_col = self.interactive_col + 1
-
-    def add_image_button(self, path):
-        button = image_button.ImageButton(self, path, (self.B_WIDTH, self.B_HEIGHT), self.filler)
-        self.image_buttons.append(button)
-        button.grid(row=self.image_row, column=self.image_col)
-        if self.image_col == Sketch.COLUMNS - 1:
-            self.image_col = 0
-            self.image_row = self.image_row + 1
-        else:
-            self.image_col = self.image_col + 1
-
-    def add_color_button(self, color):
-        raw_img = PIL.Image.open(self.config['color_button_image_path'])
-        raw_img = raw_img.resize((self.B_WIDTH, self.B_HEIGHT), PIL.Image.NEAREST)
-        raw_img = image_replace_white(raw_img, color)
-        button_img = PIL.ImageTk.PhotoImage(raw_img)
-        self.color_images.append(button_img)
-        button = tk.Button(self, image=button_img, command=lambda: self.color_filler_active(color))
-
-        button.grid(row=self.color_row, column=self.color_col)
-        if self.color_col == Sketch.COLUMNS - 1:
-            self.color_col = 0
-            self.color_row = self.color_row + 1
-        else:
-            self.color_col = self.color_col + 1
-
-    def add_elastic_image_button(self, elastic):
-        path = elastic["path"]
-        elastic_image = PIL.Image.open(path)
-        image_button = elastic_background_horizontal(elastic_image, (self.B_WIDTH, self.B_HEIGHT))
-
-        self.p_images.append(image_button)
-
-        button = tk.Button(self,
-                           image=self.p_images[-1],
-                           command=lambda: self.elastic_image_filler_active(elastic))
-
-        button.grid(row=self.elastic_row, column=self.elastic_col)
-        if self.elastic_col == Sketch.COLUMNS - 1:
-            self.elastic_col = 0
-            self.elastic_row = self.elastic_row + 1
-        else:
-            self.elastic_col = self.elastic_col + 1

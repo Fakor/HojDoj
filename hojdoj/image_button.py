@@ -3,16 +3,15 @@ import PIL
 
 
 class ImageButton(tk.Button):
-    def __init__(self, parent, image_meta, size, filler):
-        self.image_meta = image_meta
-        self.raw_img = PIL.Image.open(self.image_meta['path'])
+    def __init__(self, parent, path, size, filler, command):
+        self.raw_img = PIL.Image.open(path)
         self.size = size
         self.image_button = None
         self.parent = parent
 
         tk.Button.__init__(self,
                            parent,
-                           command=lambda: parent.image_tool_active(self.image_meta))
+                           command=command)
         self.update(filler)
 
     def update(self, filler):
