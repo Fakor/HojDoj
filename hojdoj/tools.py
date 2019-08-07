@@ -29,7 +29,7 @@ def image_replace_elastic(image, elastic_image, vertical=True):
     elastic_data = np.array(el_back)
     red, green, blue, alpha = data.T
     white_areas = (red == 255) & (blue == 255) & (green == 255)
-    data[..., :-1][white_areas.T] = elastic_data[..., :][white_areas.T]
+    data[..., :-1][white_areas.T] = elastic_data[..., :3][white_areas.T]
     return PIL.Image.fromarray(data)
 
 

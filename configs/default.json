@@ -9,6 +9,10 @@
 	    "name": "CIRKEL"
 	},
 	{
+	    "path": "$PROJ_HOME/images/templates/arrow.png",
+	    "name": "PIL"
+	},
+	{
 	    "path": "$PROJ_HOME/images/templates/baltazar.png",
 	    "name": "BALTAZAR"
 	},
@@ -43,6 +47,11 @@
 	    "path":"$PROJ_HOME/images/elastics/mahogany_wood.png",
 	    "vertical": true,
 	    "name": "MAHOGNY"
+	},
+	{
+	    "path":"$PROJ_HOME/images/elastics/stars.png",
+	    "vertical": false,
+	    "name": "STJÄRNOR"
 	}
     ],
     "sketch_colors":[
