@@ -29,7 +29,7 @@ class Sketch(MainProgram):
         self.parent.bind('<Control-y>', self._redo)
 
         self.interactive_command = sketch.Command
-        self.filler = fillers.ColorFiller(self, config['default_color'])
+        self.filler = fillers.ColorFiller(config['default_color'])
 
         self.current_object = None
 
@@ -53,7 +53,7 @@ class Sketch(MainProgram):
         self.canvas.place(x=control_width, y=0, width=canvas_width, height=canvas_height)
 
         self.control = tk.Frame(self)
-        self.control.place(x=0, y=0, width=control_width, height=control_height)  # (column=0, row=0)
+        self.control.place(x=0, y=0, width=control_width, height=control_height)
 
         self.B_WIDTH = int(0.94*control_width/Sketch.COLUMNS)
         self.B_HEIGHT = self.B_WIDTH
@@ -96,7 +96,7 @@ class Sketch(MainProgram):
         self.color_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Färger", background='white')
         for color in config['sketch_colors']:
             self.color_buttons.add_button(config['color_button_image_path'],
-                                          fillers.ColorFiller(self, color),
+                                          fillers.ColorFiller(color),
                                           self.color_filler_active,
                                           color)
         self.color_buttons.grid(row=2)
@@ -104,14 +104,14 @@ class Sketch(MainProgram):
         self.elastic_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header='Elastisk', background='white')
         for elastic in self.config['image_elastics']:
             self.elastic_buttons.add_button(config['color_button_image_path'],
-                                            fillers.ElasticImageFiller(self, elastic),
+                                            fillers.ElasticImageFiller(elastic),
                                             self.elastic_image_filler_active,
                                             elastic)
 
         self.elastic_buttons.grid(row=3)
 
     def on_button_press(self, event):
-        self.current_object = self.interactive_command(self, x=event.x, y=event.y) #.from_event(event) #self.interactive_command(self, event)
+        self.current_object = self.interactive_command(self, x=event.x, y=event.y)
 
     def on_move_press(self, event):
         self.current_object.on_move(event.x, event.y)
@@ -125,16 +125,9 @@ class Sketch(MainProgram):
         self.used_image_indexes.add(self.image_index)
         return self.image_index
 
-    def erase(self, index):
-        if index in self.objects:
-            self.delete(index)
-
     def mark_object(self, x, y):
         for index, object in reversed(self.objects.items()):
-            x2, y2 = self.canvas.coords(object.object_id)
-            width_half = object.width/2
-            height_half = object.height/2
-            if (x2-width_half <= x <= x2 + width_half) and (y2-height_half<= y <= y2 + height_half):
+            if object.cover_position(x,y):
                 self.marked_object_index = index
                 return
         self.marked_object_index = None
@@ -154,28 +147,22 @@ class Sketch(MainProgram):
     def create_image(self, *args, **kwargs):
         return self.canvas.create_image(*args, **kwargs)
 
-    def get_coords(self, index):
-        obj_index = self.objects[index].object_id
-        return self.canvas.coords(obj_index)
+    def set_coords(self, id, x, y):
+        self.canvas.coords(id, x, y)
 
-    def set_coords(self, index, x, y):
-        obj_index = self.objects[index].object_id
-        self.canvas.coords(obj_index, x, y)
-
-    def item_configure(self, index, *args, **kwargs):
-        obj_index = self.objects[index].object_id
-        self.canvas.itemconfigure(obj_index, *args, **kwargs)
+    def item_configure(self, id, *args, **kwargs):
+        self.canvas.itemconfigure(id, *args, **kwargs)
 
     def image_tool_active(self, image_meta):
         self.current_image = image_meta
         self.interactive_command = sketch.Command
 
     def color_filler_active(self, color):
-        self.filler = fillers.ColorFiller(self, color)
+        self.filler = fillers.ColorFiller(color)
         self.image_buttons.update_filler(self.filler)
 
     def elastic_image_filler_active(self, elastic_meta):
-        self.filler = fillers.ElasticImageFiller(self, elastic_meta)
+        self.filler = fillers.ElasticImageFiller(elastic_meta)
         self.image_buttons.update_filler(self.filler)
 
     def set_interactive_command(self, command_meta):

@@ -19,7 +19,8 @@ class Command:
             self.sketch.mark_object(x, y)
             self.kwargs['index'] = self.sketch.marked_object_index
         if self.kwargs['index'] is not None:
-            self.start_x, self.start_y = self.sketch.get_coords(self.kwargs['index'])
+            self.image = self.sketch.objects[self.kwargs['index']]
+            self.start_x, self.start_y = self.image.position
             self.mark_x = x
             self.mark_y = y
 
@@ -31,7 +32,8 @@ class Command:
             return
         self.kwargs['dx'] = x - self.mark_x
         self.kwargs['dy'] = y - self.mark_y
-        self.sketch.set_coords(self.kwargs['index'], self.start_x+self.kwargs['dx'], self.start_y+self.kwargs['dy'])
+        self.image.set_position(self.start_x+self.kwargs['dx'], self.start_y+self.kwargs['dy'])
+        # self.sketch.set_coords(self.kwargs['index'], self.start_x+self.kwargs['dx'], self.start_y+self.kwargs['dy'])
 
     def on_release(self, x, y):
         if self.kwargs['index'] is None:
@@ -43,9 +45,9 @@ class Command:
     def do(self):
         if self.kwargs['index'] is None:
             return
-        self.sketch.set_coords(self.kwargs['index'], self.start_x + self.kwargs['dx'], self.start_y + self.kwargs['dy'])
+        self.image.set_position(self.start_x + self.kwargs['dx'], self.start_y + self.kwargs['dy'])
 
     def undo(self):
         if self.kwargs['index'] is None:
             return
-        self.sketch.set_coords(self.kwargs['index'], self.start_x, self.start_y)
+        self.image.set_position(self.start_x, self.start_y)

@@ -19,6 +19,8 @@ class Command:
         if self.kwargs['index'] is None:
             self.sketch.mark_object(x, y)
             self.kwargs['index'] = self.sketch.marked_object_index
+        if self.kwargs['index'] is not None:
+            self.image=self.sketch.objects[self.kwargs['index']]
 
     def get_kwargs(self):
         return self.kwargs
@@ -34,9 +36,9 @@ class Command:
     def do(self):
         if self.kwargs['index'] is None:
             return
-        self.sketch.item_configure(self.kwargs['index'], state=tk.HIDDEN)
+        self.image.hide()
 
     def undo(self):
         if self.kwargs['index'] is None:
             return
-        self.sketch.item_configure(self.kwargs['index'], state=tk.NORMAL)
+        self.image.show()
