@@ -5,7 +5,7 @@ from collections import OrderedDict
 from DTools.tk_tools import color_to_tk
 from DTools.main_program import MainProgram
 from DTools.command_basics import command_from_meta
-import fillers
+from DTools import fillers
 
 from DTools.button_grid import ButtonGrid
 
