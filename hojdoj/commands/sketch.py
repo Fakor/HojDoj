@@ -56,7 +56,7 @@ class Command:
 
     def do(self):
         self._update_image()
-        self.sketch.objects[self.kwargs['index']] = self.image #sketch_object.SketchObject(self.id, self.kwargs['width'], self.kwargs['height'])
+        self.sketch.objects[self.kwargs['index']] = self.image
 
     def undo(self):
         self.image.hide()
