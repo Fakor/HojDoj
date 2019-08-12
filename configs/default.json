@@ -90,6 +90,11 @@
 	    "image": "$PROJ_HOME/images/commands/resize.png"
 	},
 	{
+	    "name": "Rotate",
+	    "path": "$PROJ_HOME/hojdoj/commands/rotate.py",
+	    "image": "$PROJ_HOME/images/commands/rotate.png"
+	},
+	{
 	    "name": "Delete",
 	    "path": "$PROJ_HOME/hojdoj/commands/delete.py",
 	    "image": "$PROJ_HOME/images/commands/delete.png"

@@ -9,6 +9,8 @@ class Command:
 
         self.kwargs.pop('self')
         self.kwargs.pop('sketch')
+        self.kwargs.pop('x')
+        self.kwargs.pop('y')
 
         self.name = Command.name
         self.sketch = sketch

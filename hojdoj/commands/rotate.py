@@ -1,10 +1,11 @@
 import inspect
+import numpy as np
 
 
 class Command:
-    name = 'move'
+    name = 'rotate'
 
-    def __init__(self, sketch, index=None, dx=0, dy=0, x=0, y=0):
+    def __init__(self, sketch, index=None, degrees=0, x=0, y=0):
         _,_,_,self.kwargs = inspect.getargvalues(inspect.currentframe())
 
         self.kwargs.pop('self')
@@ -20,9 +21,8 @@ class Command:
             self.kwargs['index'] = self.sketch.marked_object_index
         if self.kwargs['index'] is not None:
             self.image = self.sketch.objects[self.kwargs['index']]
-            self.start_x, self.start_y = self.image.position
-            self.mark_x = x
-            self.mark_y = y
+            self.image_angle = self.image.rotate
+            self.start_angle = self.get_angle(x,y)
 
     def get_kwargs(self):
         return self.kwargs
@@ -30,23 +30,26 @@ class Command:
     def on_move(self, x, y):
         if self.kwargs['index'] is None:
             return
-        self.kwargs['dx'] = x - self.mark_x
-        self.kwargs['dy'] = y - self.mark_y
-        self.image.set_position(self.start_x+self.kwargs['dx'], self.start_y+self.kwargs['dy'])
+        self.kwargs['degrees'] = self.get_angle(x,y)-self.start_angle
+        self._update_image()
 
     def on_release(self, x, y):
         if self.kwargs['index'] is None:
             return
-        self.kwargs['dx'] = x - self.mark_x
-        self.kwargs['dy'] = y - self.mark_y
+        self.kwargs['degrees'] = self.get_angle(x,y)-self.start_angle
         self.sketch.add_command(self)
 
     def do(self):
-        if self.kwargs['index'] is None:
-            return
-        self.image.set_position(self.start_x + self.kwargs['dx'], self.start_y + self.kwargs['dy'])
+        self._update_image()
 
     def undo(self):
-        if self.kwargs['index'] is None:
-            return
-        self.image.set_position(self.start_x, self.start_y)
+        self.image.update(rotate=self.image_angle)
+
+    def _update_image(self):
+        self.image.update(rotate=self.image_angle+self.kwargs['degrees'])
+
+    def get_angle(self, x, y):
+        x_orig, y_orig = self.image.position
+        dx = x-x_orig
+        dy = y-y_orig
+        return np.arctan2(dx, dy)*180/np.pi
