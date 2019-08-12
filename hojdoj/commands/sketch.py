@@ -32,6 +32,10 @@ class Command:
             self.filler = sketch.filler
 
         self.filler.get_arguments(self)
+        try:
+            self.orig_image = self.sketch.objects[self.kwargs['index']]
+        except KeyError:
+            self.orig_image = None
         self.image = SketchImage(sketch,
                                  self.image_meta['path'],
                                  (x,y),
@@ -55,10 +59,14 @@ class Command:
         self.sketch.add_command(self)
 
     def do(self):
+        if self.orig_image is not None:
+            self.orig_image.hide()
         self._update_image()
         self.sketch.objects[self.kwargs['index']] = self.image
 
     def undo(self):
+        if self.orig_image is not None:
+            self.orig_image.show()
         self.image.hide()
 
     def _prepare_shape(self, x, y):
