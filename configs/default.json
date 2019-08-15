@@ -1,4 +1,5 @@
 {
+    "save_location": "~/Pictures",
     "image_templates":[
 	{
 	    "path": "$PROJ_HOME/images/templates/square.png",

@@ -14,7 +14,7 @@ from commands import sketch
 
 
 class Sketch(MainProgram):
-    COLUMNS = 3
+    COLUMNS = 4
 
     def __init__(self, parent, config, position, size, output):
         width, height = size
@@ -23,6 +23,7 @@ class Sketch(MainProgram):
         self.canvas = tk.Canvas(self, borderwidth=4, relief=tk.GROOVE, background=bg_color)
         self.parent = parent
         self.position = position
+        self.config = config
 
         self.canvas.bind("<Button-1>", self.on_button_press)
         self.canvas.bind("<B1-Motion>", self.on_move_press)
@@ -184,7 +185,7 @@ class Sketch(MainProgram):
         y_far = y + self.canvas_size[1]
 
         image = pyscreenshot.grab((x,y,x_far,y_far))
-        file_name = filedialog.asksaveasfilename(initialdir='~/Pictures',
+        file_name = filedialog.asksaveasfilename(initialdir=self.config['save_location'],
                                                  title='Välj fil',
                                                  filetypes = (("png", "*.png"),("all files","*.*")))
         if file_name:
