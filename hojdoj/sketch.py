@@ -1,5 +1,6 @@
 import tkinter as tk
-
+from tkinter import filedialog
+import pyscreenshot
 from collections import OrderedDict
 
 from DTools.tk_tools import color_to_tk
@@ -15,11 +16,13 @@ from commands import sketch
 class Sketch(MainProgram):
     COLUMNS = 3
 
-    def __init__(self, parent, config, width, height, output):
+    def __init__(self, parent, config, position, size, output):
+        width, height = size
         MainProgram.__init__(self, parent, config, width, height, output)
         bg_color = color_to_tk(config.get_value('background_color'))
         self.canvas = tk.Canvas(self, borderwidth=4, relief=tk.GROOVE, background=bg_color)
         self.parent = parent
+        self.position = position
 
         self.canvas.bind("<Button-1>", self.on_button_press)
         self.canvas.bind("<B1-Motion>", self.on_move_press)
@@ -57,6 +60,11 @@ class Sketch(MainProgram):
 
         self.B_WIDTH = int(0.94*control_width/Sketch.COLUMNS)
         self.B_HEIGHT = self.B_WIDTH
+
+        x, y = size
+        self.canvas_position = x, 0
+        self.canvas_size = canvas_width, canvas_height
+
 
         self.interactive_row = 0
         self.interactive_col = 0
@@ -167,3 +175,17 @@ class Sketch(MainProgram):
 
     def set_interactive_command(self, command_meta):
         self.interactive_command = command_from_meta(command_meta)
+
+    def save_image(self):
+        self.control.winfo_width()
+        x = self.position[0]+self.control.winfo_width()
+        y = self.position[1]
+        x_far = x + self.canvas_size[0]
+        y_far = y + self.canvas_size[1]
+
+        image = pyscreenshot.grab((x,y,x_far,y_far))
+        file_name = filedialog.asksaveasfilename(initialdir='~/Pictures',
+                                                 title='Välj fil',
+                                                 filetypes = (("png", "*.png"),("all files","*.*")))
+        if file_name:
+            image.save(file_name)
