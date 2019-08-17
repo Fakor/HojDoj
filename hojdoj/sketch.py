@@ -121,13 +121,13 @@ class Sketch(MainProgram):
         self.elastic_buttons.grid(row=3)
 
     def on_button_press(self, event):
-        self.current_object = self.interactive_command(self, x=event.x, y=event.y)
+        self.current_object = self.interactive_command(self, event=event)
 
     def on_move_press(self, event):
-        self.current_object.on_move(event.x, event.y)
+        self.current_object.on_move(event)
 
     def on_button_release(self, event):
-        self.current_object.on_release(event.x, event.y)
+        self.current_object.on_release(event)
 
     def next_image_index(self):
         while self.image_index in self.used_image_indexes:

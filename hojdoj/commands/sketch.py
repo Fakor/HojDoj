@@ -6,18 +6,24 @@ import DTools.fillers
 class Command:
     name = 'sketch'
 
-    def __init__(self, sketch, index=None, x=0, y=0, image_meta=None, width=0,
+    def __init__(self, sketch, index=None, event=None, image_meta=None,
+                 x=0, y=0, width=0,
                  height=0, color=None,
                  rotate=0, mirror=False, elastic_name=None):
         _,_,_,self.kwargs = inspect.getargvalues(inspect.currentframe())
 
         self.kwargs.pop('self')
         self.kwargs.pop('sketch')
+        self.kwargs.pop('event')
 
         self.name = Command.name
         self.sketch = sketch
-        self.start_x = x
-        self.start_y = y
+        if event:
+            self.start_x = event.x
+            self.start_y = event.y
+        else:
+            self.start_x = x
+            self.start_y = y
         if self.kwargs['image_meta'] is None:
             self.image_meta = self.sketch.current_image
         else:
@@ -38,7 +44,7 @@ class Command:
             self.orig_image = None
         self.image = SketchImage(sketch,
                                  self.image_meta['path'],
-                                 (x,y),
+                                 (self.start_x, self.start_y),
                                  (width, height),
                                  filler=self.filler,
                                  rotate=rotate,
@@ -47,12 +53,12 @@ class Command:
     def get_kwargs(self):
         return self.kwargs
 
-    def on_move(self, x, y):
-        self._prepare_shape(x, y)
+    def on_move(self, event):
+        self._prepare_shape(event.x, event.y)
         self._update_image()
 
-    def on_release(self, x, y):
-        self._prepare_shape(x, y)
+    def on_release(self, event):
+        self._prepare_shape(event.x, event.y)
         if self.kwargs['width'] == 0 or self.kwargs['height'] == 0:
             return
         self.kwargs['index'] = self.sketch.next_image_index()

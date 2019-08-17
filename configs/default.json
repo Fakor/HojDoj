@@ -102,7 +102,8 @@
 	},
 	{
 	    "name": "Jump",
-	    "path": "$PROJ_HOME/hojdoj/commands/jump.py"
+	    "path": "$PROJ_HOME/hojdoj/commands/jump.py",
+	    "image": "$PROJ_HOME/images/commands/jump.png"
 	},
 	{
 	    "name": "Mark",
