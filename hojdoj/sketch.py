@@ -88,10 +88,11 @@ class Sketch(MainProgram):
 
         self.command_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Commands", background='white')
         for command_meta in config['commands']:
-            self.command_buttons.add_button(command_meta['image'],
-                                            fillers.NoFiller(),
-                                            self.set_interactive_command,
-                                            command_meta)
+            if 'image' in command_meta:
+                self.command_buttons.add_button(command_meta['image'],
+                                                fillers.NoFiller(),
+                                                self.set_interactive_command,
+                                                command_meta)
         self.command_buttons.grid(row=0)
 
         self.image_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Bilder", background='white')

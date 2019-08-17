@@ -101,6 +101,10 @@
 	    "image": "$PROJ_HOME/images/commands/delete.png"
 	},
 	{
+	    "name": "Jump",
+	    "path": "$PROJ_HOME/hojdoj/commands/jump.py"
+	},
+	{
 	    "name": "Mark",
 	    "path": "$PROJ_HOME/hojdoj/commands/mark.py",
 	    "image": "$PROJ_HOME/images/commands/mark.png"
