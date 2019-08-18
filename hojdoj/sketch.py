@@ -139,8 +139,9 @@ class Sketch(MainProgram):
         for index, object in reversed(self.objects.items()):
             if object.cover_position(x,y):
                 self.marked_object_index = index
-                return
+                return self.marked_object_index
         self.marked_object_index = None
+        return None
 
     def _undo(self, event):
         self.undo_command()
