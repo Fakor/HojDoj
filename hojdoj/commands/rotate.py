@@ -1,4 +1,3 @@
-import inspect
 import numpy as np
 
 
@@ -6,37 +5,36 @@ class Command:
     name = 'rotate'
 
     def __init__(self, sketch, index=None, degrees=0, event=None):
-        _,_,_,self.kwargs = inspect.getargvalues(inspect.currentframe())
-
-        self.kwargs.pop('self')
-        self.kwargs.pop('sketch')
-        self.kwargs.pop('event')
-
         self.name = Command.name
         self.sketch = sketch
 
-        if self.kwargs['index'] is None:
-            self.sketch.mark_object(event.x, event.y)
-            self.kwargs['index'] = self.sketch.marked_object_index
-        if self.kwargs['index'] is not None:
-            self.image = self.sketch.objects[self.kwargs['index']]
+        if event is not None:
+            self.index = self.sketch.mark_object(event.x, event.y)
+        else:
+            self.index = index
+        if self.index is not None:
+            self.image = self.sketch.objects[self.index]
             self.image_angle = self.image.rotate
-        if event:
-            self.start_angle = self.get_angle(event.x, event.y)
+            if event:
+                self.start_angle = self.get_angle(event.x, event.y)
+        self.degrees = degrees
 
     def get_kwargs(self):
-        return self.kwargs
+        return {
+            'index': self.index,
+            'degrees': self.degrees
+        }
 
     def on_move(self, event):
-        if self.kwargs['index'] is None:
+        if self.index is None:
             return
-        self.kwargs['degrees'] = self.get_angle(event.x,event.y)-self.start_angle
+        self.degrees = self.get_angle(event.x,event.y)-self.start_angle
         self._update_image()
 
     def on_release(self, event):
-        if self.kwargs['index'] is None:
+        if self.index is None:
             return
-        self.kwargs['degrees'] = self.get_angle(event.x,event.y)-self.start_angle
+        self.degrees = self.get_angle(event.x,event.y)-self.start_angle
         self.sketch.add_command(self)
 
     def do(self):
@@ -46,7 +44,7 @@ class Command:
         self.image.update(rotate=self.image_angle)
 
     def _update_image(self):
-        self.image.update(rotate=self.image_angle+self.kwargs['degrees'])
+        self.image.update(rotate=self.image_angle+self.degrees)
 
     def get_angle(self, x, y):
         x_orig, y_orig = self.image.position

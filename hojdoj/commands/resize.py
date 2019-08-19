@@ -1,31 +1,29 @@
-import inspect
+from DTools.tools import sum_points
 
 
 class Command:
     name = 'resize'
 
-    def __init__(self, sketch, index=None, width=0, height=0, event=None):
-        _,_,_,self.kwargs = inspect.getargvalues(inspect.currentframe())
-
-        self.kwargs.pop('self')
-        self.kwargs.pop('sketch')
-        self.kwargs.pop('event')
-
+    def __init__(self, sketch, index=None, size=(0,0), event=None):
         self.name = Command.name
         self.sketch = sketch
 
-        if self.kwargs['index'] is None:
-            self.sketch.mark_object(event.x, event.y)
-            self.kwargs['index'] = self.sketch.marked_object_index
-        if self.kwargs['index'] is not None:
-            self.image = self.sketch.objects[self.kwargs['index']]
-            self.org_size = self.image.size
-        if event:
+        if event is not None:
+            self.index = self.sketch.mark_object(event.x, event.y)
             self.mark_x = event.x
             self.mark_y = event.y
+        else:
+            self.index = index
+        if self.index is not None:
+            self.image = self.sketch.objects[self.index]
+            self.org_size = self.image.size
+        self.size = size
 
     def get_kwargs(self):
-        return self.kwargs
+        return {
+            'index': self.index,
+            'size': self.size
+        }
 
     def on_move(self, event):
         self._prepare_shape(event.x, event.y)
@@ -42,16 +40,8 @@ class Command:
         self.image.update(size=self.org_size)
 
     def _prepare_shape(self, x, y):
-        dx = x - self.mark_x
-        dy = y - self.mark_y
-        self.kwargs['width'] = self.org_size[0] + dx
-        self.kwargs['height'] = self.org_size[1] + dy
-
-    def _get_image_position(self):
-        return self.org_position
-
-    def _get_image_size(self):
-        return self.kwargs['width'], self.kwargs['height']
+        dpos = (x - self.mark_x, y - self.mark_y)
+        self.size = sum_points(self.org_size, dpos)
 
     def _update_image(self):
-        self.image.update(size=self._get_image_size())
+        self.image.update(size=self.size)

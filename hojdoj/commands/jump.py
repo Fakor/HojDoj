@@ -2,8 +2,6 @@ class Command:
     name='jump'
 
     def __init__(self, sketch, index=None, dpos=(4, 12), gravity=0.3, step_time=10, event=None):
-        self.kwargs = {}
-
         self.name = Command.name
         self.sketch = sketch
 
