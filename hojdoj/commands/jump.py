@@ -50,8 +50,7 @@ class Command:
 
         if new_y > self.start_position[1]:
             new_y = self.start_position[1]
-            self.image.update(position=(int(new_x), int(new_y)))
         else:
-            self.image.update(position=(int(new_x), int(new_y)))
             dy = dpos[1] - self.gravity
             self.sketch.after(self.step_time, self._update_image, (dpos[0], dy))
+        self.image.set_position(int(new_x), int(new_y))
