@@ -35,12 +35,9 @@ class Sketch(MainProgram):
         self.interactive_command = sketch.Command
         self.filler = fillers.ColorFiller(config['default_color'])
 
-        self.current_object = None
+        self.current_command = None
 
-        self.start_point = None
         self.objects = OrderedDict()
-        self.inactive_objects = []
-        self.images = []
 
         self.current_image = self.config.get_value('image_templates', 0)
         self.elastic_image = None
@@ -65,26 +62,6 @@ class Sketch(MainProgram):
         x, y = size
         self.canvas_position = x, 0
         self.canvas_size = canvas_width, canvas_height
-
-
-        self.interactive_row = 0
-        self.interactive_col = 0
-
-        self.image_row = 2
-        self.image_col = 0
-
-        self.color_row = 7
-        self.color_col = 0
-
-        self.elastic_row = 12
-        self.elastic_col = 0
-
-        self.normal_images = []
-
-        self.image_buttons = []
-        self.color_images = []
-
-        self.p_images = []
 
         self.command_buttons = ButtonGrid(self.control, Sketch.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Commands", background='white')
         for command_meta in config['commands']:
@@ -121,13 +98,13 @@ class Sketch(MainProgram):
         self.elastic_buttons.grid(row=3)
 
     def on_button_press(self, event):
-        self.current_object = self.interactive_command(self, event=event)
+        self.current_command = self.interactive_command(self, event=event)
 
     def on_move_press(self, event):
-        self.current_object.on_move(event)
+        self.current_command.on_move(event)
 
     def on_button_release(self, event):
-        self.current_object.on_release(event)
+        self.current_command.on_release(event)
 
     def next_image_index(self):
         while self.image_index in self.used_image_indexes:
