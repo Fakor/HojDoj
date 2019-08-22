@@ -11,6 +11,7 @@ from DTools import fillers
 from DTools.button_grid import ButtonGrid
 
 from commands import sketch
+from logic.sketch_logic import SketchLogic
 
 
 class Sketch(MainProgram):
