@@ -1,6 +1,6 @@
 import tkinter as tk
 
-import command_terminal
+from DTools.command_terminal import CommandTerminal
 from DTools.command_basics import command_from_meta
 
 
@@ -13,7 +13,7 @@ class Template(tk.Frame):
         width, height = size
 
         output_window_height = int(height/25)
-        self.output_panel = command_terminal.CommandTerminal(self, shell_locals)
+        self.output_panel = CommandTerminal(self, shell_locals)
         self.control_panel = tk.Frame(self)
         self.control_button_row = 0
         self.control_button_column = 0
