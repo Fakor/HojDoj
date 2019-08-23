@@ -7,7 +7,7 @@ VIRTUAL_ENV_HOME=$HOJDOJ_HOME/venv
 source $VIRTUAL_ENV_HOME/bin/activate
 
 export TEST_FOLDER=$HOJDOJ_PATH/tests
-export PYTHONPATH=$HOJDOJ_PATH/hojdoj
+export PYTHONPATH=$HOJDOJ_PATH/hojdoj:$TEST_FOLDER/resources/helper
 
 cd $TEST_FOLDER
 

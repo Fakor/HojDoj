@@ -1,14 +1,7 @@
 import unittest
-import os
 
 from logic.sketch_logic import SketchLogic
-
-
-SQUARE = '{}/resources/square.png'.format(os.environ['TEST_FOLDER'])
-
-IMAGE_TEMPLATES={
-    'SQUARE': SQUARE
-}
+from constants import *
 
 
 class MyTestCase(unittest.TestCase):
