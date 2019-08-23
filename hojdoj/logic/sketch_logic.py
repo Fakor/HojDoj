@@ -1,8 +1,10 @@
 from collections import OrderedDict
+from logic.image_logic import ImageLogic
 
 
 class SketchLogic:
-    def __init__(self):
+    def __init__(self, image_templates):
+        self.image_templates = image_templates
         self.objects = OrderedDict()
         self.marked_object_index = None
         self.object_index = 0
@@ -17,10 +19,10 @@ class SketchLogic:
     def object_position(self, index):
         return self.objects[index].position
 
-    def add_object(self, new_object, index=None):
+    def add_object(self, name, position, size, index=None):
         if index is None:
             index = self.next_image_index()
-        self.objects[index] = new_object
+        self.objects[index] = ImageLogic(self.image_templates[name], position, size)
         return index
 
     def delete_object(self, index):

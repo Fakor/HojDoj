@@ -2,19 +2,22 @@ import unittest
 import os
 
 from logic.sketch_logic import SketchLogic
-from logic.image_logic import ImageLogic
 
 
 SQUARE = '{}/resources/square.png'.format(os.environ['TEST_FOLDER'])
 
+IMAGE_TEMPLATES={
+    'SQUARE': SQUARE
+}
+
 
 class MyTestCase(unittest.TestCase):
     def test_mark_object(self):
-        sketch = SketchLogic()
+        sketch = SketchLogic(IMAGE_TEMPLATES)
 
-        self.assertEqual(sketch.add_object(ImageLogic(SQUARE, (0,0), (10,10))), 0)
-        self.assertEqual(sketch.add_object(ImageLogic(SQUARE, (0, 0), (10, 10))), 1)
-        self.assertEqual(sketch.add_object(ImageLogic(SQUARE, (0, 0), (10, 10)), index=10), 10)
+        self.assertEqual(sketch.add_object('SQUARE', (0,0), (10,10)),0)
+        self.assertEqual(sketch.add_object('SQUARE', (0, 0), (10, 10)), 1)
+        self.assertEqual(sketch.add_object('SQUARE', (0, 0), (10, 10), index=10), 10)
 
         self.assertIsNone(sketch.mark_object(-15, 0))
         self.assertIsNone(sketch.mark_object(0, -15))
@@ -29,9 +32,9 @@ class MyTestCase(unittest.TestCase):
         self.assertIsNone(sketch.mark_object(0, 0))
 
     def test_move_object(self):
-        sketch = SketchLogic()
+        sketch = SketchLogic(IMAGE_TEMPLATES)
 
-        sketch.add_object(ImageLogic(SQUARE, (30,20), (10,10)), 0)
+        sketch.add_object('SQUARE', (30,20), (10,10), index=0)
         self.assertEqual(sketch.object_position(0), (30,20))
 
         sketch.move_object(0, (-5, 15))
