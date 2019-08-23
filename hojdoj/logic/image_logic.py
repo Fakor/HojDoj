@@ -1,6 +1,7 @@
 from PIL import Image, ImageOps
 
 from DTools.fillers import NoFiller
+from DTools.tools import sum_points
 
 
 class ImageLogic:
@@ -22,3 +23,6 @@ class ImageLogic:
         width_half = width / 2
         height_half = height / 2
         return (x2 - width_half <= x <= x2 + width_half) and (y2 - height_half <= y <= y2 + height_half)
+
+    def move(self, delta_position):
+        self.position = sum_points(self.position, delta_position)
