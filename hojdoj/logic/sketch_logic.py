@@ -19,7 +19,10 @@ class SketchLogic:
     def object_position(self, index):
         return self.objects[index].position
 
-    def add_object(self, name, position, size, index=None):
+    def object_size(self, index):
+        return self.objects[index].size
+
+    def draw_object(self, name, position, size, index=None):
         if index is None:
             index = self.next_image_index()
         self.objects[index] = ImageLogic(self.image_templates[name], position, size)

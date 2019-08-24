@@ -9,6 +9,20 @@ def value_to_string(value):
     return str(value)
 
 
+def value_from_string(text):
+    txt_tmp = text.strip()
+    if txt_tmp[0] == '(':
+        txt_tmp = txt_tmp.strip('()')
+        return tuple((value_from_string(el) for el in txt_tmp.split(',')))
+    try:
+        return int(txt_tmp)
+    except ValueError:
+        try:
+            return float(txt_tmp)
+        except ValueError:
+            return txt_tmp
+
+
 def sum_points(*points):
     return [sum(el) for el in zip(*points)]
 

@@ -11,6 +11,6 @@ export PYTHONPATH=$HOJDOJ_PATH/hojdoj:$TEST_FOLDER/resources/helper
 
 cd $TEST_FOLDER
 
-python -m unittest sketch_logic_tests.py
+python -m unittest test_suite.py
 
 

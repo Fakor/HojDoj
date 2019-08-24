@@ -4,13 +4,13 @@ from logic.sketch_logic import SketchLogic
 from constants import *
 
 
-class MyTestCase(unittest.TestCase):
+class SketchLogicTests(unittest.TestCase):
     def test_mark_object(self):
         sketch = SketchLogic(IMAGE_TEMPLATES)
 
-        self.assertEqual(sketch.add_object('SQUARE', (0,0), (10,10)),0)
-        self.assertEqual(sketch.add_object('SQUARE', (0, 0), (10, 10)), 1)
-        self.assertEqual(sketch.add_object('SQUARE', (0, 0), (10, 10), index=10), 10)
+        self.assertEqual(sketch.draw_object('SQUARE', (0,0), (10, 10)),0)
+        self.assertEqual(sketch.draw_object('SQUARE', (0, 0), (10, 10)), 1)
+        self.assertEqual(sketch.draw_object('SQUARE', (0, 0), (10, 10), index=10), 10)
 
         self.assertIsNone(sketch.mark_object(-15, 0))
         self.assertIsNone(sketch.mark_object(0, -15))
@@ -27,8 +27,9 @@ class MyTestCase(unittest.TestCase):
     def test_move_object(self):
         sketch = SketchLogic(IMAGE_TEMPLATES)
 
-        sketch.add_object('SQUARE', (30,20), (10,10), index=0)
-        self.assertEqual(sketch.object_position(0), (30,20))
+        sketch.draw_object('SQUARE', (30, 20), (10, 5), index=0)
+        self.assertEqual(sketch.object_position(0), (30, 20))
+        self.assertEqual(sketch.object_size(0), (10, 5))
 
         sketch.move_object(0, (-5, 15))
         self.assertEqual(sketch.object_position(0), [25,35])
