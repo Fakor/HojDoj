@@ -10,6 +10,11 @@ class SketchLogic:
         self.object_index = 0
         self.used_object_indexes = set()
 
+    def get_command_table(self):
+        return {
+            'draw': self.draw_object
+        }
+
     def next_image_index(self):
         while self.object_index in self.used_object_indexes:
             self.object_index = self.object_index + 1

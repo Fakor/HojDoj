@@ -26,7 +26,7 @@ class InterpreterTests(unittest.TestCase):
 
     def test_draw_command(self):
         sketch = SketchLogic(IMAGE_TEMPLATES)
-        interpreter = Interpreter(sketch)
+        interpreter = Interpreter(sketch.get_command_table())
 
         interpreter.perform_command("draw(SQUARE, (5,7), (3,8), index=5)")
 

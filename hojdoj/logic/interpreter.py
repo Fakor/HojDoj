@@ -1,11 +1,9 @@
-import json
-
 from DTools.tools import value_from_string
 
 
 class Interpreter:
-    def __init__(self, sketch):
-        self.sketch = sketch
+    def __init__(self, command_table):
+        self.command_table = command_table
 
     def perform_command(self, text):
         pars = text.split(sep='(', maxsplit=1)
@@ -19,8 +17,7 @@ class Interpreter:
         command(*args, **kwargs)
 
     def get_command(self, command_string):
-        if command_string == 'draw':
-            return self.sketch.draw_object
+        return self.command_table[command_string]
 
 
 def interpret_values(values):
