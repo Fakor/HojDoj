@@ -25,4 +25,4 @@ class ImageLogic:
         return (x2 - width_half <= x <= x2 + width_half) and (y2 - height_half <= y <= y2 + height_half)
 
     def move(self, delta_position):
-        self.position = sum_points(self.position, delta_position)
+        self.position = tuple(sum_points(self.position, delta_position))

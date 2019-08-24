@@ -12,7 +12,8 @@ class SketchLogic:
 
     def get_command_table(self):
         return {
-            'draw': self.draw_object
+            'draw': self.draw_object,
+            'move': self.move_object
         }
 
     def next_image_index(self):

@@ -24,7 +24,7 @@ class InterpreterTests(unittest.TestCase):
         self.assertListEqual(args, expected_args)
         self.assertDictEqual(kwargs, expected_kwargs)
 
-    def test_draw_command(self):
+    def test_commands(self):
         sketch = SketchLogic(IMAGE_TEMPLATES)
         interpreter = Interpreter(sketch.get_command_table())
 
@@ -32,6 +32,9 @@ class InterpreterTests(unittest.TestCase):
 
         self.assertEqual(sketch.object_position(5), (5,7))
         self.assertEqual(sketch.object_size(5), (3, 8))
+
+        interpreter.perform_command("move(5, delta_position=(10,-3))")
+        self.assertEqual(sketch.object_position(5), (15,4))
 
 
 if __name__ == '__main__':

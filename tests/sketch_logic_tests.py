@@ -32,7 +32,7 @@ class SketchLogicTests(unittest.TestCase):
         self.assertEqual(sketch.object_size(0), (10, 5))
 
         sketch.move_object(0, (-5, 15))
-        self.assertEqual(sketch.object_position(0), [25,35])
+        self.assertEqual(sketch.object_position(0), (25,35))
 
 
 if __name__ == '__main__':
