@@ -11,23 +11,20 @@
 	"GRÄVMASKIN": "$PROJ_HOME/images/templates/excevator.png",
 	"SKODA": "$PROJ_HOME/images/templates/skoda.png"
     },
-    "image_elastics":[
-	{
+    "fillers": {
+	"MUR": {
 	    "path": "$PROJ_HOME/images/elastics/brick_wall.png",
-	    "vertical": false,
-	    "name": "MUR"
+	    "type": "horizontal_elastic"
 	},
-	{
+	"MAHOGNY": {
 	    "path":"$PROJ_HOME/images/elastics/mahogany_wood.png",
-	    "vertical": true,
-	    "name": "MAHOGNY"
+	    "type": "vertical_elastic"
 	},
-	{
+	"STJÄRNOR": {
 	    "path":"$PROJ_HOME/images/elastics/stars.png",
-	    "vertical": false,
-	    "name": "STJÄRNOR"
+	    "type": "horizontal_elastic"
 	}
-    ],
+    },
     "sketch_colors":[
 	[0, 0, 0],
 	[255, 255, 255],

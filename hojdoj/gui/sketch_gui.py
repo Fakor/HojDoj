@@ -81,14 +81,14 @@ class SketchGui(tk.Frame):
                                           color)
         self.color_buttons.grid(row=2)
 
-        self.elastic_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header='Elastisk', background='white')
-        for elastic in self.config['image_elastics']:
-            self.elastic_buttons.add_button(config['color_button_image_path'],
-                                            fillers.ElasticImageFiller(elastic),
-                                            self.elastic_image_filler_active,
-                                            elastic)
-
-        self.elastic_buttons.grid(row=3)
+        # self.elastic_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header='Elastisk', background='white')
+        # for elastic in self.config['image_elastics']:
+        #     self.elastic_buttons.add_button(config['color_button_image_path'],
+        #                                     fillers.ElasticImageFiller(elastic),
+        #                                     self.elastic_image_filler_active,
+        #                                     elastic)
+        #
+        # self.elastic_buttons.grid(row=3)
 
         self.draw_object('BALTAZAR', (500, 500), (600, 600))
 
