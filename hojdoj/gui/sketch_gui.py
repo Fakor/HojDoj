@@ -26,9 +26,9 @@ class SketchGui(tk.Frame):
         self.position = position
         self.config = config
 
-        self.canvas.bind("<Button-1>", self.on_button_press)
-        self.canvas.bind("<B1-Motion>", self.on_move_press)
-        self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
+        # self.canvas.bind("<Button-1>", self.on_button_press)
+        # self.canvas.bind("<B1-Motion>", self.on_move_press)
+        # self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
 
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
@@ -99,14 +99,19 @@ class SketchGui(tk.Frame):
         self.canvas.create_image(*obj.position, image=new_image)
         self.images[new_index] = new_image
 
-    def on_button_press(self, event):
-        self.current_command = self.interactive_command(self, event=event)
+    def get_command_table(self):
+        return {
+            'draw': self.draw_object
+        }
 
-    def on_move_press(self, event):
-        self.current_command.on_move(event)
-
-    def on_button_release(self, event):
-        self.current_command.on_release(event)
+    # def on_button_press(self, event):
+    #     self.current_command = self.interactive_command(self, event=event)
+    #
+    # def on_move_press(self, event):
+    #     self.current_command.on_move(event)
+    #
+    # def on_button_release(self, event):
+    #     self.current_command.on_release(event)
 
     def set_interactive_command(self, command_meta):
         self.interactive_command = command_from_meta(command_meta)
