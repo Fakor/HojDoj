@@ -10,6 +10,9 @@ class SketchLogic:
         self.object_index = 0
         self.used_object_indexes = set()
 
+    def get_object(self, index):
+        return self.objects[index]
+
     def get_command_table(self):
         return {
             'draw': self.draw_object,

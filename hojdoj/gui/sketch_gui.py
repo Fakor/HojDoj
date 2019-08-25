@@ -1,10 +1,12 @@
 import tkinter as tk
+from PIL import ImageTk
 
 from DTools.tk_tools import color_to_tk
 from DTools.button_grid import ButtonGrid
 from DTools import fillers
 from commands import sketch
 from DTools.command_basics import command_from_meta
+from logic.sketch_logic import SketchLogic
 
 
 class SketchGui(tk.Frame):
@@ -13,6 +15,10 @@ class SketchGui(tk.Frame):
     def __init__(self, parent, config, position, size):
         width, height = size
         tk.Frame.__init__(self, parent, width=width, height=height)
+
+        self.logic = SketchLogic(config['image_templates'])
+        self.images = {}
+
         bg_color = color_to_tk(config.get_value('background_color'))
         self.canvas = tk.Canvas(self, borderwidth=4, relief=tk.GROOVE, background=bg_color)
 
@@ -50,8 +56,6 @@ class SketchGui(tk.Frame):
         self.canvas_position = x, 0
         self.canvas_size = canvas_width, canvas_height
 
-
-
         self.command_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Commands", background='white')
         for command_meta in config['commands']:
             if 'image' in command_meta:
@@ -62,11 +66,11 @@ class SketchGui(tk.Frame):
         self.command_buttons.grid(row=0)
 
         self.image_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Bilder", background='white')
-        for image_meta in config['image_templates']:
-            self.image_buttons.add_button(image_meta['path'],
+        for name, path in config['image_templates'].items():
+            self.image_buttons.add_button(path,
                                           self.filler,
                                           self.image_tool_active,
-                                          image_meta)
+                                          name)
         self.image_buttons.grid(row=1)
 
         self.color_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Färger", background='white')
@@ -85,6 +89,15 @@ class SketchGui(tk.Frame):
                                             elastic)
 
         self.elastic_buttons.grid(row=3)
+
+        self.draw_object('BALTAZAR', (500, 500), (600, 600))
+
+    def draw_object(self, *args, **kwargs):
+        new_index = self.logic.draw_object(*args, **kwargs)
+        obj = self.logic.get_object(new_index)
+        new_image = ImageTk.PhotoImage(obj.image)
+        self.canvas.create_image(*obj.position, image=new_image)
+        self.images[new_index] = new_image
 
     def on_button_press(self, event):
         self.current_command = self.interactive_command(self, event=event)
