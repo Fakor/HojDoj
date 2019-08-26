@@ -14,15 +14,15 @@
     "fillers": {
 	"MUR": {
 	    "path": "$PROJ_HOME/images/elastics/brick_wall.png",
-	    "type": "horizontal_elastic"
+	    "type": "elastic_horizontal"
 	},
 	"MAHOGNY": {
 	    "path":"$PROJ_HOME/images/elastics/mahogany_wood.png",
-	    "type": "vertical_elastic"
+	    "type": "elastic_vertical"
 	},
 	"STJÄRNOR": {
 	    "path":"$PROJ_HOME/images/elastics/stars.png",
-	    "type": "horizontal_elastic"
+	    "type": "elastic_horizontal"
 	}
     },
     "sketch_colors":[
@@ -40,11 +40,18 @@
     ],
     "color_button_image_path": "$PROJ_HOME/images/templates/square.png",
     "default_color": [0,0,0],
+    "default_image": "TUMMEN", 
     "background_color": [255,255,255],
     "console": {
 	"enabled": true
     },
-    "commands":[
+    "commands":{
+	"draw": {
+	    "path":"$PROJ_HOME/hojdoj/commands/draw.py",
+	    "image": "$PROJ_HOME/images/commands/sketch.png"
+	}
+    },
+    "old_commands":[
 	{
 	    "name": "Sketch",
 	    "path": "$PROJ_HOME/hojdoj/commands/sketch.py",

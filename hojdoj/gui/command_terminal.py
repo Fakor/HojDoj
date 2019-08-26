@@ -21,7 +21,6 @@ class CommandTerminal(tk.Frame):
 
         self.interpreter = Interpreter(command_table)
 
-
     def run_command(self, text):
         print("enter pressed")
         self.interpreter.perform_command(text)

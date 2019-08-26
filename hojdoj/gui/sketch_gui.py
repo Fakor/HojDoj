@@ -26,14 +26,18 @@ class SketchGui(tk.Frame):
         self.position = position
         self.config = config
 
-        # self.canvas.bind("<Button-1>", self.on_button_press)
-        # self.canvas.bind("<B1-Motion>", self.on_move_press)
-        # self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
+        self.temporary_image = None
+        self.temporary_image_index = None
+
+        self.current_image = self.config.get_value('default_image')
+
+        self.canvas.bind("<Button-1>", self.on_button_press)
+        self.canvas.bind("<B1-Motion>", self.on_move_press)
+        self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
 
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.interactive_command = sketch.Command
         self.filler = fillers.ColorFiller(config['default_color'])
 
         canvas_width = int(width*0.87)
@@ -45,6 +49,7 @@ class SketchGui(tk.Frame):
         self.canvas.place(x=control_width, y=0, width=canvas_width, height=canvas_height)
 
         self.current_command = None
+        self.interactive_command_name = "draw"
 
         self.control = tk.Frame(self)
         self.control.place(x=0, y=0, width=control_width, height=control_height)
@@ -57,12 +62,12 @@ class SketchGui(tk.Frame):
         self.canvas_size = canvas_width, canvas_height
 
         self.command_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Commands", background='white')
-        for command_meta in config['commands']:
+        for name, command_meta in config['commands'].items():
             if 'image' in command_meta:
                 self.command_buttons.add_button(command_meta['image'],
                                                 fillers.NoFiller(),
                                                 self.set_interactive_command,
-                                                command_meta)
+                                                name)
         self.command_buttons.grid(row=0)
 
         self.image_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Bilder", background='white')
@@ -104,17 +109,18 @@ class SketchGui(tk.Frame):
             'draw': self.draw_object
         }
 
-    # def on_button_press(self, event):
-    #     self.current_command = self.interactive_command(self, event=event)
-    #
-    # def on_move_press(self, event):
-    #     self.current_command.on_move(event)
-    #
-    # def on_button_release(self, event):
-    #     self.current_command.on_release(event)
+    def on_button_press(self, event):
+        command = command_from_meta(self.config['commands'][self.interactive_command_name])
+        self.current_command = command(self, event, self.current_image, self.interactive_command_name)
 
-    def set_interactive_command(self, command_meta):
-        self.interactive_command = command_from_meta(command_meta)
+    def on_move_press(self, event):
+        self.current_command.on_move(event)
+
+    def on_button_release(self, event):
+        self.current_command.on_release(event)
+
+    def set_interactive_command(self, command_name):
+        self.interactive_command_name = command_name #command_from_meta(command_meta)
 
     def image_tool_active(self, image_meta):
         self.current_image = image_meta
@@ -127,6 +133,17 @@ class SketchGui(tk.Frame):
     def elastic_image_filler_active(self, elastic_meta):
         self.filler = fillers.ElasticImageFiller(elastic_meta)
         self.image_buttons.update_filler(self.filler)
+
+    def create_temporary_image(self, position, image):
+        self.temporary_image = ImageTk.PhotoImage(image.image)
+        self.temporary_image_index = self.canvas.create_image(position, image=self.temporary_image)
+
+    def remove_temporary_image(self):
+        if self.temporary_image_index is not None:
+            self.canvas.delete(self.temporary_image_index)
+
+    def get_image_path(self, image_name):
+        return self.config['image_templates'][image_name]
 
     def _undo(self, event):
         self.undo_command()
