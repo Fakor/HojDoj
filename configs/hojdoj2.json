@@ -40,7 +40,7 @@
     ],
     "color_button_image_path": "$PROJ_HOME/images/templates/square.png",
     "default_color": [0,0,0],
-    "default_image": "TUMMEN", 
+    "default_image": "DÖRR", 
     "background_color": [255,255,255],
     "console": {
 	"enabled": true

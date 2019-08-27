@@ -13,8 +13,14 @@ class Command:
 
     def on_move(self, event):
         self._prepare_shape(event.x, event.y)
-        self.image.update(size=self.size)
-        self.sketch.create_temporary_image(self.pos, self.image)
+        self.image.update(size=self.size, position=self.pos)
+        self.sketch.create_temporary_image(self.image)
+
+    def on_release(self, event):
+        self._prepare_shape(event.x, event.y)
+        if any(el == 0 for el in self.size):
+            return
+        self.sketch.draw_object(self.image_name, self.pos, self.size)
 
     def _prepare_shape(self, x, y):
         self.size = (abs(x - self.start_pos[0]), abs(y - self.start_pos[1]))

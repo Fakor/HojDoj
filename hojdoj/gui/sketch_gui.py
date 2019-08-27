@@ -134,9 +134,11 @@ class SketchGui(tk.Frame):
         self.filler = fillers.ElasticImageFiller(elastic_meta)
         self.image_buttons.update_filler(self.filler)
 
-    def create_temporary_image(self, position, image):
+    def create_temporary_image(self, image):
+        if any(el == 0 for el in image.size):
+            return
         self.temporary_image = ImageTk.PhotoImage(image.image)
-        self.temporary_image_index = self.canvas.create_image(position, image=self.temporary_image)
+        self.temporary_image_index = self.canvas.create_image(image.position, image=self.temporary_image)
 
     def remove_temporary_image(self):
         if self.temporary_image_index is not None:
