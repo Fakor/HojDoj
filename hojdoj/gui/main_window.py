@@ -23,7 +23,7 @@ class MainWindow(tk.Frame):
 
         command_width = width
         command_height = height - sketch_height
-        self.command_terminal = CommandTerminal(self, self.sketch.get_command_table())
+        self.command_terminal = CommandTerminal(self, self.sketch.get_command_table(), command_width, command_height)
 
         self.command_terminal.place(x=0, y=sketch_height, width=command_width, height=command_height)
 

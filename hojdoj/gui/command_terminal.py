@@ -14,10 +14,10 @@ class InputEntry(tk.Entry):
 
 
 class CommandTerminal(tk.Frame):
-    def __init__(self, parent, command_table):
+    def __init__(self, parent, command_table, width, height):
         tk.Frame.__init__(self, parent)
         self.input = InputEntry(self)
-        self.input.grid()
+        self.input.place(width=width, height=height)
 
         self.interpreter = Interpreter(command_table)
 
