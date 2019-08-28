@@ -97,6 +97,9 @@ class SketchGui(tk.Frame):
 
         self.draw_object('BALTAZAR', (500, 500), (600, 600))
 
+    def new_command(self, command_name, *args, **kwargs):
+        self.parent.new_command(command_name, *args, **kwargs)
+
     def draw_object(self, *args, **kwargs):
         new_index = self.logic.draw_object(*args, **kwargs)
         obj = self.logic.get_object(new_index)

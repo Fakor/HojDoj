@@ -10,7 +10,7 @@ def value_to_string(value):
 
 
 def value_from_string(text):
-    txt_tmp = text.strip()
+    txt_tmp = text.strip(" \"\'")
     if txt_tmp[0] == '(':
         txt_tmp = txt_tmp.strip('()')
         return tuple((value_from_string(el) for el in txt_tmp.split(',')))

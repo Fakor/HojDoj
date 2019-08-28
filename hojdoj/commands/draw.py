@@ -20,7 +20,12 @@ class Command:
         self._prepare_shape(event.x, event.y)
         if any(el == 0 for el in self.size):
             return
-        self.sketch.draw_object(self.image_name, self.pos, self.size)
+        self.sketch.new_command(self.command_name,
+                                self.image_name,
+                                self.pos,
+                                self.size)
+
+        #self.sketch.draw_object(self.image_name, self.pos, self.size)
 
     def _prepare_shape(self, x, y):
         self.size = (abs(x - self.start_pos[0]), abs(y - self.start_pos[1]))

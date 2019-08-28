@@ -2,6 +2,7 @@ import tkinter as tk
 
 from gui.sketch_gui import SketchGui
 from gui.command_terminal import CommandTerminal
+from DTools.tools import value_to_string
 
 
 class MainWindow(tk.Frame):
@@ -28,3 +29,12 @@ class MainWindow(tk.Frame):
 
     def quit(self, event=None):
         self.parent.event_generate('<<quit_now>>')
+
+    def new_command(self, command_name, *args, **kwargs):
+        text = "{}(".format(command_name)
+
+        args_text = [value_to_string(arg) for arg in args]
+        kwargs_text =['{}={}'.format(str(key),value_to_string(value)) for key, value in kwargs.items() if value is not None]
+        text = text + ', '.join(args_text  + kwargs_text) + ")"
+
+        self.command_terminal.run_command(text)
