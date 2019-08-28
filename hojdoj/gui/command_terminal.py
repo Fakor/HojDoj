@@ -21,5 +21,8 @@ class CommandTerminal(tk.Frame):
 
         self.interpreter = Interpreter(command_table)
 
-    def run_command(self, text):
+    def run_command(self, text, update_text=False):
         self.interpreter.perform_command(text)
+        if update_text:
+            self.input.delete(0, tk.END)
+            self.input.insert(0, text)

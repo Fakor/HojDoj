@@ -37,4 +37,4 @@ class MainWindow(tk.Frame):
         kwargs_text =['{}={}'.format(str(key),value_to_string(value)) for key, value in kwargs.items() if value is not None]
         text = text + ', '.join(args_text  + kwargs_text) + ")"
 
-        self.command_terminal.run_command(text)
+        self.command_terminal.run_command(text, update_text=True)
