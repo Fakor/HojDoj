@@ -49,6 +49,10 @@
 	"draw": {
 	    "path":"$PROJ_HOME/hojdoj/commands/draw.py",
 	    "image": "$PROJ_HOME/images/commands/sketch.png"
+	},
+	"move": {
+	    "path": "$PROJ_HOME/hojdoj/commands/move.py",
+	    "image": "$PROJ_HOME/images/commands/move.png"
 	}
     },
     "old_commands":[

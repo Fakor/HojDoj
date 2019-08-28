@@ -42,7 +42,7 @@ class SketchLogic:
 
     def move_object(self, index, delta_position):
         self.objects[index].move(delta_position)
-        return self.objects[index].position
+        return index, self.objects[index].position
 
     def mark_object(self, x, y):
         for index, obj in reversed(self.objects.items()):

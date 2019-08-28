@@ -25,8 +25,6 @@ class Command:
                                 self.pos,
                                 self.size)
 
-        #self.sketch.draw_object(self.image_name, self.pos, self.size)
-
     def _prepare_shape(self, x, y):
         self.size = (abs(x - self.start_pos[0]), abs(y - self.start_pos[1]))
 

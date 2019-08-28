@@ -26,6 +26,8 @@ class SketchGui(tk.Frame):
         self.position = position
         self.config = config
 
+        self.objects = {}
+
         self.temporary_image = None
         self.temporary_image_index = None
 
@@ -104,12 +106,17 @@ class SketchGui(tk.Frame):
         new_index = self.logic.draw_object(*args, **kwargs)
         obj = self.logic.get_object(new_index)
         new_image = ImageTk.PhotoImage(obj.image)
-        self.canvas.create_image(*obj.position, image=new_image)
+        self.objects[new_index] = self.canvas.create_image(*obj.position, image=new_image)
         self.images[new_index] = new_image
+
+    def move_object(self, *args, **kwargs):
+        index, new_position = self.logic.move_object(*args, **kwargs)
+        self.canvas.coords(self.objects[index], *new_position)
 
     def get_command_table(self):
         return {
-            'draw': self.draw_object
+            'draw': self.draw_object,
+            'move': self.move_object
         }
 
     def on_button_press(self, event):
