@@ -3,6 +3,7 @@ import unittest
 from logic.sketch_logic import SketchLogic
 from logic.interpreter import Interpreter, interpret_values, arg_split
 from constants import *
+from functions import *
 
 
 class InterpreterTests(unittest.TestCase):
@@ -23,18 +24,6 @@ class InterpreterTests(unittest.TestCase):
 
         self.assertListEqual(args, expected_args)
         self.assertDictEqual(kwargs, expected_kwargs)
-
-    def test_commands(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
-        interpreter = Interpreter(sketch.get_command_table())
-
-        interpreter.perform_command("draw(SQUARE, (5,7), (3,8), index=5)")
-
-        self.assertEqual(sketch.object_position(5), (5,7))
-        self.assertEqual(sketch.object_size(5), (3, 8))
-
-        interpreter.perform_command("move(5, delta_position=(10,-3))")
-        self.assertEqual(sketch.object_position(5), (15,4))
 
 
 if __name__ == '__main__':

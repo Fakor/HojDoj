@@ -103,15 +103,16 @@ class SketchGui(tk.Frame):
         self.parent.new_command(command_name, *args, **kwargs)
 
     def draw_object(self, *args, **kwargs):
-        new_index = self.logic.draw_object(*args, **kwargs)
-        obj = self.logic.get_object(new_index)
-        new_image = ImageTk.PhotoImage(obj.image)
-        self.objects[new_index] = self.canvas.create_image(*obj.position, image=new_image)
-        self.images[new_index] = new_image
+        self.logic.draw_object(self.draw_object_callback, *args, **kwargs)
 
     def move_object(self, *args, **kwargs):
         index, new_position = self.logic.move_object(*args, **kwargs)
         self.canvas.coords(self.objects[index], *new_position)
+
+    def draw_object_callback(self, index, position, logic_image):
+        new_image = ImageTk.PhotoImage(logic_image.image)
+        self.objects[index] = self.canvas.create_image(*position, image=new_image)
+        self.images[new_image] = new_image
 
     def get_command_table(self):
         return {
