@@ -2,14 +2,14 @@ from logic.image_logic import ImageLogic
 
 
 class Command:
-    def __init__(self, sketch, event, image_name, command_name):
+    def __init__(self, sketch, event, command_name):
         self.sketch = sketch
-        self.image_name = image_name
+        self.image_name = self.sketch.current_image
         self.command_name = command_name
         self.start_pos = (event.x, event.y)
         self.pos = self.start_pos
         self.size = (0,0)
-        self.image = ImageLogic(self.sketch.get_image_path(image_name), self.pos, self.size)
+        self.image = ImageLogic(self.sketch.get_image_path(self.image_name), self.pos, self.size)
 
     def on_move(self, event):
         self._prepare_shape(event.x, event.y)

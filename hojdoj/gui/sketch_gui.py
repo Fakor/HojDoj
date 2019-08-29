@@ -121,7 +121,7 @@ class SketchGui(tk.Frame):
 
     def on_button_press(self, event):
         command = command_from_meta(self.config['commands'][self.interactive_command_name])
-        self.current_command = command(self, event, self.current_image, self.interactive_command_name)
+        self.current_command = command(self, event, self.interactive_command_name)
 
     def on_move_press(self, event):
         self.current_command.on_move(event)
@@ -130,7 +130,7 @@ class SketchGui(tk.Frame):
         self.current_command.on_release(event)
 
     def set_interactive_command(self, command_name):
-        self.interactive_command_name = command_name #command_from_meta(command_meta)
+        self.interactive_command_name = command_name
 
     def image_tool_active(self, image_meta):
         self.current_image = image_meta

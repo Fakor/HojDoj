@@ -4,7 +4,7 @@ from DTools.tools import sum_points
 class Command:
     name = 'move'
 
-    def __init__(self, sketch, index=None, dpos=(0, 0), event=None):
+    def __init__(self, sketch, event, command_name):
         self.name = Command.name
         self.sketch = sketch
 
