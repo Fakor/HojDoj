@@ -27,6 +27,7 @@ class SketchGui(tk.Frame):
         self.config = config
 
         self.objects = {}
+        self.marked_object = None
 
         self.temporary_image = None
         self.temporary_image_index = None
@@ -105,14 +106,23 @@ class SketchGui(tk.Frame):
     def draw_object(self, *args, **kwargs):
         self.logic.draw_object(self.draw_object_callback, *args, **kwargs)
 
-    def move_object(self, *args, **kwargs):
-        index, new_position = self.logic.move_object(*args, **kwargs)
-        self.canvas.coords(self.objects[index], *new_position)
-
     def draw_object_callback(self, index, position, logic_image):
         new_image = ImageTk.PhotoImage(logic_image.image)
         self.objects[index] = self.canvas.create_image(*position, image=new_image)
         self.images[new_image] = new_image
+
+    def move_object(self, *args, **kwargs):
+        self.logic.move_object(self.move_object_callback, *args, **kwargs)
+
+    def move_object_callback(self, index, position):
+        self.canvas.coords(self.objects[index], *position)
+
+    def mark_object(self, position):
+        self.logic.mark_object(self.mark_object_callback, position)
+        return self.marked_object
+
+    def mark_object_callback(self, index):
+        self.marked_object = index
 
     def get_command_table(self):
         return {

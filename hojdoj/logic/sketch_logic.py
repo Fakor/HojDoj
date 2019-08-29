@@ -40,15 +40,14 @@ class SketchLogic:
     def delete_object(self, index):
         self.objects.pop(index)
 
-    def move_object(self, index, delta_position):
+    def move_object(self, callback, index, delta_position):
         self.objects[index].move(delta_position)
-        return index, self.objects[index].position
+        return callback(index, self.objects[index].position)
 
-    def mark_object(self, x, y):
-        for index, obj in reversed(self.objects.items()):
-            if obj.cover_position(x,y):
-                self.marked_object_index = index
-                return self.marked_object_index
+    def mark_object(self, callback, position):
         self.marked_object_index = None
-        return None
-
+        for index, obj in reversed(self.objects.items()):
+            if obj.cover_position(*position):
+                self.marked_object_index = index
+                break
+        return callback(self.marked_object_index)
