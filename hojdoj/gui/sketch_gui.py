@@ -117,16 +117,24 @@ class SketchGui(tk.Frame):
         self.canvas.coords(self.objects[index], *position)
 
     def mark_object(self, position):
-        self.logic.mark_object(self.mark_object_callback, position)
-        return self.marked_object
+        return self.logic.mark_object(self.mark_object_callback, position)
 
     def mark_object_callback(self, index):
         self.marked_object = index
+        return self.marked_object
+
+    def delete_object(self, index):
+        self.logic.delete_object(self.delete_object_callback, index)
+
+    def delete_object_callback(self, index):
+        self.canvas.delete(self.objects.pop(index))
+        self.images.pop(index)
 
     def get_command_table(self):
         return {
             'draw': self.draw_object,
-            'move': self.move_object
+            'move': self.move_object,
+            'delete': self.delete_object
         }
 
     def on_button_press(self, event):

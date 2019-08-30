@@ -1,21 +1,10 @@
 class Command:
     name = 'delete'
 
-    def __init__(self, sketch, index=None, event=None):
-        self.name = Command.name
+    def __init__(self, sketch, event, command_name):
+        self.command_name = command_name
         self.sketch = sketch
-
-        if event is not None:
-            self.index = self.sketch.mark_object(event.x, event.y)
-        else:
-            self.index = index
-        if self.index is not None:
-            self.image=self.sketch.objects[self.index]
-
-    def get_kwargs(self):
-        return {
-            'index': self.index
-        }
+        self.index = self.sketch.mark_object((event.x, event.y))
 
     def on_move(self, event):
         pass
@@ -23,14 +12,5 @@ class Command:
     def on_release(self, event):
         if self.index is None:
             return
-        self.sketch.add_command(self)
-
-    def do(self):
-        if self.index is None:
-            return
-        self.image.hide()
-
-    def undo(self):
-        if self.index is None:
-            return
-        self.image.show()
+        self.sketch.new_command(self.command_name,
+                                self.index)
