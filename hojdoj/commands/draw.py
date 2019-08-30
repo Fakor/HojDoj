@@ -9,12 +9,14 @@ class Command:
         self.start_pos = (event.x, event.y)
         self.pos = self.start_pos
         self.size = (0,0)
-        self.image = ImageLogic(self.sketch.get_image_path(self.image_name), self.pos, self.size)
+        self.index = None
 
     def on_move(self, event):
         self._prepare_shape(event.x, event.y)
-        self.image.update(size=self.size, position=self.pos)
-        self.sketch.create_temporary_image(self.image)
+        kwargs = {}
+        if self.index is not None:
+            kwargs['index'] = self.index
+        self.index = self.sketch.draw_object(self.image_name, self.pos, self.size, **kwargs)
 
     def on_release(self, event):
         self._prepare_shape(event.x, event.y)
@@ -23,7 +25,8 @@ class Command:
         self.sketch.new_command(self.command_name,
                                 self.image_name,
                                 self.pos,
-                                self.size)
+                                self.size,
+                                index=self.index)
 
     def _prepare_shape(self, x, y):
         self.size = (abs(x - self.start_pos[0]), abs(y - self.start_pos[1]))

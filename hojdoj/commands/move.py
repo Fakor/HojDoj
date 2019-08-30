@@ -1,6 +1,3 @@
-from DTools.tools import sum_points
-
-
 class Command:
     name = 'move'
 

@@ -29,9 +29,6 @@ class SketchGui(tk.Frame):
         self.objects = {}
         self.marked_object = None
 
-        self.temporary_image = None
-        self.temporary_image_index = None
-
         self.current_image = self.config.get_value('default_image')
 
         self.canvas.bind("<Button-1>", self.on_button_press)
@@ -98,18 +95,20 @@ class SketchGui(tk.Frame):
         #
         # self.elastic_buttons.grid(row=3)
 
-        self.draw_object('BALTAZAR', (500, 500), (600, 600))
-
     def new_command(self, command_name, *args, **kwargs):
         self.parent.new_command(command_name, *args, **kwargs)
 
     def draw_object(self, *args, **kwargs):
-        self.logic.draw_object(self.draw_object_callback, *args, **kwargs)
+        return self.logic.draw_object(self.draw_object_callback, *args, **kwargs)
 
     def draw_object_callback(self, index, position, logic_image):
-        new_image = ImageTk.PhotoImage(logic_image.image)
-        self.objects[index] = self.canvas.create_image(*position, image=new_image)
-        self.images[new_image] = new_image
+        if index in self.objects:
+            self.canvas.delete(self.objects[index])
+        if logic_image.have_size():
+            new_image = ImageTk.PhotoImage(logic_image.image)
+            self.objects[index] = self.canvas.create_image(*position, image=new_image)
+            self.images[index] = new_image
+        return index
 
     def move_object(self, *args, **kwargs):
         self.logic.move_object(self.move_object_callback, *args, **kwargs)
@@ -154,16 +153,6 @@ class SketchGui(tk.Frame):
     def elastic_image_filler_active(self, elastic_meta):
         self.filler = fillers.ElasticImageFiller(elastic_meta)
         self.image_buttons.update_filler(self.filler)
-
-    def create_temporary_image(self, image):
-        if any(el == 0 for el in image.size):
-            return
-        self.temporary_image = ImageTk.PhotoImage(image.image)
-        self.temporary_image_index = self.canvas.create_image(image.position, image=self.temporary_image)
-
-    def remove_temporary_image(self):
-        if self.temporary_image_index is not None:
-            self.canvas.delete(self.temporary_image_index)
 
     def get_image_path(self, image_name):
         return self.config['image_templates'][image_name]
