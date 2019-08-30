@@ -40,9 +40,9 @@ class SketchLogic:
     def delete_object(self, index):
         self.objects.pop(index)
 
-    def move_object(self, callback, index, delta_position):
-        self.objects[index].move(delta_position)
-        return callback(index, self.objects[index].position)
+    def move_object(self, callback, index, delta_position, intermediate=False):
+        position = self.objects[index].move(delta_position, intermediate)
+        return callback(index, position)
 
     def mark_object(self, callback, position):
         self.marked_object_index = None

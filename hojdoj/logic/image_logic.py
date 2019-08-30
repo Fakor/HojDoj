@@ -25,8 +25,11 @@ class ImageLogic:
         height_half = height / 2
         return (x2 - width_half <= x <= x2 + width_half) and (y2 - height_half <= y <= y2 + height_half)
 
-    def move(self, delta_position):
-        self.position = tuple(sum_points(self.position, delta_position))
+    def move(self, delta_position, intermediate=False):
+        new_pos = tuple(sum_points(self.position, delta_position))
+        if not intermediate:
+            self.position = new_pos
+        return new_pos
 
     def update(self, position=None, size=None, filler=None, rotate=None, mirror=None):
         if position is not None:

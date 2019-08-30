@@ -157,6 +157,9 @@ class SketchGui(tk.Frame):
     def get_image_path(self, image_name):
         return self.config['image_templates'][image_name]
 
+    def get_object_position(self, index):
+        return self.logic.object_position(index)
+
     def _undo(self, event):
         self.undo_command()
 
