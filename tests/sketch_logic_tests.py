@@ -18,11 +18,11 @@ class SketchLogicTests(unittest.TestCase):
         self.assertIsNone(sketch.mark_object(mark_callback, (15, 15)))
 
         self.assertEqual(sketch.mark_object(mark_callback, (0, 0)), 10)
-        sketch.delete_object(10)
+        self.assertEqual(sketch.delete_object(delete_callback, 10), 10)
         self.assertEqual(sketch.mark_object(mark_callback, (0, 0)), 1)
-        sketch.delete_object(1)
+        self.assertEqual(sketch.delete_object(delete_callback, 1), 1)
         self.assertEqual(sketch.mark_object(mark_callback, (0, 0)), 0)
-        sketch.delete_object(0)
+        self.assertEqual(sketch.delete_object(delete_callback, 0), 0)
         self.assertIsNone(sketch.mark_object(mark_callback, (0, 0)))
 
     def test_move_object(self):

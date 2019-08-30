@@ -41,8 +41,9 @@ class SketchLogic:
                                          mirror=mirror)
         return callback(index, position, self.objects[index])
 
-    def delete_object(self, index):
+    def delete_object(self, callback, index):
         self.objects.pop(index)
+        return callback(index)
 
     def move_object(self, callback, index, delta_position, intermediate=False):
         position = self.objects[index].move(delta_position, intermediate)
