@@ -1,6 +1,3 @@
-from logic.image_logic import ImageLogic
-
-
 class Command:
     def __init__(self, sketch, event, command_name):
         self.sketch = sketch
@@ -14,9 +11,8 @@ class Command:
     def on_move(self, event):
         self._prepare_shape(event.x, event.y)
         kwargs = {}
-        if self.index is not None:
-            kwargs['index'] = self.index
-        self.index = self.sketch.draw_object(self.image_name, self.pos, self.size, **kwargs)
+
+        self.index = self.sketch.draw_object(self.image_name, self.pos, self.size, **self.kwargs)
 
     def on_release(self, event):
         self._prepare_shape(event.x, event.y)
@@ -26,7 +22,7 @@ class Command:
                                 self.image_name,
                                 self.pos,
                                 self.size,
-                                index=self.index)
+                                **self.kwargs)
 
     def _prepare_shape(self, x, y):
         self.size = (abs(x - self.start_pos[0]), abs(y - self.start_pos[1]))
@@ -40,3 +36,14 @@ class Command:
         new_x = int((x + self.start_pos[0]) / 2)
         new_y = int((y + self.start_pos[1]) / 2)
         self.pos = (new_x, new_y)
+
+    @property
+    def kwargs(self):
+        kwargs = {}
+        if self.index is not None:
+            kwargs['index'] = self.index
+        if self.rotate is not 0:
+            kwargs['rotate'] = self.rotate
+        if self.mirror:
+            kwargs['mirror'] = self.mirror
+        return kwargs
