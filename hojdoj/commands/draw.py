@@ -42,7 +42,7 @@ class Command:
         kwargs = {}
         if self.index is not None:
             kwargs['index'] = self.index
-        if self.rotate is not 0:
+        if self.rotation is not 0:
             kwargs['rotation'] = self.rotation
         if self.mirror:
             kwargs['mirror'] = self.mirror

@@ -123,6 +123,15 @@ class SketchGui(tk.Frame):
         self.marked_object = index
         return self.marked_object
 
+    def rotate_object(self, *args, **kwargs):
+        self.logic.rotate_object(self.rotate_object_callback, *args, **kwargs)
+
+    def rotate_object_callback(self, index, rotation, logic_image):
+        self.canvas.delete(self.objects[index])
+        new_image = ImageTk.PhotoImage(logic_image.image)
+        self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
+        self.images[index] = new_image
+
     def delete_object(self, index):
         self.logic.delete_object(self.delete_object_callback, index)
 
@@ -134,6 +143,7 @@ class SketchGui(tk.Frame):
         return {
             'draw': self.draw_object,
             'move': self.move_object,
+            'rotate': self.rotate_object,
             'delete': self.delete_object
         }
 

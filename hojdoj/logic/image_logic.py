@@ -1,4 +1,5 @@
 from PIL import Image, ImageOps
+import numpy as np
 
 from DTools.fillers import NoFiller
 from DTools.tools import sum_points
@@ -30,6 +31,13 @@ class ImageLogic:
         if not intermediate:
             self.position = new_pos
         return new_pos
+
+    def rotate(self, rotation, intermediate=False):
+        new_rotation = np.mod(self.rotation+rotation, 360)
+        self.update(rotation=new_rotation)
+        if intermediate:
+            self.rotation = self.rotation-rotation
+        return new_rotation
 
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:
