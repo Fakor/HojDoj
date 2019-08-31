@@ -13,3 +13,7 @@ def mark_callback(index):
 
 def delete_callback(index):
     return index
+
+
+def rotate_callback(index, image):
+    return index, image.rotation

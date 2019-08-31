@@ -5,14 +5,14 @@ from DTools.tools import sum_points
 
 
 class ImageLogic:
-    def __init__(self, path, position, size, filler=None, rotate=0, mirror=False):
+    def __init__(self, path, position, size, filler=None, rotation=0, mirror=False):
         self.position = position
         self.size = size
         if filler is None:
             self.filler = NoFiller()
         else:
             self.filler = filler
-        self.rotate = rotate
+        self.rotation = rotation
         self.mirror = mirror
         self.raw_image = Image.open(path)
         self.image = None
@@ -31,15 +31,15 @@ class ImageLogic:
             self.position = new_pos
         return new_pos
 
-    def update(self, position=None, size=None, filler=None, rotate=None, mirror=None):
+    def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:
             self.position = position
         if size is not None:
             self.size = size
         if filler is not None:
             self.filler = filler
-        if rotate is not None:
-            self.rotate = rotate
+        if rotation is not None:
+            self.rotation = rotation
         if mirror is not None:
             self.mirror = mirror
 
@@ -47,7 +47,7 @@ class ImageLogic:
             return
         self.image = self.raw_image.resize(self.size, Image.NEAREST)
         self.image = self.filler.fill_image(self.image)
-        self.image = self.image.rotate(self.rotate, expand=True)
+        self.image = self.image.rotate(self.rotation, expand=True)
 
         if self.mirror:
             self.image = ImageOps.mirror(self.image)

@@ -6,12 +6,12 @@ class Command:
         self.start_pos = (event.x, event.y)
         self.pos = self.start_pos
         self.size = (0,0)
+        self.rotation = 0
+        self.mirror = False
         self.index = None
 
     def on_move(self, event):
         self._prepare_shape(event.x, event.y)
-        kwargs = {}
-
         self.index = self.sketch.draw_object(self.image_name, self.pos, self.size, **self.kwargs)
 
     def on_release(self, event):
@@ -28,10 +28,10 @@ class Command:
         self.size = (abs(x - self.start_pos[0]), abs(y - self.start_pos[1]))
 
         if y < self.start_pos[1]:
-            self.rotate = 180
+            self.rotation = 180
             self.mirror = x > self.start_pos[0]
         else:
-            self.rotate = 0
+            self.rotation = 0
             self.mirror = x < self.start_pos[0]
         new_x = int((x + self.start_pos[0]) / 2)
         new_y = int((y + self.start_pos[1]) / 2)
@@ -43,7 +43,7 @@ class Command:
         if self.index is not None:
             kwargs['index'] = self.index
         if self.rotate is not 0:
-            kwargs['rotate'] = self.rotate
+            kwargs['rotation'] = self.rotation
         if self.mirror:
             kwargs['mirror'] = self.mirror
         return kwargs

@@ -31,13 +31,16 @@ class SketchLogic:
     def object_size(self, index):
         return self.objects[index].size
 
+    def object_rotation(self, index):
+        return self.objects[index].rotation
+
     def draw_object(self, callback, name, position, size, index=None, rotate=0, mirror=False):
         if index is None:
             index = self.next_image_index()
         self.objects[index] = ImageLogic(self.image_templates[name],
                                          position,
                                          size,
-                                         rotate=rotate,
+                                         rotation=rotate,
                                          mirror=mirror)
         return callback(index, position, self.objects[index])
 
@@ -48,6 +51,10 @@ class SketchLogic:
     def move_object(self, callback, index, delta_position, intermediate=False):
         position = self.objects[index].move(delta_position, intermediate)
         return callback(index, position)
+
+    def rotate_object(self, callback, index, rotation, intermediate=False):
+        self.objects[index].update(rotation=rotation)
+        return callback(index, self.objects[index])
 
     def mark_object(self, callback, position):
         self.marked_object_index = None
