@@ -53,8 +53,11 @@ class SketchLogic:
         return callback(index, position)
 
     def rotate_object(self, callback, index, rotation, intermediate=False):
+        old_rotation = self.object_rotation(index)
         self.objects[index].update(rotation=rotation)
-        return callback(index, self.objects[index])
+        if intermediate:
+            self.objects[index].rotation = old_rotation
+        return callback(index, rotation, self.objects[index])
 
     def mark_object(self, callback, position):
         self.marked_object_index = None

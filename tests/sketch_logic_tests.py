@@ -53,6 +53,16 @@ class SketchLogicTests(unittest.TestCase):
         self.assertEqual(rotation, 20)
         self.assertEqual(sketch.object_rotation(0), 20)
 
+    def test_rotate_object_intermediate(self):
+        sketch = SketchLogic(IMAGE_TEMPLATES)
+
+        sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
+        self.assertEqual(sketch.object_rotation(0), 0)
+
+        index, rotation = sketch.rotate_object(rotate_callback, 0, 20, intermediate=True)
+        self.assertEqual(rotation, 20)
+        self.assertEqual(sketch.object_rotation(0), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

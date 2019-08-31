@@ -15,5 +15,5 @@ def delete_callback(index):
     return index
 
 
-def rotate_callback(index, image):
-    return index, image.rotation
+def rotate_callback(index, rotation, image):
+    return index, rotation
