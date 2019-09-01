@@ -81,6 +81,20 @@ class SketchLogicTests(unittest.TestCase):
         self.assertEqual(resize, (-7, 7))
         self.assertEqual(sketch.object_size(index), (0, 17))
 
+    def test_resize_object_intermediate(self):
+        sketch = SketchLogic(IMAGE_TEMPLATES)
+
+        sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
+        self.assertEqual(sketch.object_size(0), (10, 5))
+
+        index, size = sketch.resize_object(resize_callback, 0, (-3, 5), intermediate=True)
+        self.assertEqual(size, (-3, 5))
+        self.assertEqual(sketch.object_size(index), (10, 5))
+
+        index, resize = sketch.resize_object(resize_callback, 0, (-10, 7))
+        self.assertEqual(resize, (-10, 7))
+        self.assertEqual(sketch.object_size(index), (0, 12))
+
 
 if __name__ == '__main__':
     unittest.main()
