@@ -45,7 +45,7 @@ class ImageLogic:
         self.update(size=new_size)
         if intermediate:
             self.size = old_size
-        return new_size[0]-old_size[0], new_size[1] - old_size[1]
+        return new_size
 
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:

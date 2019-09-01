@@ -7,6 +7,7 @@ from DTools import fillers
 from commands import sketch
 from DTools.command_basics import command_from_meta
 from logic.sketch_logic import SketchLogic
+from DTools.tools import sum_points
 
 
 class SketchGui(tk.Frame):
@@ -135,9 +136,9 @@ class SketchGui(tk.Frame):
     def resize_object(self, *args, **kwargs):
         self.logic.resize_object(self.resize_object_callback, *args, **kwargs)
 
-    def resize_object_callback(self, index, dsize, logic_image):
+    def resize_object_callback(self, index, size, logic_image):
         self.canvas.delete(self.objects[index])
-        if logic_image.have_size():
+        if not any([el<=0 for el in size]):
             new_image = ImageTk.PhotoImage(logic_image.image)
             self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
             self.images[index] = new_image
@@ -188,6 +189,9 @@ class SketchGui(tk.Frame):
 
     def get_object_position(self, index):
         return self.logic.object_position(index)
+
+    def get_object_size(self, index):
+        return self.logic.object_size(index)
 
     def _undo(self, event):
         self.undo_command()
