@@ -11,16 +11,8 @@ class Command:
         self.index = self.sketch.mark_object((event.x, event.y))
         if self.index is None:
             return
-        self.image = self.sketch.objects[self.index]
         self.orig = self.sketch.get_object_position(self.index)
         self.start_angle = self.get_angle(event.x, event.y)
-        #self.degrees = degrees
-
-    def get_kwargs(self):
-        return {
-            'index': self.index,
-            'degrees': self.degrees
-        }
 
     def on_move(self, event):
         if self.index is None:
@@ -35,9 +27,6 @@ class Command:
         self.sketch.new_command(self.name,
                                 self.index,
                                 rotation)
-
-    def _update_image(self):
-        self.image.update(rotate=self.image_angle+self.degrees)
 
     def get_angle(self, x, y):
         x_orig, y_orig = self.orig
