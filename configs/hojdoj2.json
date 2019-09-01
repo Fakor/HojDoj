@@ -58,17 +58,16 @@
 	    "path": "$PROJ_HOME/hojdoj/commands/rotate.py",
 	    "image": "$PROJ_HOME/images/commands/rotate.png"
 	},
+	"resize": {
+	    "path": "$PROJ_HOME/hojdoj/commands/resize.py",
+	    "image": "$PROJ_HOME/images/commands/resize.png"
+	},
 	"delete": {
 	    "path": "$PROJ_HOME/hojdoj/commands/delete.py",
 	    "image": "$PROJ_HOME/images/commands/delete.png"
 	}
     },
     "old_commands":[
-	{
-	    "name": "Resize",
-	    "path": "$PROJ_HOME/hojdoj/commands/resize.py",
-	    "image": "$PROJ_HOME/images/commands/resize.png"
-	},
 	{
 	    "name": "Jump",
 	    "path": "$PROJ_HOME/hojdoj/commands/jump.py",

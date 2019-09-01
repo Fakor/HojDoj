@@ -132,6 +132,16 @@ class SketchGui(tk.Frame):
         self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
         self.images[index] = new_image
 
+    def resize_object(self, *args, **kwargs):
+        self.logic.resize_object(self.resize_object_callback, *args, **kwargs)
+
+    def resize_object_callback(self, index, dsize, logic_image):
+        self.canvas.delete(self.objects[index])
+        if logic_image.have_size():
+            new_image = ImageTk.PhotoImage(logic_image.image)
+            self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
+            self.images[index] = new_image
+
     def delete_object(self, index):
         self.logic.delete_object(self.delete_object_callback, index)
 
@@ -144,6 +154,7 @@ class SketchGui(tk.Frame):
             'draw': self.draw_object,
             'move': self.move_object,
             'rotate': self.rotate_object,
+            'resize': self.resize_object,
             'delete': self.delete_object
         }
 
