@@ -2,8 +2,6 @@ import numpy as np
 
 
 class Command:
-    name = 'rotate'
-
     def __init__(self, sketch, event, command_name):
         self.command_name = command_name
         self.sketch = sketch

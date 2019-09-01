@@ -1,6 +1,4 @@
 class Command:
-    name = 'move'
-
     def __init__(self, sketch, event, command_name):
         self.name = command_name
         self.sketch = sketch
