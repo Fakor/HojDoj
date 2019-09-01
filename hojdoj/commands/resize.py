@@ -19,14 +19,16 @@ class Command:
     def on_move(self, event):
         if self.index is None:
             return
-        dpos = (self.mark_x- event.x, self.mark_y - event.y)
+        dpos = self.get_dpos(event.x, event.y)
         self.sketch.resize_object(self.index, dpos, intermediate=True)
 
     def on_release(self, event):
         if self.index is None:
             return
-        dpos = (self.mark_x- event.x, self.mark_y - event.y)
+        dpos = self.get_dpos(event.x, event.y)
         self.sketch.new_command(self.name,
                                 self.index,
                                 dpos)
 
+    def get_dpos(self, x, y):
+        return 2*(self.mark_x - x), 2*(self.mark_y - y)
