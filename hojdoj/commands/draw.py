@@ -46,4 +46,5 @@ class Command:
             kwargs['rotation'] = self.rotation
         if self.mirror:
             kwargs['mirror'] = self.mirror
+        kwargs['filler'] = self.sketch.filler
         return kwargs

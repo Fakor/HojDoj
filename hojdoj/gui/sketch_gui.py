@@ -7,7 +7,6 @@ from DTools import fillers
 from commands import sketch
 from DTools.command_basics import command_from_meta
 from logic.sketch_logic import SketchLogic
-from DTools.tools import sum_points
 
 
 class SketchGui(tk.Frame):
@@ -39,7 +38,7 @@ class SketchGui(tk.Frame):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.filler = fillers.ColorFiller(config['default_color'])
+        self.filler = (255, 255, 255)
 
         canvas_width = int(width*0.87)
         canvas_height = height
@@ -74,7 +73,7 @@ class SketchGui(tk.Frame):
         self.image_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Bilder", background='white')
         for name, path in config['image_templates'].items():
             self.image_buttons.add_button(path,
-                                          self.filler,
+                                          self.logic.get_filler(config['default_color']),
                                           self.image_tool_active,
                                           name)
         self.image_buttons.grid(row=1)
@@ -177,8 +176,8 @@ class SketchGui(tk.Frame):
         self.interactive_command = sketch.Command
 
     def color_filler_active(self, color):
-        self.filler = fillers.ColorFiller(color)
-        self.image_buttons.update_filler(self.filler)
+        self.filler = tuple(color)
+        self.image_buttons.update_filler(fillers.ColorFiller(color))
 
     def elastic_image_filler_active(self, elastic_meta):
         self.filler = fillers.ElasticImageFiller(elastic_meta)
