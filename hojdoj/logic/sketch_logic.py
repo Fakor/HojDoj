@@ -1,5 +1,6 @@
 from collections import OrderedDict
 from logic.image_logic import ImageLogic
+from DTools.fillers import *
 
 
 class SketchLogic:
@@ -12,12 +13,6 @@ class SketchLogic:
 
     def get_object(self, index):
         return self.objects[index]
-
-    def get_command_table(self):
-        return {
-            'draw': self.draw_object,
-            'move': self.move_object
-        }
 
     def next_image_index(self):
         while self.object_index in self.used_object_indexes:
@@ -33,6 +28,10 @@ class SketchLogic:
 
     def object_rotation(self, index):
         return self.objects[index].rotation
+
+    def get_filler(self, arg):
+        if isinstance(arg, list) and len(arg) == 3:
+            return ColorFiller(arg)
 
     def draw_object(self, callback, name, position, size, index=None, rotation=0, mirror=False):
         if index is None:

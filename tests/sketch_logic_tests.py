@@ -1,6 +1,8 @@
 import unittest
 
 from logic.sketch_logic import SketchLogic
+from DTools.fillers import *
+
 from constants import *
 from functions import *
 
@@ -95,6 +97,12 @@ class SketchLogicTests(unittest.TestCase):
         self.assertEqual(size, (0, 12))
         self.assertEqual(sketch.object_size(index), (0, 12))
 
+    def test_get_color_filler(self):
+        sketch = SketchLogic(IMAGE_TEMPLATES)
+        filler = sketch.get_filler([100, 150, 200])
+
+        self.assertTrue(isinstance(filler, ColorFiller))
+        self.assertEqual(filler.color, [100, 150, 200])
 
 if __name__ == '__main__':
     unittest.main()
