@@ -17,3 +17,7 @@ def delete_callback(index):
 
 def rotate_callback(index, rotation, image):
     return index, rotation
+
+
+def resize_callback(index, dsize, image):
+    return index, dsize

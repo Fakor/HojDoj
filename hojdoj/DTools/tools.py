@@ -23,8 +23,11 @@ def value_from_string(text):
             return txt_tmp
 
 
-def sum_points(*points):
-    return [sum(el) for el in zip(*points)]
+def sum_points(*points, min_value=None):
+    values = [sum(el) for el in zip(*points)]
+    if min_value is not None:
+        values = [max(el, 0) for el in values]
+    return values
 
 
 def image_replace_white(image, new):

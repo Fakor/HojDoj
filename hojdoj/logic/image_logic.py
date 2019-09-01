@@ -39,6 +39,14 @@ class ImageLogic:
             self.rotation = self.rotation-rotation
         return new_rotation
 
+    def resize(self, dsize, intermediate=False):
+        old_size = self.size
+        new_size = tuple(sum_points(self.size, dsize, min_value=0))
+        self.update(size=new_size)
+        if intermediate:
+            pass
+        return new_size[0]-old_size[0], new_size[1] - old_size[1]
+
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:
             self.position = position
