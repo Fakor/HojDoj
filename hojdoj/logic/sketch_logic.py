@@ -30,12 +30,20 @@ class SketchLogic:
         return self.objects[index].rotation
 
     def get_filler(self, arg):
-        if isinstance(arg, tuple) and len(arg) == 3:
+        if (isinstance(arg, tuple) or isinstance(arg, list)) and len(arg) == 3:
             return ColorFiller(arg)
         else:
             return NoFiller()
 
-    def draw_object(self, callback, name, position, size, index=None, rotation=0, mirror=False, filler=None):
+    def draw_object(self,
+                    callback,
+                    name,
+                    position,
+                    size,
+                    index=None,
+                    rotation=0,
+                    mirror=False,
+                    filler=None):
         if index is None:
             index = self.next_image_index()
         self.objects[index] = ImageLogic(self.image_templates[name],
@@ -46,7 +54,9 @@ class SketchLogic:
                                          filler=self.get_filler(filler))
         return callback(index, position, self.objects[index])
 
-    def delete_object(self, callback, index):
+    def delete_object(self, callback, index=None):
+        if index is None:
+            index = self.marked_object_index
         self.objects.pop(index)
         return callback(index)
 
