@@ -52,6 +52,7 @@ class SketchLogic:
                                          rotation=rotation,
                                          mirror=mirror,
                                          filler=self.get_filler(filler))
+        self.marked_object_index = index
         return callback(index, position, self.objects[index])
 
     def delete_object(self, callback, index=None):

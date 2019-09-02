@@ -12,6 +12,11 @@ class InterpreterTests(unittest.TestCase):
         expected_values = ['SQUARE', '4', '6.7', '(5,7)', 'index=5', 'position=(5,6)']
         self.assertListEqual(values, expected_values)
 
+    def test_no_args_split(self):
+        values = arg_split(")")
+        expected_values = []
+        self.assertEqual(values, expected_values)
+
     def test_interpret_values(self):
         values = ['SQUARE', '4', '6.7', '(5,7)', 'index=5', 'position=(5,6)']
         args, kwargs = interpret_values(values)

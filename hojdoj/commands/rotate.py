@@ -3,7 +3,7 @@ import numpy as np
 
 class Command:
     def __init__(self, sketch, event, command_name):
-        self.command_name = command_name
+        self.name = command_name
         self.sketch = sketch
 
         self.index = self.sketch.mark_object((event.x, event.y))

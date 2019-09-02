@@ -102,8 +102,7 @@ class SketchGui(tk.Frame):
         return self.logic.draw_object(self.draw_object_callback, *args, **kwargs)
 
     def draw_object_callback(self, index, position, logic_image):
-        if index in self.objects:
-            self.canvas.delete(self.objects[index])
+        self._delete(index)
         if logic_image.have_size():
             new_image = ImageTk.PhotoImage(logic_image.image)
             self.objects[index] = self.canvas.create_image(*position, image=new_image)
@@ -127,7 +126,7 @@ class SketchGui(tk.Frame):
         self.logic.rotate_object(self.rotate_object_callback, *args, **kwargs)
 
     def rotate_object_callback(self, index, rotation, logic_image):
-        self.canvas.delete(self.objects[index])
+        self._delete(index)
         new_image = ImageTk.PhotoImage(logic_image.image)
         self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
         self.images[index] = new_image
@@ -136,18 +135,18 @@ class SketchGui(tk.Frame):
         self.logic.resize_object(self.resize_object_callback, *args, **kwargs)
 
     def resize_object_callback(self, index, size, logic_image):
-        self.canvas.delete(self.objects[index])
+        self._delete(index)
         if not any([el<=0 for el in size]):
             new_image = ImageTk.PhotoImage(logic_image.image)
             self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
             self.images[index] = new_image
 
-    def delete_object(self, index):
+    def delete_object(self, index=None):
         self.logic.delete_object(self.delete_object_callback, index)
 
     def delete_object_callback(self, index):
-        self.canvas.delete(self.objects.pop(index))
-        self.images.pop(index)
+        if self._delete(index):
+            self.images.pop(index)
 
     def get_command_table(self):
         return {
@@ -191,6 +190,12 @@ class SketchGui(tk.Frame):
 
     def get_object_size(self, index):
         return self.logic.object_size(index)
+
+    def _delete(self, index):
+        if index in self.objects:
+            self.canvas.delete(self.objects[index])
+            return True
+        return False
 
     def _undo(self, event):
         self.undo_command()

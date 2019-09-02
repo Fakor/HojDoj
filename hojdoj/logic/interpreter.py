@@ -39,7 +39,8 @@ def arg_split(text):
     arg_start = 0
     while i < len(text):
         if text[i] == ',' or text[i] == ')':
-            args.append(text[arg_start:i].strip())
+            if arg_start != i:
+                args.append(text[arg_start:i].strip())
             arg_start = i + 1
         elif text[i] == '(':
             i = text[i:].find(')') + i
