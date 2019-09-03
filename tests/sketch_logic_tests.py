@@ -34,14 +34,14 @@ class SketchLogicTests(unittest.TestCase):
         self.assertEqual(sketch.object_position(0), (30, 20))
         self.assertEqual(sketch.object_size(0), (10, 5))
 
-        self.assertEqual(sketch.move_object(move_callback, 0, (-5, 15)), (0, (25,35)))
+        self.assertEqual(sketch.move_object(move_callback, (-5, 15)), (0, (25,35)))
         self.assertEqual(sketch.object_position(0), (25,35))
 
     def test_move_object_intermediate(self):
         sketch = SketchLogic(IMAGE_TEMPLATES)
         sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
 
-        index, intermediate_pos = sketch.move_object(move_callback, 0, (10, -15), intermediate=True)
+        index, intermediate_pos = sketch.move_object(move_callback,(10, -15),  index=0, intermediate=True)
         self.assertEqual(intermediate_pos, (40, 5))
         self.assertEqual(sketch.object_position(0), (30,  20))
 

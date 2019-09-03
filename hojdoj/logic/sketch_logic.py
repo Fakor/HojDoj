@@ -61,7 +61,9 @@ class SketchLogic:
         self.objects.pop(index)
         return callback(index)
 
-    def move_object(self, callback, index, delta_position, intermediate=False):
+    def move_object(self, callback, delta_position, index=None, intermediate=False):
+        if index is None:
+            index = self.marked_object_index
         position = self.objects[index].move(delta_position, intermediate)
         return callback(index, position)
 

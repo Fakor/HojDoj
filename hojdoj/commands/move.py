@@ -14,12 +14,12 @@ class Command:
         if self.index is None:
             return
         self.dpos = (event.x - self.mark_x, event.y - self.mark_y)
-        self.sketch.move_object(self.index, self.dpos, intermediate=True)
+        self.sketch.move_object(self.dpos, index=self.index, intermediate=True)
 
     def on_release(self, event):
         if self.index is None:
             return
         self.dpos = (event.x - self.mark_x, event.y - self.mark_y)
         self.sketch.new_command(self.name,
-                                self.index,
-                                self.dpos)
+                                self.dpos,
+                                index=self.index)
