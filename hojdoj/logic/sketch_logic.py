@@ -67,7 +67,9 @@ class SketchLogic:
         position = self.objects[index].move(delta_position, intermediate)
         return callback(index, position)
 
-    def rotate_object(self, callback, index, rotation, intermediate=False):
+    def rotate_object(self, callback, rotation, index=None, intermediate=False):
+        if index is None:
+            index = self.marked_object_index
         self.objects[index].rotate(rotation, intermediate)
         return callback(index, rotation, self.objects[index])
 

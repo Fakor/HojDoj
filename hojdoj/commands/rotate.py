@@ -16,15 +16,15 @@ class Command:
         if self.index is None:
             return
         rotation = self.get_angle(event.x,event.y)-self.start_angle
-        self.sketch.rotate_object(self.index, rotation, intermediate=True)
+        self.sketch.rotate_object(rotation, index=self.index, intermediate=True)
 
     def on_release(self, event):
         if self.index is None:
             return
         rotation = self.get_angle(event.x,event.y)-self.start_angle
         self.sketch.new_command(self.name,
-                                self.index,
-                                rotation)
+                                rotation,
+                                index=self.index)
 
     def get_angle(self, x, y):
         x_orig, y_orig = self.orig

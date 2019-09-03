@@ -11,4 +11,4 @@ class Command:
         if self.index is None:
             return
         self.sketch.new_command(self.command_name,
-                                self.index)
+                                index=self.index)

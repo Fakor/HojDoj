@@ -51,11 +51,11 @@ class SketchLogicTests(unittest.TestCase):
         sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_rotation(0), 0)
 
-        index, rotation = sketch.rotate_object(rotate_callback, 0, 20)
+        index, rotation = sketch.rotate_object(rotate_callback, 20)
         self.assertEqual(rotation, 20)
         self.assertEqual(sketch.object_rotation(index), 20)
 
-        index, rotation = sketch.rotate_object(rotate_callback, 0, 20)
+        index, rotation = sketch.rotate_object(rotate_callback, 20, index=0)
         self.assertEqual(rotation, 20)
         self.assertEqual(sketch.object_rotation(index), 40)
 
@@ -65,7 +65,7 @@ class SketchLogicTests(unittest.TestCase):
         sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_rotation(0), 0)
 
-        index, rotation = sketch.rotate_object(rotate_callback, 0, 20, intermediate=True)
+        index, rotation = sketch.rotate_object(rotate_callback, 20, intermediate=True)
         self.assertEqual(rotation, 20)
         self.assertEqual(sketch.object_rotation(index), 0)
 
