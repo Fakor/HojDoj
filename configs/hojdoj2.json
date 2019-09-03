@@ -62,6 +62,10 @@
 	    "path": "$PROJ_HOME/hojdoj/commands/resize.py",
 	    "image": "$PROJ_HOME/images/commands/resize.png"
 	},
+	"mark": {
+	    "path": "$PROJ_HOME/hojdoj/commands/mark.py",
+	    "image": "$PROJ_HOME/images/commands/mark.png"
+	},
 	"delete": {
 	    "path": "$PROJ_HOME/hojdoj/commands/delete.py",
 	    "image": "$PROJ_HOME/images/commands/delete.png"

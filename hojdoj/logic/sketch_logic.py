@@ -77,6 +77,10 @@ class SketchLogic:
         actual_dsize = self.objects[index].resize(dsize, intermediate)
         return callback(index, actual_dsize, self.objects[index])
 
+    def mark_object_by_index(self, callback, index):
+        self.marked_object_index = index
+        return callback(self.marked_object_index)
+
     def mark_object(self, callback, position):
         self.marked_object_index = None
         for index, obj in reversed(self.objects.items()):

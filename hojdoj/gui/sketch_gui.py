@@ -118,6 +118,9 @@ class SketchGui(tk.Frame):
     def mark_object(self, position):
         return self.logic.mark_object(self.mark_object_callback, position)
 
+    def mark_object_by_index(self, index):
+        return self.logic.mark_object_by_index(self.mark_object_callback, index)
+
     def mark_object_callback(self, index):
         self.marked_object = index
         return self.marked_object
@@ -154,6 +157,7 @@ class SketchGui(tk.Frame):
             'move': self.move_object,
             'rotate': self.rotate_object,
             'resize': self.resize_object,
+            'mark': self.mark_object_by_index,
             'delete': self.delete_object
         }
 
