@@ -16,7 +16,7 @@ class SketchGui(tk.Frame):
         width, height = size
         tk.Frame.__init__(self, parent, width=width, height=height)
 
-        self.logic = SketchLogic(config['image_templates'])
+        self.logic = SketchLogic(config['image_templates'], config['fillers'])
         self.images = {}
 
         bg_color = color_to_tk(config.get_value('background_color'))
@@ -81,19 +81,19 @@ class SketchGui(tk.Frame):
         self.color_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Färger", background='white')
         for color in config['sketch_colors']:
             self.color_buttons.add_button(config['color_button_image_path'],
-                                          fillers.ColorFiller(color),
+                                          self.logic.get_filler(color),
                                           self.color_filler_active,
                                           color)
         self.color_buttons.grid(row=2)
 
-        # self.elastic_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header='Elastisk', background='white')
-        # for elastic in self.config['image_elastics']:
-        #     self.elastic_buttons.add_button(config['color_button_image_path'],
-        #                                     fillers.ElasticImageFiller(elastic),
-        #                                     self.elastic_image_filler_active,
-        #                                     elastic)
-        #
-        # self.elastic_buttons.grid(row=3)
+        self.elastic_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header='Elastisk', background='white')
+        for elastic in self.config['fillers'].keys():
+            self.elastic_buttons.add_button(config['color_button_image_path'],
+                                            self.logic.get_filler(elastic),
+                                            self.elastic_image_filler_active,
+                                            elastic)
+
+        self.elastic_buttons.grid(row=3)
 
     def new_command(self, command_name, *args, **kwargs):
         self.parent.new_command(command_name, *args, **kwargs)
@@ -180,11 +180,11 @@ class SketchGui(tk.Frame):
 
     def color_filler_active(self, color):
         self.filler = tuple(color)
-        self.image_buttons.update_filler(fillers.ColorFiller(color))
+        self.image_buttons.update_filler(self.logic.get_filler(color))
 
-    def elastic_image_filler_active(self, elastic_meta):
-        self.filler = fillers.ElasticImageFiller(elastic_meta)
-        self.image_buttons.update_filler(self.filler)
+    def elastic_image_filler_active(self, name):
+        self.filler = name
+        self.image_buttons.update_filler(self.logic.get_filler(name))
 
     def get_image_path(self, image_name):
         return self.config['image_templates'][image_name]

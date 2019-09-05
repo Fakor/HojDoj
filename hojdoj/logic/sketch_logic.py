@@ -4,8 +4,12 @@ from DTools.fillers import *
 
 
 class SketchLogic:
-    def __init__(self, image_templates):
+    def __init__(self, image_templates, fillers=None):
         self.image_templates = image_templates
+        if fillers is None:
+            self.fillers = dict()
+        else:
+            self.fillers = fillers
         self.objects = OrderedDict()
         self.marked_object_index = None
         self.object_index = 0
@@ -32,6 +36,10 @@ class SketchLogic:
     def get_filler(self, arg):
         if (isinstance(arg, tuple) or isinstance(arg, list)) and len(arg) == 3:
             return ColorFiller(arg)
+        elif isinstance(arg, str):
+            filler_meta = self.fillers[arg]
+            vertical = filler_meta['type'] == 'elastic_vertical'
+            return ElasticImageFiller(filler_meta['path'], vertical)
         else:
             return NoFiller()
 

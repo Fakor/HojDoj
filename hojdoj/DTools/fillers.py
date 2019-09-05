@@ -17,18 +17,14 @@ class ColorFiller:
 
 
 class ElasticImageFiller:
-    def __init__(self, elastic_meta):
-        self.meta = elastic_meta
-        self.elastic_image = Image.open(self.meta['path'])
-
+    def __init__(self, path, vertical):
+        self.elastic_image = Image.open(path)
+        self.vertical = vertical
         self.image = None
         self.id =None
 
     def fill_image(self, image):
-        return image_replace_elastic(image, self.elastic_image, self.meta['vertical'])
-
-    def get_arguments(self, command):
-        command.elastic_name = self.meta['name']
+        return image_replace_elastic(image, self.elastic_image, self.vertical)
 
 
 class NoFiller:
