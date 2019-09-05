@@ -73,7 +73,9 @@ class SketchLogic:
         self.objects[index].rotate(rotation, intermediate)
         return callback(index, rotation, self.objects[index])
 
-    def resize_object(self, callback, index, dsize, intermediate=False):
+    def resize_object(self, callback, dsize, index=None, intermediate=False):
+        if index is None:
+            index = self.marked_object_index
         actual_dsize = self.objects[index].resize(dsize, intermediate)
         return callback(index, actual_dsize, self.objects[index])
 

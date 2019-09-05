@@ -75,11 +75,11 @@ class SketchLogicTests(unittest.TestCase):
         sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_size(0), (10, 5))
 
-        index, size = sketch.resize_object(resize_callback, 0, (-3, 5))
+        index, size = sketch.resize_object(resize_callback, (-3, 5))
         self.assertEqual(size, (7, 10))
         self.assertEqual(sketch.object_size(index), (7, 10))
 
-        index, size = sketch.resize_object(resize_callback, 0, (-10, 7))
+        index, size = sketch.resize_object(resize_callback, (-10, 7), index=0)
         self.assertEqual(size, (0, 17))
         self.assertEqual(sketch.object_size(index), (0, 17))
 
@@ -89,11 +89,11 @@ class SketchLogicTests(unittest.TestCase):
         sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_size(0), (10, 5))
 
-        index, size = sketch.resize_object(resize_callback, 0, (-3, 5), intermediate=True)
+        index, size = sketch.resize_object(resize_callback, (-3, 5), intermediate=True)
         self.assertEqual(size, (7, 10))
         self.assertEqual(sketch.object_size(index), (10, 5))
 
-        index, size = sketch.resize_object(resize_callback, 0, (-10, 7))
+        index, size = sketch.resize_object(resize_callback, (-10, 7))
         self.assertEqual(size, (0, 12))
         self.assertEqual(sketch.object_size(index), (0, 12))
 
