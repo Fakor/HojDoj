@@ -44,5 +44,8 @@ def arg_split(text):
             arg_start = i + 1
         elif text[i] == '(':
             i = text[i:].find(')') + i
+        elif text[i] == '[':
+            i = text[i:].find(']') + i
+
         i += 1
     return args

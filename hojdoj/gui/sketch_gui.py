@@ -38,7 +38,7 @@ class SketchGui(tk.Frame):
         self.parent.bind('<Control-z>', self._undo)
         self.parent.bind('<Control-y>', self._redo)
 
-        self.filler = (255, 255, 255)
+        self.filler = config['default_color']
 
         canvas_width = int(width*0.87)
         canvas_height = height

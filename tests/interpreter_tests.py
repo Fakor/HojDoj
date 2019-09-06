@@ -8,8 +8,8 @@ from functions import *
 
 class InterpreterTests(unittest.TestCase):
     def test_arg_split(self):
-        values = arg_split("SQUARE, 4, 6.7, (5,7), index=5, position=(5,6))")
-        expected_values = ['SQUARE', '4', '6.7', '(5,7)', 'index=5', 'position=(5,6)']
+        values = arg_split("SQUARE, 4, 6.7, (5,7), index=5, position=(5,6), filler=[2,3,4])")
+        expected_values = ['SQUARE', '4', '6.7', '(5,7)', 'index=5', 'position=(5,6)', 'filler=[2,3,4]']
         self.assertListEqual(values, expected_values)
 
     def test_no_args_split(self):
@@ -18,13 +18,14 @@ class InterpreterTests(unittest.TestCase):
         self.assertEqual(values, expected_values)
 
     def test_interpret_values(self):
-        values = ['SQUARE', '4', '6.7', '(5,7)', 'index=5', 'position=(5,6)']
+        values = ['SQUARE', '4', '6.7', '(5,7)', 'index=5', 'position=(5,6)', 'filler=[2,3,4]']
         args, kwargs = interpret_values(values)
 
         expected_args = ['SQUARE', 4, 6.7, (5,7)]
         expected_kwargs = {
             'index': 5,
-            'position':(5, 6)
+            'position':(5, 6),
+            'filler': (2,3,4)
         }
 
         self.assertListEqual(args, expected_args)
