@@ -4,10 +4,11 @@ from PIL import ImageTk
 from DTools.tk_tools import color_to_tk
 from DTools.button_grid import ButtonGrid
 from DTools import fillers
-from commands import sketch
 from DTools.command_basics import command_from_meta
 from logic.sketch_logic import SketchLogic
 
+
+DRAW_COMMAND='draw'
 
 class SketchGui(tk.Frame):
     COLUMNS = 4
@@ -49,7 +50,7 @@ class SketchGui(tk.Frame):
         self.canvas.place(x=control_width, y=0, width=canvas_width, height=canvas_height)
 
         self.current_command = None
-        self.interactive_command_name = "draw"
+        self.interactive_command_name = DRAW_COMMAND
 
         self.control = tk.Frame(self)
         self.control.place(x=0, y=0, width=control_width, height=control_height)
@@ -174,9 +175,9 @@ class SketchGui(tk.Frame):
     def set_interactive_command(self, command_name):
         self.interactive_command_name = command_name
 
-    def image_tool_active(self, image_meta):
-        self.current_image = image_meta
-        self.interactive_command = sketch.Command
+    def image_tool_active(self, image_name):
+        self.current_image = image_name
+        self.interactive_command_name = DRAW_COMMAND
 
     def color_filler_active(self, color):
         self.filler = tuple(color)
