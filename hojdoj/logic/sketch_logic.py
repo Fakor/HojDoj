@@ -15,6 +15,13 @@ class SketchLogic:
         self.object_index = 0
         self.used_object_indexes = set()
 
+    def step(self):
+        ret = []
+        for index, obj in self.objects.items():
+            if obj.motion_update():
+                ret.append(index)
+        return ret
+
     def get_object(self, index):
         return self.objects[index]
 
@@ -98,3 +105,9 @@ class SketchLogic:
                 self.marked_object_index = index
                 break
         return callback(self.marked_object_index)
+
+    def set_velocity_to_object(self, callback, velocity, index=None):
+        if index is None:
+            index = self.marked_object_index
+        vel = self.objects[index].set_velocity(velocity)
+        return callback(index, vel)

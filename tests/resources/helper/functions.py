@@ -21,3 +21,7 @@ def rotate_callback(index, rotation, image):
 
 def resize_callback(index, dsize, image):
     return index, dsize
+
+
+def velocity_callback(index, velocity):
+    return index, velocity

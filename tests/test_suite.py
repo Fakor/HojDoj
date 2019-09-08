@@ -2,6 +2,7 @@ import unittest
 
 from sketch_logic_tests import SketchLogicTests
 from interpreter_tests import InterpreterTests
+from motion_tests import MotionTests
 
 def suite():
     suite = unittest.TestSuite()

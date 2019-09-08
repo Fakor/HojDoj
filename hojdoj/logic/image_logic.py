@@ -6,7 +6,7 @@ from DTools.tools import sum_points
 
 
 class ImageLogic:
-    def __init__(self, path, position, size, filler=None, rotation=0, mirror=False):
+    def __init__(self, path, position, size, filler=None, rotation=0, mirror=False, velocity=(0,0)):
         self.position = position
         self.size = size
         if filler is None:
@@ -15,6 +15,7 @@ class ImageLogic:
             self.filler = filler
         self.rotation = rotation
         self.mirror = mirror
+        self.velocity = velocity
         self.raw_image = Image.open(path)
         self.image = None
         self.update()
@@ -27,7 +28,7 @@ class ImageLogic:
         return (x2 - width_half <= x <= x2 + width_half) and (y2 - height_half <= y <= y2 + height_half)
 
     def move(self, delta_position, intermediate=False):
-        new_pos = tuple(sum_points(self.position, delta_position))
+        new_pos = sum_points(self.position, delta_position)
         if not intermediate:
             self.position = new_pos
         return new_pos
@@ -41,11 +42,15 @@ class ImageLogic:
 
     def resize(self, dsize, intermediate=False):
         old_size = self.size
-        new_size = tuple(sum_points(self.size, dsize, min_value=0))
+        new_size = sum_points(self.size, dsize, min_value=0)
         self.update(size=new_size)
         if intermediate:
             self.size = old_size
         return new_size
+
+    def set_velocity(self, velocity):
+        self.velocity = velocity
+        return velocity
 
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:
@@ -67,6 +72,11 @@ class ImageLogic:
 
         if self.mirror:
             self.image = ImageOps.mirror(self.image)
+
+    def motion_update(self):
+        org_pos = self.position
+        self.position = sum_points(self.position, self.velocity)
+        return org_pos != self.position
 
     def have_size(self):
         return all([el > 0 for el in self.size])

@@ -27,7 +27,7 @@ def sum_points(*points, min_value=None):
     values = [sum(el) for el in zip(*points)]
     if min_value is not None:
         values = [max(el, 0) for el in values]
-    return values
+    return tuple(values)
 
 
 def image_replace_white(image, new):

@@ -104,5 +104,6 @@ class SketchLogicTests(unittest.TestCase):
         self.assertTrue(isinstance(filler, ColorFiller))
         self.assertEqual(filler.color, [100, 150, 200])
 
+
 if __name__ == '__main__':
     unittest.main()
