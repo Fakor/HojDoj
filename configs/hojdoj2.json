@@ -42,6 +42,7 @@
     "default_color": [0,0,0],
     "default_image": "DÖRR", 
     "background_color": [255,255,255],
+    "step_time": 100,
     "console": {
 	"enabled": true
     },

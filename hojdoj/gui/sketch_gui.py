@@ -95,6 +95,8 @@ class SketchGui(tk.Frame):
                                             elastic)
 
         self.elastic_buttons.grid(row=3)
+        self.start_motion_cycle()
+
 
     def new_command(self, command_name, *args, **kwargs):
         self.parent.new_command(command_name, *args, **kwargs)
@@ -152,6 +154,12 @@ class SketchGui(tk.Frame):
         if self._delete(index):
             self.images.pop(index)
 
+    def set_velocity(self, *args, **kwargs):
+        self.logic.set_velocity_to_object(self.set_velocity_callback, *args, **kwargs)
+
+    def set_velocity_callback(self, index, velocity):
+        pass
+
     def get_command_table(self):
         return {
             'draw': self.draw_object,
@@ -159,7 +167,8 @@ class SketchGui(tk.Frame):
             'rotate': self.rotate_object,
             'resize': self.resize_object,
             'mark': self.mark_object_by_index,
-            'delete': self.delete_object
+            'delete': self.delete_object,
+            'velocity': self.set_velocity
         }
 
     def on_button_press(self, event):
@@ -195,6 +204,12 @@ class SketchGui(tk.Frame):
 
     def get_object_size(self, index):
         return self.logic.object_size(index)
+
+    def start_motion_cycle(self):
+        updates = self.logic.step()
+        for index, position in updates:
+            self.canvas.coords(self.objects[index], *position)
+        self.after(self.config['step_time'], self.start_motion_cycle)
 
     def _delete(self, index):
         if index in self.objects:

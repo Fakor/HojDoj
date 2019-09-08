@@ -21,8 +21,8 @@ class MotionTests(unittest.TestCase):
         self.assertEqual(velocity, (1.5, -2))
 
         updated = sketch.step()
-        self.assertListEqual(updated, [7])
+        self.assertListEqual(updated, [(7, (1.5, -2))])
         self.assertEqual(sketch.object_position(7), (1.5,  -2))
         updated = sketch.step()
-        self.assertListEqual(updated, [7])
+        self.assertListEqual(updated, [(7, (3, -4))])
         self.assertEqual(sketch.object_position(7), (3,  -4))

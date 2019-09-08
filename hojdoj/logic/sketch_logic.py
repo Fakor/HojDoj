@@ -19,7 +19,7 @@ class SketchLogic:
         ret = []
         for index, obj in self.objects.items():
             if obj.motion_update():
-                ret.append(index)
+                ret.append((index, obj.position))
         return ret
 
     def get_object(self, index):
