@@ -15,7 +15,8 @@ class ImageLogic:
             self.filler = filler
         self.rotation = rotation
         self.mirror = mirror
-        self.velocity = velocity
+        self.velocity = np.array(velocity)
+        self.range = None
         self.raw_image = Image.open(path)
         self.image = None
         self.update()
@@ -48,8 +49,9 @@ class ImageLogic:
             self.size = old_size
         return new_size
 
-    def set_velocity(self, velocity):
-        self.velocity = velocity
+    def set_velocity(self, velocity, range=None):
+        self.velocity = np.array(velocity)
+        self.range = range
         return velocity
 
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
@@ -75,7 +77,18 @@ class ImageLogic:
 
     def motion_update(self):
         org_pos = self.position
-        self.position = sum_points(self.position, self.velocity)
+        if self.range is not None:
+            d_range = np.sqrt(np.sum(self.velocity ** 2))
+            if d_range > self.range:
+                velocity = self.velocity * self.range / d_range
+                self.velocity = np.array((0, 0))
+                self.range = 0
+            else:
+                velocity = self.velocity
+                self.range -= d_range
+            self.position = sum_points(self.position, velocity)
+        else:
+            self.position = sum_points(self.position, self.velocity)
         return org_pos != self.position
 
     def have_size(self):

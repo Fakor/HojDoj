@@ -16,7 +16,7 @@ class MotionTests(unittest.TestCase):
         updated = sketch.step()
         self.assertListEqual(updated, [])
 
-        index, velocity = sketch.set_velocity_to_object(velocity_callback, (1.5, -2))
+        index, velocity = sketch.set_velocity_to_object(velocity_callback, (1.5, -2), range=6.25)
         self.assertEqual(index, 7)
         self.assertEqual(velocity, (1.5, -2))
 
@@ -26,3 +26,11 @@ class MotionTests(unittest.TestCase):
         updated = sketch.step()
         self.assertListEqual(updated, [(7, (3, -4))])
         self.assertEqual(sketch.object_position(7), (3,  -4))
+
+        updated = sketch.step()
+        self.assertListEqual(updated, [(7, (3.75, -5))])
+        self.assertEqual(sketch.object_position(7), (3.75,  -5))
+
+        updated = sketch.step()
+        self.assertListEqual(updated, [])
+        self.assertEqual(sketch.object_position(7), (3.75,  -5))

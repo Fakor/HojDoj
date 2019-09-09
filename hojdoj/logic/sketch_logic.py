@@ -106,8 +106,8 @@ class SketchLogic:
                 break
         return callback(self.marked_object_index)
 
-    def set_velocity_to_object(self, callback, velocity, index=None):
+    def set_velocity_to_object(self, callback, velocity, index=None, range=None):
         if index is None:
             index = self.marked_object_index
-        vel = self.objects[index].set_velocity(velocity)
+        vel = self.objects[index].set_velocity(velocity, range)
         return callback(index, vel)

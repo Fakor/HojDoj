@@ -10,6 +10,7 @@ from logic.sketch_logic import SketchLogic
 
 DRAW_COMMAND='draw'
 
+
 class SketchGui(tk.Frame):
     COLUMNS = 4
 
