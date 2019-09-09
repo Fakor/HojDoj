@@ -15,7 +15,7 @@ class ImageLogic:
             self.filler = filler
         self.rotation = rotation
         self.mirror = mirror
-        self.velocity = np.array(velocity)
+        self.velocity = velocity
         self.range = None
         self.raw_image = Image.open(path)
         self.image = None
@@ -50,7 +50,7 @@ class ImageLogic:
         return new_size
 
     def set_velocity(self, velocity, range=None):
-        self.velocity = np.array(velocity)
+        self.velocity = velocity
         self.range = range
         return velocity
 
@@ -78,11 +78,11 @@ class ImageLogic:
     def motion_update(self):
         org_pos = self.position
         if self.range is not None:
-            d_range = np.sqrt(np.sum(self.velocity ** 2))
+            d_range = np.hypot(*self.velocity)
             if d_range > self.range:
-                velocity = self.velocity * self.range / d_range
-                self.velocity = np.array((0, 0))
-                self.range = 0
+                velocity = np.array(self.velocity) * self.range / d_range
+                self.velocity = (0, 0)
+                self.range = None
             else:
                 velocity = self.velocity
                 self.range -= d_range

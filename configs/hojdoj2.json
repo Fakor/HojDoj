@@ -42,7 +42,7 @@
     "default_color": [0,0,0],
     "default_image": "DÖRR", 
     "background_color": [255,255,255],
-    "step_time": 100,
+    "step_time": 80,
     "console": {
 	"enabled": true
     },
@@ -70,6 +70,10 @@
 	"delete": {
 	    "path": "$PROJ_HOME/hojdoj/commands/delete.py",
 	    "image": "$PROJ_HOME/images/commands/delete.png"
+	},
+	"velocity": {
+	    "path": "$PROJ_HOME/hojdoj/commands/velocity.py",
+	    "image": "$PROJ_HOME/images/commands/velocity.png"
 	}
     },
     "old_commands":[
