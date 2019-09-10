@@ -78,18 +78,10 @@
 	"acc": {
 	    "path": "$PROJ_HOME/hojdoj/commands/acceleration.py",
 	    "image": "$PROJ_HOME/images/commands/acceleration.png"
-	}
-    },
-    "old_commands":[
-	{
-	    "name": "Jump",
+	},
+	"jump": {
 	    "path": "$PROJ_HOME/hojdoj/commands/jump.py",
 	    "image": "$PROJ_HOME/images/commands/jump.png"
-	},
-	{
-	    "name": "Mark",
-	    "path": "$PROJ_HOME/hojdoj/commands/mark.py",
-	    "image": "$PROJ_HOME/images/commands/mark.png"
 	}
-    ]
+    }
 }

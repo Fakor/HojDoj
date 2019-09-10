@@ -30,6 +30,22 @@ def sum_points(*points, min_value=None):
     return tuple(values)
 
 
+def count_jump_range(velocity, acceleration):
+    dx, dy = velocity
+    _, acc_y = acceleration
+    dy = np.sqrt(dy**2)
+    acc_y = -np.sqrt(acc_y**2)
+    rng = 0
+    pos = 0
+    while (np.sign(dy) == 1 or dy < pos):
+        rng += np.hypot(dx, dy)
+        dy += acc_y
+        pos += dy
+
+    overshot = dy-pos
+    rng += np.hypot(dx, dy)*overshot/(-dy)
+    return rng
+
 def image_replace_white(image, new):
     image = image.convert('RGBA')
     data = np.array(image)

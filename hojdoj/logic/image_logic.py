@@ -104,6 +104,7 @@ class ImageLogic:
             if d_range > self.range:
                 velocity = np.array(self.velocity) * self.range / d_range
                 self.velocity = (0, 0)
+                self.acceleration = (0, 0)
                 self.range = None
             else:
                 velocity = self.velocity

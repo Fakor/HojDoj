@@ -1,6 +1,7 @@
 import unittest
 
 from logic.sketch_logic import SketchLogic
+from DTools.tools import count_jump_range
 
 from constants import *
 from functions import *
@@ -73,3 +74,7 @@ class MotionTests(HojdojTestCase):
         self.assertFloatTupleEqual(sketch.object_velocity(5), (2, 4))
         self.assertFloatTupleEqual(sketch.object_acceleration(5), (1, -1))
         self.assertEqual(sketch.object_range(5), 100)
+
+    def test_count_jump_range(self):
+        rng = count_jump_range((1, 2), (0, -0.9))
+        self.assertAlmostEqual(rng, 8.9269, 3)

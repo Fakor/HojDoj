@@ -98,7 +98,6 @@ class SketchGui(tk.Frame):
         self.elastic_buttons.grid(row=3)
         self.start_motion_cycle()
 
-
     def new_command(self, command_name, *args, **kwargs):
         self.parent.new_command(command_name, *args, **kwargs)
 
@@ -167,6 +166,9 @@ class SketchGui(tk.Frame):
     def set_acceleration_callback(self, index, acceleration):
         pass
 
+    def set_motion(self, *args, **kwargs):
+        self.logic.set_motion(*args, **kwargs)
+
     def get_command_table(self):
         return {
             'draw': self.draw_object,
@@ -176,7 +178,8 @@ class SketchGui(tk.Frame):
             'mark': self.mark_object_by_index,
             'delete': self.delete_object,
             'vel': self.set_velocity,
-            'acc': self.set_acceleration
+            'acc': self.set_acceleration,
+            'motion': self.set_motion
         }
 
     def on_button_press(self, event):
