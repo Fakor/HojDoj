@@ -34,6 +34,9 @@ class SketchLogic:
     def object_position(self, index):
         return self.objects[index].position
 
+    def object_velocity(self, index):
+        return self.objects[index].velocity
+
     def object_size(self, index):
         return self.objects[index].size
 
@@ -106,8 +109,14 @@ class SketchLogic:
                 break
         return callback(self.marked_object_index)
 
-    def set_velocity_to_object(self, callback, velocity, index=None, range=None):
+    def set_velocity(self, callback, velocity, index=None, range=None):
         if index is None:
             index = self.marked_object_index
         vel = self.objects[index].set_velocity(velocity, range)
         return callback(index, vel)
+
+    def set_acceleration(self, callback, acceleration, index=None):
+        if index is None:
+            index = self.marked_object_index
+        acc = self.objects[index].set_acceleration(acceleration)
+        return callback(index, acc)

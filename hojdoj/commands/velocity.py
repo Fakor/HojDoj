@@ -20,7 +20,7 @@ class Command:
             return
         dpos = np.array((event.x - self.mark_x, event.y - self.mark_y))
         rng = np.hypot(*dpos)
-        velocity = tuple(dpos*5/rng)
+        velocity = tuple(dpos*15/rng)
 
         self.sketch.new_command(self.name,
                                 velocity,

@@ -156,7 +156,7 @@ class SketchGui(tk.Frame):
             self.images.pop(index)
 
     def set_velocity(self, *args, **kwargs):
-        self.logic.set_velocity_to_object(self.set_velocity_callback, *args, **kwargs)
+        self.logic.set_velocity(self.set_velocity_callback, *args, **kwargs)
 
     def set_velocity_callback(self, index, velocity):
         pass

@@ -6,7 +6,15 @@ from DTools.tools import sum_points
 
 
 class ImageLogic:
-    def __init__(self, path, position, size, filler=None, rotation=0, mirror=False, velocity=(0,0)):
+    def __init__(self,
+                 path,
+                 position,
+                 size,
+                 filler=None,
+                 rotation=0,
+                 mirror=False,
+                 velocity=(0, 0),
+                 acceleration=(0, 0)):
         self.position = position
         self.size = size
         if filler is None:
@@ -16,6 +24,7 @@ class ImageLogic:
         self.rotation = rotation
         self.mirror = mirror
         self.velocity = velocity
+        self.acceleration = acceleration
         self.range = None
         self.raw_image = Image.open(path)
         self.image = None
@@ -54,6 +63,10 @@ class ImageLogic:
         self.range = range
         return velocity
 
+    def set_acceleration(self, acceleration):
+        self.acceleration = acceleration
+        return acceleration
+
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:
             self.position = position
@@ -77,6 +90,7 @@ class ImageLogic:
 
     def motion_update(self):
         org_pos = self.position
+        self.velocity = sum_points(self.velocity, self.acceleration)
         if self.range is not None:
             d_range = np.hypot(*self.velocity)
             if d_range > self.range:

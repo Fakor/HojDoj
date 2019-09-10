@@ -25,3 +25,7 @@ def resize_callback(index, dsize, image):
 
 def velocity_callback(index, velocity):
     return index, velocity
+
+
+def acceleration_callback(index, acceleration):
+    return index, acceleration
