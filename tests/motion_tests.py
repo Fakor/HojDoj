@@ -55,3 +55,21 @@ class MotionTests(HojdojTestCase):
         self.assertUpdateEqual(updated, [(5, (-0.6, 1.5))])
         self.assertFloatTupleEqual(sketch.object_position(5), (-0.6, 1.5))
         self.assertFloatTupleEqual(sketch.object_velocity(5), (-0.4, 1))
+
+    def test_set_motion(self):
+        sketch = SketchLogic(IMAGE_TEMPLATES)
+
+        sketch.draw_object(draw_callback, 'SQUARE', (0, 0), (10, 5), index=5)
+        sketch.set_motion(index=5, velocity=(2, 4))
+
+        self.assertFloatTupleEqual(sketch.object_position(5), (0, 0))
+        self.assertFloatTupleEqual(sketch.object_velocity(5), (2, 4))
+        self.assertFloatTupleEqual(sketch.object_acceleration(5), (0, 0))
+        self.assertIsNone(sketch.object_range(5))
+
+        sketch.set_motion(index=5, acceleration=(1, -1), range=100)
+
+        self.assertFloatTupleEqual(sketch.object_position(5), (0, 0))
+        self.assertFloatTupleEqual(sketch.object_velocity(5), (2, 4))
+        self.assertFloatTupleEqual(sketch.object_acceleration(5), (1, -1))
+        self.assertEqual(sketch.object_range(5), 100)

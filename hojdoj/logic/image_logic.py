@@ -67,6 +67,14 @@ class ImageLogic:
         self.acceleration = acceleration
         return acceleration
 
+    def set_motion(self, velocity=None, acceleration=None, range=None):
+        if velocity is not None:
+            self.velocity = velocity
+        if acceleration is not None:
+            self.acceleration = acceleration
+        if range is not None:
+            self.range = range
+
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:
             self.position = position
