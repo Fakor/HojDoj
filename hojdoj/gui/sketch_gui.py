@@ -161,6 +161,12 @@ class SketchGui(tk.Frame):
     def set_velocity_callback(self, index, velocity):
         pass
 
+    def set_acceleration(self, *args, **kwargs):
+        self.logic.set_acceleration(self.set_acceleration_callback, *args, **kwargs)
+
+    def set_acceleration_callback(self, index, acceleration):
+        pass
+
     def get_command_table(self):
         return {
             'draw': self.draw_object,
@@ -169,7 +175,8 @@ class SketchGui(tk.Frame):
             'resize': self.resize_object,
             'mark': self.mark_object_by_index,
             'delete': self.delete_object,
-            'velocity': self.set_velocity
+            'vel': self.set_velocity,
+            'acc': self.set_acceleration
         }
 
     def on_button_press(self, event):
