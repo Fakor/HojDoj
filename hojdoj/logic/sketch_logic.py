@@ -4,12 +4,13 @@ from DTools.fillers import *
 
 
 class SketchLogic:
-    def __init__(self, image_templates, fillers=None):
+    def __init__(self, image_templates, fillers=None, gravity=0):
         self.image_templates = image_templates
         if fillers is None:
             self.fillers = dict()
         else:
             self.fillers = fillers
+        self.gravity = gravity
         self.objects = OrderedDict()
         self.marked_object_index = None
         self.object_index = 0
@@ -67,7 +68,8 @@ class SketchLogic:
                     index=None,
                     rotation=0,
                     mirror=False,
-                    filler=None):
+                    filler=None,
+                    mass=None):
         if index is None:
             index = self.next_image_index()
         self.objects[index] = ImageLogic(self.image_templates[name],
@@ -75,7 +77,8 @@ class SketchLogic:
                                          size,
                                          rotation=rotation,
                                          mirror=mirror,
-                                         filler=self.get_filler(filler))
+                                         filler=self.get_filler(filler),
+                                         mass=mass)
         self.marked_object_index = index
         return callback(index, position, self.objects[index])
 
@@ -131,3 +134,9 @@ class SketchLogic:
             index = self.marked_object_index
         acc = self.objects[index].set_acceleration(acceleration)
         return callback(index, acc)
+
+    def apply_gravity_all(self):
+        for i1, obj1 in self.objects.items():
+            for i2, obj2 in self.objects.items():
+                if i1 != i2:
+                    obj1.apply_gravity(obj2, self.gravity)

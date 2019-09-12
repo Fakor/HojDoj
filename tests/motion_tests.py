@@ -80,7 +80,7 @@ class MotionTests(HojdojTestCase):
         rng = count_jump_range((1, 2), (0, -0.9))
         self.assertAlmostEqual(rng, 8.9269, 3)
 
-    def test_gravity(self):
+    def test_image_apply_gravity(self):
         i1 = ImageLogic(SQUARE, (1, 1), (2, 1))
         self.assertAlmostEqual(i1.mass, 2)
         i2 = ImageLogic(SQUARE, (4, 5), (3, 2), acceleration=(-1,2))
@@ -93,3 +93,16 @@ class MotionTests(HojdojTestCase):
 
         i2.apply_gravity(i1, G)
         self.assertFloatTupleEqual(i2.acceleration, (-1.12, 1.84))
+
+    def test_apply_gravity_all(self):
+        sketch = SketchLogic(IMAGE_TEMPLATES, gravity=5)
+
+        sketch.draw_object(draw_callback, 'SQUARE', (0, 0), (1, 1), index=0, mass=5)
+        sketch.draw_object(draw_callback, 'SQUARE', (2, 0), (1, 1), index=1, mass=1)
+        sketch.draw_object(draw_callback, 'SQUARE', (0, 1), (1, 1), index=2, mass=10)
+
+        sketch.apply_gravity_all()
+
+        self.assertFloatTupleEqual(sketch.object_acceleration(0), (1.25, 50))
+        self.assertFloatTupleEqual(sketch.object_acceleration(1), (-15.19427, 4.4721))
+        self.assertFloatTupleEqual(sketch.object_acceleration(2), (0.89442, -25.44721))

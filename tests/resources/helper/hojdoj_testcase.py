@@ -1,6 +1,6 @@
 import unittest
 
-EPSILON=7
+EPSILON = 4
 
 
 class HojdojTestCase(unittest.TestCase):
