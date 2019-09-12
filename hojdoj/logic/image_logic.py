@@ -80,6 +80,13 @@ class ImageLogic:
         if range is not None:
             self.range = range
 
+    def apply_gravity(self, obj, gravity):
+        dist = np.array(obj.position) - np.array(self.position)
+        r = np.linalg.norm(dist)
+        acc = gravity*obj.mass/r**2
+        added_acc = tuple(acc * el/r for el in dist)
+        self.acceleration = sum_points(self.acceleration, added_acc)
+
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:
             self.position = position

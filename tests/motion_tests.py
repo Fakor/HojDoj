@@ -80,9 +80,16 @@ class MotionTests(HojdojTestCase):
         rng = count_jump_range((1, 2), (0, -0.9))
         self.assertAlmostEqual(rng, 8.9269, 3)
 
-    def test_default_mass(self):
-        i1 = ImageLogic(SQUARE, (0, 0), (2, 1))
+    def test_gravity(self):
+        i1 = ImageLogic(SQUARE, (1, 1), (2, 1))
         self.assertAlmostEqual(i1.mass, 2)
-        i2 = ImageLogic(SQUARE, (0, 0), (2, 7))
-        self.assertAlmostEqual(i2.mass, 14)
+        i2 = ImageLogic(SQUARE, (4, 5), (3, 2), acceleration=(-1,2))
+        self.assertAlmostEqual(i2.mass, 6)
 
+        G = 2.5
+
+        i1.apply_gravity(i2, G)
+        self.assertFloatTupleEqual(i1.acceleration, (0.36, 0.48))
+
+        i2.apply_gravity(i1, G)
+        self.assertFloatTupleEqual(i2.acceleration, (-1.12, 1.84))

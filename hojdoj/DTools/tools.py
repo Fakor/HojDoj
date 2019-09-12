@@ -46,6 +46,7 @@ def count_jump_range(velocity, acceleration):
     rng += np.hypot(dx, dy)*overshot/(-dy)
     return rng
 
+
 def image_replace_white(image, new):
     image = image.convert('RGBA')
     data = np.array(image)
