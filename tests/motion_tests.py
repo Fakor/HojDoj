@@ -1,6 +1,7 @@
 import unittest
 
 from logic.sketch_logic import SketchLogic
+from logic.image_logic import ImageLogic
 from DTools.tools import count_jump_range
 
 from constants import *
@@ -78,3 +79,10 @@ class MotionTests(HojdojTestCase):
     def test_count_jump_range(self):
         rng = count_jump_range((1, 2), (0, -0.9))
         self.assertAlmostEqual(rng, 8.9269, 3)
+
+    def test_default_mass(self):
+        i1 = ImageLogic(SQUARE, (0, 0), (2, 1))
+        self.assertAlmostEqual(i1.mass, 2)
+        i2 = ImageLogic(SQUARE, (0, 0), (2, 7))
+        self.assertAlmostEqual(i2.mass, 14)
+

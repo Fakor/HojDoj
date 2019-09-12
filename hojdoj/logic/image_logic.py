@@ -14,7 +14,8 @@ class ImageLogic:
                  rotation=0,
                  mirror=False,
                  velocity=(0, 0),
-                 acceleration=(0, 0)):
+                 acceleration=(0, 0),
+                 mass=None):
         self.position = position
         self.size = size
         if filler is None:
@@ -26,6 +27,10 @@ class ImageLogic:
         self.velocity = velocity
         self.acceleration = acceleration
         self.range = None
+        if mass is None:
+            self.mass = np.prod(self.size)
+        else:
+            self.mass = mass
         self.raw_image = Image.open(path)
         self.image = None
         self.update()
