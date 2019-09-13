@@ -223,7 +223,13 @@ class SketchGui(tk.Frame):
     def start_motion_cycle(self):
         updates = self.logic.step()
         for index, position in updates:
-            self.canvas.coords(self.objects[index], *position)
+            try:
+                self.canvas.coords(self.objects[index], *position)
+            except KeyError:
+                # Need to catch this exception since there might be a
+                # race condition problem were the logic sends back updated
+                # indexes that have not yet been registered here.
+                pass
         self.after(self.config['step_time'], self.start_motion_cycle)
 
     def _delete(self, index):
