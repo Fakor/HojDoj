@@ -2,7 +2,7 @@ import tkinter as tk
 
 import sys
 
-import main_window
+import gui.main_window
 import DTools.configuration
 import DTools.tk_tools
 
@@ -26,10 +26,10 @@ if __name__ == '__main__':
 
     root.geometry(DTools.tk_tools.get_screen_geometry(SCREEN_INDEX))
 
-    main_window = main_window.MainWindow(root,
-                                         config,
-                                         DTools.tk_tools.get_screen_position(SCREEN_INDEX),
-                                         DTools.tk_tools.get_screen_size(SCREEN_INDEX))
+    main_window = gui.main_window.MainWindow(root,
+                                             config,
+                                             DTools.tk_tools.get_screen_position(SCREEN_INDEX),
+                                             DTools.tk_tools.get_screen_size(SCREEN_INDEX))
 
     root.bind('<<quit_now>>', lambda eff: quit_hojdoj(root))
 
