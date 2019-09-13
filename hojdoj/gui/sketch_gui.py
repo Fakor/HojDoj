@@ -169,6 +169,9 @@ class SketchGui(tk.Frame):
     def set_motion(self, *args, **kwargs):
         self.logic.set_motion(*args, **kwargs)
 
+    def set_gravity(self, gravity):
+        self.logic.gravity = gravity
+
     def get_command_table(self):
         return {
             'draw': self.draw_object,
@@ -179,7 +182,8 @@ class SketchGui(tk.Frame):
             'delete': self.delete_object,
             'vel': self.set_velocity,
             'acc': self.set_acceleration,
-            'motion': self.set_motion
+            'motion': self.set_motion,
+            'gravity': self.set_gravity
         }
 
     def on_button_press(self, event):

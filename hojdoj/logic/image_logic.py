@@ -25,7 +25,8 @@ class ImageLogic:
         self.rotation = rotation
         self.mirror = mirror
         self.velocity = velocity
-        self.acceleration = acceleration
+        self._acceleration = acceleration
+        self.gravity_acceleration = (0, 0)
         self.range = None
         if mass is None:
             self.mass = np.prod(self.size)
@@ -69,23 +70,30 @@ class ImageLogic:
         return velocity
 
     def set_acceleration(self, acceleration):
-        self.acceleration = acceleration
+        self._acceleration = acceleration
         return acceleration
 
     def set_motion(self, velocity=None, acceleration=None, range=None):
         if velocity is not None:
             self.velocity = velocity
         if acceleration is not None:
-            self.acceleration = acceleration
+            self._acceleration = acceleration
         if range is not None:
             self.range = range
+
+    @property
+    def acceleration(self):
+        return sum_points(self._acceleration, self.gravity_acceleration)
 
     def apply_gravity(self, obj, gravity):
         dist = np.array(obj.position) - np.array(self.position)
         r = np.linalg.norm(dist)
         acc = gravity*obj.mass/r**2
         added_acc = tuple(acc * el/r for el in dist)
-        self.acceleration = sum_points(self.acceleration, added_acc)
+        self.gravity_acceleration = sum_points(self.gravity_acceleration, added_acc)
+
+    def reset_gravity_acceleration(self):
+        self.gravity_acceleration = (0, 0)
 
     def update(self, position=None, size=None, filler=None, rotation=None, mirror=None):
         if position is not None:
@@ -116,7 +124,7 @@ class ImageLogic:
             if d_range > self.range:
                 velocity = np.array(self.velocity) * self.range / d_range
                 self.velocity = (0, 0)
-                self.acceleration = (0, 0)
+                self._acceleration = (0, 0)
                 self.range = None
             else:
                 velocity = self.velocity

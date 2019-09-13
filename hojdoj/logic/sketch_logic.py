@@ -17,6 +17,7 @@ class SketchLogic:
         self.used_object_indexes = set()
 
     def step(self):
+        self.apply_gravity_all()
         ret = []
         for index, obj in self.objects.items():
             if obj.motion_update():
@@ -69,7 +70,9 @@ class SketchLogic:
                     rotation=0,
                     mirror=False,
                     filler=None,
-                    mass=None):
+                    mass=None,
+                    velocity=(0, 0),
+                    acceleration=(0, 0)):
         if index is None:
             index = self.next_image_index()
         self.objects[index] = ImageLogic(self.image_templates[name],
@@ -78,7 +81,9 @@ class SketchLogic:
                                          rotation=rotation,
                                          mirror=mirror,
                                          filler=self.get_filler(filler),
-                                         mass=mass)
+                                         mass=mass,
+                                         velocity=velocity,
+                                         acceleration=acceleration)
         self.marked_object_index = index
         return callback(index, position, self.objects[index])
 
@@ -137,6 +142,7 @@ class SketchLogic:
 
     def apply_gravity_all(self):
         for i1, obj1 in self.objects.items():
+            obj1.reset_gravity_acceleration()
             for i2, obj2 in self.objects.items():
                 if i1 != i2:
                     obj1.apply_gravity(obj2, self.gravity)
