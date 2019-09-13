@@ -1,11 +1,14 @@
 import tkinter as tk
 from PIL import ImageTk
+from tkinter import filedialog
+import pyscreenshot
 
 from DTools.tk_tools import color_to_tk
 from DTools.button_grid import ButtonGrid
 from DTools import fillers
 from DTools.command_basics import command_from_meta
 from logic.sketch_logic import SketchLogic
+from DTools.tools import sum_points
 
 
 DRAW_COMMAND='draw'
@@ -37,12 +40,9 @@ class SketchGui(tk.Frame):
         self.canvas.bind("<B1-Motion>", self.on_move_press)
         self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
 
-        self.parent.bind('<Control-z>', self._undo)
-        self.parent.bind('<Control-y>', self._redo)
-
         self.filler = config['default_color']
 
-        canvas_width = int(width*0.87)
+        canvas_width = int(width*0.9)
         canvas_height = height
 
         control_width = width-canvas_width
@@ -56,11 +56,10 @@ class SketchGui(tk.Frame):
         self.control = tk.Frame(self)
         self.control.place(x=0, y=0, width=control_width, height=control_height)
 
-        self.B_WIDTH = int(0.94*control_width/SketchGui.COLUMNS)
+        self.B_WIDTH = int(0.87*control_width/SketchGui.COLUMNS)
         self.B_HEIGHT = self.B_WIDTH
 
-        x, y = size
-        self.canvas_position = x, 0
+        self.canvas_position = width, 0
         self.canvas_size = canvas_width, canvas_height
 
         self.command_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header="Commands", background='white')
@@ -183,7 +182,8 @@ class SketchGui(tk.Frame):
             'vel': self.set_velocity,
             'acc': self.set_acceleration,
             'motion': self.set_motion,
-            'gravity': self.set_gravity
+            'gravity': self.set_gravity,
+            'save': self.save_image
         }
 
     def on_button_press(self, event):
@@ -232,14 +232,17 @@ class SketchGui(tk.Frame):
                 pass
         self.after(self.config['step_time'], self.start_motion_cycle)
 
+    def save_image(self):
+        size = sum_points(self.canvas_position, self.canvas_size)
+        image = pyscreenshot.grab((*self.canvas_position, *size))
+        file_name = filedialog.asksaveasfilename(initialdir=self.config['save_location'],
+                                                 title='Välj fil',
+                                                 filetypes = (("png", "*.png"),("all files","*.*")))
+        if file_name:
+            image.save(file_name)
+
     def _delete(self, index):
         if index in self.objects:
             self.canvas.delete(self.objects[index])
             return True
         return False
-
-    def _undo(self, event):
-        self.undo_command()
-
-    def _redo(self, event):
-        self.redo_command()

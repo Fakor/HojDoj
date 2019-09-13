@@ -18,7 +18,7 @@ class MainWindow(tk.Frame):
 
         self.parent.bind('<Control-c>', self.quit)
         self.place(x=0, y=0, width=sketch_width, height=height)
-        self.sketch = SketchGui(self, config, position, size)
+        self.sketch = SketchGui(self, config, position, (sketch_width, sketch_height))
         self.sketch.place(x=0, y=0, width=sketch_width, height=sketch_height)
 
         command_width = width
