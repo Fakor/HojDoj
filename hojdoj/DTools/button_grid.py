@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from image_button import ImageButton
+from gui.image_button import ImageButton
 
 
 class ButtonGrid(tk.Frame):
