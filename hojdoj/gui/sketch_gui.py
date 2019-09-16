@@ -36,9 +36,12 @@ class SketchGui(tk.Frame):
 
         self.current_image = self.config.get_value('default_image')
 
-        self.canvas.bind("<Button-1>", self.on_button_press)
+        self.canvas.bind("<Button-1>", self.on_button1_press)
+        self.canvas.bind("<Button-3>", self.on_button2_press)
         self.canvas.bind("<B1-Motion>", self.on_move_press)
+        self.canvas.bind("<B3-Motion>", self.on_move_press)
         self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
+        self.canvas.bind("<ButtonRelease-3>", self.on_button_release)
 
         self.filler = config['default_color']
 
@@ -186,9 +189,13 @@ class SketchGui(tk.Frame):
             'save': self.save_image
         }
 
-    def on_button_press(self, event):
+    def on_button1_press(self, event):
         command = command_from_meta(self.config['commands'][self.interactive_command_name])
         self.current_command = command(self, event, self.interactive_command_name)
+
+    def on_button2_press(self, event):
+        command = command_from_meta(self.config['commands'][self.interactive_command_name])
+        self.current_command = command(self, event, self.interactive_command_name, button2=True)
 
     def on_move_press(self, event):
         self.current_command.on_move(event)
