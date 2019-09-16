@@ -1,11 +1,10 @@
-class Command:
-    name = 'mark'
+from DTools.base_command import BaseCommand
 
-    def __init__(self, sketch, event, command_name):
-        self.name = command_name
-        self.sketch = sketch
 
-        self.index = self.sketch.mark_object((event.x, event.y))
+class Command(BaseCommand):
+    def __init__(self, *args, **kwargs):
+        BaseCommand.__init__(self, *args, **kwargs)
+        self.mark_object()
 
     def on_move(self, event):
         pass

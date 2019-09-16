@@ -1,16 +1,12 @@
 import numpy as np
 
+from DTools.base_command import BaseCommand
 
-class Command:
-    def __init__(self, sketch, event, command_name):
-        self.name = command_name
-        self.sketch = sketch
 
-        self.index = self.sketch.mark_object((event.x, event.y))
-        if self.index is None:
-            return
-        self.mark_x = event.x
-        self.mark_y = event.y
+class Command(BaseCommand):
+    def __init__(self, *args, **kwargs):
+        BaseCommand.__init__(self, *args, **kwargs)
+        self.mark_object()
 
     def on_move(self, event):
         pass
@@ -18,7 +14,7 @@ class Command:
     def on_release(self, event):
         if self.index is None:
             return
-        dpos = np.array((event.x - self.mark_x, event.y - self.mark_y))
+        dpos = np.array((event.x - self.init_event.x, event.y - self.init_event.y))
         rng = np.hypot(*dpos)
         velocity = tuple(dpos*15/rng)
 

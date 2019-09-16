@@ -1,8 +1,10 @@
-class Command:
-    def __init__(self, sketch, event, command_name):
-        self.command_name = command_name
-        self.sketch = sketch
-        self.index = self.sketch.mark_object((event.x, event.y))
+from DTools.base_command import BaseCommand
+
+
+class Command(BaseCommand):
+    def __init__(self, *args, **kwargs):
+        BaseCommand.__init__(self, *args, **kwargs)
+        self.mark_object()
 
     def on_move(self, event):
         pass
@@ -10,5 +12,5 @@ class Command:
     def on_release(self, event):
         if self.index is None:
             return
-        self.sketch.new_command(self.command_name,
+        self.sketch.new_command(self.name,
                                 index=self.index)

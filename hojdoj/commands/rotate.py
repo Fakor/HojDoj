@@ -1,16 +1,16 @@
 import numpy as np
 
+from DTools.base_command import BaseCommand
 
-class Command:
-    def __init__(self, sketch, event, command_name):
-        self.name = command_name
-        self.sketch = sketch
 
-        self.index = self.sketch.mark_object((event.x, event.y))
+class Command(BaseCommand):
+    def __init__(self, *args, **kwargs):
+        BaseCommand.__init__(self, *args, **kwargs)
+        self.mark_object()
         if self.index is None:
             return
         self.orig = self.sketch.get_object_position(self.index)
-        self.start_angle = self.get_angle(event.x, event.y)
+        self.start_angle = self.get_angle(self.init_event.x, self.init_event.y)
 
     def on_move(self, event):
         if self.index is None:
