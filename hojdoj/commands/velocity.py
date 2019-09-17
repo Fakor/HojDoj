@@ -15,10 +15,10 @@ class Command(BaseCommand):
         if self.index is None:
             return
         dpos = np.array((event.x - self.init_event.x, event.y - self.init_event.y))
-        rng = np.hypot(*dpos)
-        velocity = tuple(dpos*15/rng)
-
+        velocity = tuple(dpos/25)
+        kwargs = {'index': self.index}
+        if self.button2:
+            kwargs['range'] = np.hypot(*dpos)
         self.sketch.new_command(self.name,
                                 velocity,
-                                index=self.index,
-                                range=rng)
+                                **kwargs)
