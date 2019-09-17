@@ -10,13 +10,11 @@ class Command(BaseCommand):
     def on_move(self, event):
         if self.index is None:
             return
-        self.dpos = (event.x - self.init_event.x, event.y - self.init_event.y)
-        self.sketch.move_object(self.dpos, index=self.index, intermediate=True)
+        self.sketch.move_object(self.delta_position(event), index=self.index, intermediate=True)
 
     def on_release(self, event):
         if self.index is None:
             return
-        self.dpos = (event.x - self.init_event.x, event.y - self.init_event.y)
         self.sketch.new_command(self.name,
-                                self.dpos,
+                                self.delta_position(event),
                                 index=self.index)

@@ -15,3 +15,6 @@ class BaseCommand:
     def mark_object(self):
         self.index = self.sketch.mark_object((self.init_event.x, self.init_event.y))
         return self.index is not None
+
+    def delta_position(self, event):
+        return event.x - self.init_event.x, event.y - self.init_event.y

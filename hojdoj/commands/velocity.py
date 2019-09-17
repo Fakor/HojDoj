@@ -14,7 +14,7 @@ class Command(BaseCommand):
     def on_release(self, event):
         if self.index is None:
             return
-        dpos = np.array((event.x - self.init_event.x, event.y - self.init_event.y))
+        dpos = np.array(self.delta_position(event))
         velocity = tuple(dpos/25)
         kwargs = {'index': self.index}
         if self.button2:
