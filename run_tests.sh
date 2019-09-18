@@ -11,6 +11,13 @@ export PYTHONPATH=$HOJDOJ_PATH/hojdoj:$TEST_FOLDER/resources/helper
 
 cd $TEST_FOLDER
 
-python -m unittest test_suite.py
+if [ $# -eq 0 ]; then
+    python -m unittest test_suite.py
+else
+   python -m unittest $@
+fi
+
+
+
 
 
