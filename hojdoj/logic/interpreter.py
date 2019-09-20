@@ -2,7 +2,7 @@ from DTools.tools import value_from_string
 
 
 class Interpreter:
-    def __init__(self, command_table):
+    def __init__(self, command_table={}):
         self.command_table = command_table
 
     def perform_command(self, text):

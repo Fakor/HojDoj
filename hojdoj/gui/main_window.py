@@ -18,12 +18,14 @@ class MainWindow(tk.Frame):
 
         self.parent.bind('<Control-c>', self.quit)
         self.place(x=0, y=0, width=sketch_width, height=height)
-        self.sketch = SketchGui(self, config, position, (sketch_width, sketch_height))
-        self.sketch.place(x=0, y=0, width=sketch_width, height=sketch_height)
-
         command_width = width
         command_height = height - sketch_height
-        self.command_terminal = CommandTerminal(self, self.sketch.get_command_table(), command_width, command_height)
+        self.command_terminal = CommandTerminal(self, command_width, command_height)
+
+        self.sketch = SketchGui(self, config, position, (sketch_width, sketch_height), self.command_terminal)
+        self.sketch.place(x=0, y=0, width=sketch_width, height=sketch_height)
+
+        self.command_terminal.set_command_table(self.sketch.get_command_table())
 
         self.command_terminal.place(x=0, y=sketch_height, width=command_width, height=command_height)
 

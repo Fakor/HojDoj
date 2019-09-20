@@ -40,9 +40,10 @@
     ],
     "color_button_image_path": "$PROJ_HOME/images/templates/square.png",
     "default_color": [0,0,0],
-    "default_image": "DÖRR", 
+    "default_image": "CIRKEL",
     "background_color": [255,255,255],
     "step_time": 80,
+    "gravity": 0,
     "console": {
 	"enabled": true
     },

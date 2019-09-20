@@ -5,100 +5,109 @@ from DTools.fillers import *
 
 from constants import *
 from functions import *
+from hojdoj_testcase import *
 
 
-class SketchLogicTests(unittest.TestCase):
+class SketchLogicTests(HojdojTestCase):
     def test_mark_object(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG, self.callback)
 
-        self.assertEqual(sketch.draw_object(draw_callback, 'SQUARE', (0,0), (10, 10)), (0, (0,0)))
-        self.assertEqual(sketch.draw_object(draw_callback,'SQUARE', (0, 0), (10, 10)), (1, (0,0)))
-        self.assertEqual(sketch.draw_object(draw_callback,'SQUARE', (0, 0), (10, 10), index=10), (10, (0,0)))
+        self.assertEqual(sketch.draw_object('SQUARE', (0,0), (10, 10)), [('draw', {'index': 0})])
+        self.assertEqual(sketch.draw_object('SQUARE', (0, 0), (10, 10)), [('draw', {'index': 1})])
+        self.assertEqual(sketch.draw_object('SQUARE', (0, 0), (10, 10), index=10), [('draw', {'index': 10})])
 
-        self.assertIsNone(sketch.mark_object(mark_callback, (-15, 0)))
-        self.assertIsNone(sketch.mark_object(mark_callback, (0, -15)))
-        self.assertIsNone(sketch.mark_object(mark_callback, (15, 15)))
+        self.assertEqual(sketch.mark_object((-15, 0)), [])
+        self.assertEqual(sketch.mark_object((0, -15)), [])
+        self.assertEqual(sketch.mark_object((15, 15)), [])
 
-        self.assertEqual(sketch.mark_object(mark_callback, (0, 0)), 10)
-        self.assertEqual(sketch.delete_object(delete_callback), 10)
-        self.assertEqual(sketch.mark_object(mark_callback, (0, 0)), 1)
-        self.assertEqual(sketch.delete_object(delete_callback, index=1), 1)
-        self.assertEqual(sketch.mark_object(mark_callback, (0, 0)), 0)
-        self.assertEqual(sketch.delete_object(delete_callback), 0)
-        self.assertIsNone(sketch.mark_object(mark_callback, (0, 0)))
+        self.assertEqual(sketch.mark_object((0, 0)), [('mark', {'index': 10})])
+        self.assertEqual(sketch.delete_object(), [('delete', {'index': 10})])
+        self.assertEqual(sketch.mark_object((0, 0)), [('mark', {'index': 1})])
+        self.assertEqual(sketch.delete_object(index=1), [('delete', {'index': 1})])
+        self.assertEqual(sketch.mark_object((0, 0)), [('mark', {'index': 0})])
+        self.assertEqual(sketch.delete_object(), [('delete', {'index': 0})])
+        self.assertEqual(sketch.mark_object((0, 0)), [])
 
     def test_move_object(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG, self.callback)
 
-        sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
+        sketch.draw_object('SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_position(0), (30, 20))
         self.assertEqual(sketch.object_size(0), (10, 5))
 
-        self.assertEqual(sketch.move_object(move_callback, (-5, 15)), (0, (25,35)))
+        self.assertEqual(sketch.move_object((-5, 15)), [('move', {'index': 0, 'position': (25,35)})])
         self.assertEqual(sketch.object_position(0), (25,35))
 
     def test_move_object_intermediate(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
-        sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
+        sketch = SketchLogic(CONFIG, self.callback)
+        sketch.draw_object('SQUARE', (30, 20), (10, 5), index=0)
 
-        index, intermediate_pos = sketch.move_object(move_callback,(10, -15),  index=0, intermediate=True)
-        self.assertEqual(intermediate_pos, (40, 5))
+        actions = sketch.move_object((10, -15),  index=0, intermediate=True)
+        self.assertEqual(actions[0][1]['index'], 0)
+        self.assertEqual(actions[0][1]['position'], (40, 5))
         self.assertEqual(sketch.object_position(0), (30,  20))
 
     def test_rotate_object(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG, self.callback)
 
-        sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
+        sketch.draw_object('SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_rotation(0), 0)
 
-        index, rotation = sketch.rotate_object(rotate_callback, 20)
-        self.assertEqual(rotation, 20)
-        self.assertEqual(sketch.object_rotation(index), 20)
+        actions = sketch.rotate_object(20)
+        self.assertEqual(actions[0][1]['index'], 0)
+        self.assertEqual(actions[0][1]['rotation'], 20)
+        self.assertEqual(sketch.object_rotation(0), 20)
 
-        index, rotation = sketch.rotate_object(rotate_callback, 20, index=0)
-        self.assertEqual(rotation, 20)
-        self.assertEqual(sketch.object_rotation(index), 40)
+        actions = sketch.rotate_object(20, index=0)
+        self.assertEqual(actions[0][1]['rotation'], 20)
+        self.assertEqual(sketch.object_rotation(0), 40)
 
     def test_rotate_object_intermediate(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG, self.callback)
 
-        sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
+        sketch.draw_object('SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_rotation(0), 0)
 
-        index, rotation = sketch.rotate_object(rotate_callback, 20, intermediate=True)
-        self.assertEqual(rotation, 20)
-        self.assertEqual(sketch.object_rotation(index), 0)
+        actions = sketch.rotate_object(20, intermediate=True)
+        self.assertEqual(actions[0][1]['index'], 0)
+        self.assertEqual(actions[0][1]['rotation'], 20)
+        self.assertEqual(sketch.object_rotation(0), 0)
 
     def test_resize_object(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG, self.callback)
 
-        sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
+        sketch.draw_object('SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_size(0), (10, 5))
 
-        index, size = sketch.resize_object(resize_callback, (-3, 5))
-        self.assertEqual(size, (7, 10))
-        self.assertEqual(sketch.object_size(index), (7, 10))
+        actions = sketch.resize_object((-3, 5))
+        self.assertEqual(actions[0][1]['index'], 0)
+        self.assertEqual(actions[0][1]['size'], (7,10))
+        self.assertEqual(sketch.object_size(0), (7, 10))
 
-        index, size = sketch.resize_object(resize_callback, (-10, 7), index=0)
-        self.assertEqual(size, (0, 17))
-        self.assertEqual(sketch.object_size(index), (0, 17))
+        actions = sketch.resize_object((-10, 7), index=0)
+        self.assertEqual(actions[0][1]['index'], 0)
+        self.assertEqual(actions[0][1]['size'], (0,17))
+        self.assertEqual(sketch.object_size(0), (0, 17))
 
     def test_resize_object_intermediate(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG, self.callback)
 
-        sketch.draw_object(draw_callback, 'SQUARE', (30, 20), (10, 5), index=0)
+        sketch.draw_object('SQUARE', (30, 20), (10, 5), index=0)
         self.assertEqual(sketch.object_size(0), (10, 5))
 
-        index, size = sketch.resize_object(resize_callback, (-3, 5), intermediate=True)
-        self.assertEqual(size, (7, 10))
-        self.assertEqual(sketch.object_size(index), (10, 5))
+        actions = sketch.resize_object((-3, 5), intermediate=True)
+        self.assertEqual(actions[0][1]['index'], 0)
+        self.assertEqual(actions[0][1]['size'], (7,10))
+        self.assertEqual(sketch.object_size(0), (10, 5))
 
-        index, size = sketch.resize_object(resize_callback, (-10, 7))
-        self.assertEqual(size, (0, 12))
-        self.assertEqual(sketch.object_size(index), (0, 12))
+        actions = sketch.resize_object((-10, 7))
+        self.assertEqual(actions[0][1]['index'], 0)
+        self.assertEqual(actions[0][1]['size'], (0,12))
+
+        self.assertEqual(sketch.object_size(0), (0, 12))
 
     def test_get_color_filler(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG, self.callback)
         filler = sketch.get_filler([100, 150, 200])
 
         self.assertTrue(isinstance(filler, ColorFiller))

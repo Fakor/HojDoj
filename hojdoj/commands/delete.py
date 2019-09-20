@@ -12,5 +12,5 @@ class Command(BaseCommand):
     def on_release(self, event):
         if self.index is None:
             return
-        self.sketch.new_command(self.name,
-                                index=self.index)
+        self.perform_command(self.name,
+                             index=self.index)

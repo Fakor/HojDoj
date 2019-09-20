@@ -4,13 +4,13 @@ from DTools.fillers import *
 
 
 class SketchLogic:
-    def __init__(self, image_templates, fillers=None, gravity=0):
-        self.image_templates = image_templates
-        if fillers is None:
-            self.fillers = dict()
-        else:
-            self.fillers = fillers
-        self.gravity = gravity
+    def __init__(self, config, callback):
+        self.image_templates = config['image_templates']
+        self.fillers = config['fillers']
+        self.gravity = config['gravity']
+        self.current_image = config['default_image']
+        self.current_filler = config['default_color']
+        self.callback = callback
         self.objects = OrderedDict()
         self.marked_object_index = None
         self.object_index = 0
@@ -61,8 +61,17 @@ class SketchLogic:
         else:
             return NoFiller()
 
+    def get_command_table(self):
+        return {
+            'draw': self.draw_object,
+            'mark': self.mark_object_by_index,
+            'delete': self.delete_object,
+            'move': self.move_object,
+            'rotate': self.rotate_object,
+            'resize': self.resize_object
+        }
+
     def draw_object(self,
-                    callback,
                     name,
                     position,
                     size,
@@ -85,43 +94,45 @@ class SketchLogic:
                                          velocity=velocity,
                                          acceleration=acceleration)
         self.marked_object_index = index
-        return callback(index, position, self.objects[index])
+        return self.callback([('draw', {'index': index})])
 
-    def delete_object(self, callback, index=None):
+    def delete_object(self, index=None):
         if index is None:
             index = self.marked_object_index
         self.objects.pop(index)
-        return callback(index)
+        return self.callback([('delete', {'index': index})])
 
-    def move_object(self, callback, delta_position, index=None, intermediate=False):
+    def move_object(self, delta_position, index=None, intermediate=False):
         if index is None:
             index = self.marked_object_index
         position = self.objects[index].move(delta_position, intermediate)
-        return callback(index, position)
+        return self.callback([('move', {'index': index, 'position': position})])
 
-    def rotate_object(self, callback, rotation, index=None, intermediate=False):
+    def rotate_object(self, rotation, index=None, intermediate=False):
         if index is None:
             index = self.marked_object_index
         self.objects[index].rotate(rotation, intermediate)
-        return callback(index, rotation, self.objects[index])
+        return self.callback([('rotate', {'index': index, 'rotation': rotation})])
 
-    def resize_object(self, callback, dsize, index=None, intermediate=False):
+    def resize_object(self, dsize, index=None, intermediate=False):
         if index is None:
             index = self.marked_object_index
         actual_dsize = self.objects[index].resize(dsize, intermediate)
-        return callback(index, actual_dsize, self.objects[index])
+        return self.callback([('resize', {'index': index, 'size': actual_dsize})])
 
-    def mark_object_by_index(self, callback, index):
+    def mark_object_by_index(self, index):
         self.marked_object_index = index
-        return callback(self.marked_object_index)
+        return self.callback([('mark', {'index': self.marked_object_index})])
 
-    def mark_object(self, callback, position):
+    def mark_object(self, position):
         self.marked_object_index = None
+        actions = []
         for index, obj in reversed(self.objects.items()):
             if obj.cover_position(*position):
                 self.marked_object_index = index
+                actions.append(('mark', {'index': self.marked_object_index}))
                 break
-        return callback(self.marked_object_index)
+        return self.callback(actions)
 
     def set_velocity(self, callback, velocity, index=None, range=None):
         if index is None:

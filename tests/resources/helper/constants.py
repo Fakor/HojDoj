@@ -2,6 +2,13 @@ import os
 
 SQUARE = '{}/resources/square.png'.format(os.environ['TEST_FOLDER'])
 
-IMAGE_TEMPLATES={
-    'SQUARE': SQUARE
+CONFIG={
+    "image_templates":{
+        "SQUARE": SQUARE
+    },
+    "fillers":{
+    },
+    "gravity": 0,
+    "default_image": "SQUARE",
+    "default_color": [0,0,0]
 }

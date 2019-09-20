@@ -7,7 +7,7 @@ class Command(BaseCommand):
         self.mark_object()
         if self.index is None:
             return
-        pos = self.sketch.get_object_position(self.index)
+        pos = self.logic.object_position(self.index)
         self.mark_on_right = pos[0] < self.init_event.x
         self.mark_on_up = pos[1] < self.init_event.y
 
@@ -15,15 +15,15 @@ class Command(BaseCommand):
         if self.index is None:
             return
         dpos = self.get_dpos(event.x, event.y)
-        self.sketch.resize_object(dpos, index=self.index, intermediate=True)
+        self.logic.resize_object(dpos, index=self.index, intermediate=True)
 
     def on_release(self, event):
         if self.index is None:
             return
         dpos = self.get_dpos(event.x, event.y)
-        self.sketch.new_command(self.name,
-                                dpos,
-                                index=self.index)
+        self.perform_command(self.name,
+                             dpos,
+                             index=self.index)
 
     def get_dpos(self, x, y):
         dx = 2*(self.init_event.x - x)

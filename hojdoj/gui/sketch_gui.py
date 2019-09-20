@@ -17,11 +17,12 @@ DRAW_COMMAND='draw'
 class SketchGui(tk.Frame):
     COLUMNS = 4
 
-    def __init__(self, parent, config, position, size):
+    def __init__(self, parent, config, position, size, interpreter):
         width, height = size
         tk.Frame.__init__(self, parent, width=width, height=height)
+        self.interpreter = interpreter
 
-        self.logic = SketchLogic(config['image_templates'], config['fillers'])
+        self.logic = SketchLogic(config, self.handle_actions)
         self.images = {}
 
         bg_color = color_to_tk(config.get_value('background_color'))
@@ -34,7 +35,7 @@ class SketchGui(tk.Frame):
         self.objects = {}
         self.marked_object = None
 
-        self.current_image = self.config.get_value('default_image')
+        #self.current_image = self.config.get_value('default_image')
 
         self.canvas.bind("<Button-1>", self.on_button1_press)
         self.canvas.bind("<Button-3>", self.on_button2_press)
@@ -92,67 +93,66 @@ class SketchGui(tk.Frame):
 
         self.elastic_buttons = ButtonGrid(self.control, SketchGui.COLUMNS, self.B_WIDTH, self.B_HEIGHT, header='Elastisk', background='white')
         for elastic in self.config['fillers'].keys():
-            self.elastic_buttons.add_button(config['color_button_image_path'],
-                                            self.logic.get_filler(elastic),
-                                            self.elastic_image_filler_active,
-                                            elastic)
+           self.elastic_buttons.add_button(config['color_button_image_path'],
+                                           self.logic.get_filler(elastic),
+                                           self.elastic_image_filler_active,
+                                           elastic)
 
         self.elastic_buttons.grid(row=3)
         self.start_motion_cycle()
 
-    def new_command(self, command_name, *args, **kwargs):
-        self.parent.new_command(command_name, *args, **kwargs)
+#    def new_command(self, command_name, *args, **kwargs):
+#        self.parent.new_command(command_name, *args, **kwargs)
 
-    def draw_object(self, *args, **kwargs):
-        return self.logic.draw_object(self.draw_object_callback, *args, **kwargs)
+    def handle_actions(self, actions):
+        for action, arguments in actions:
+            if action == 'draw':
+                self.draw_object(**arguments)
+            elif action == 'mark':
+                self.mark_object(**arguments)
+            elif action == 'delete':
+                self.delete_object(**arguments)
+            elif action == 'move':
+                self.move_object(**arguments)
+            elif action == 'rotate':
+                self.rotate_object(**arguments)
+            elif action == 'resize':
+                self.resize_object(**arguments)
 
-    def draw_object_callback(self, index, position, logic_image):
+    def draw_object(self, index):
+        logic_image = self.logic.get_object(index)
         self._delete(index)
         if logic_image.have_size():
             new_image = ImageTk.PhotoImage(logic_image.image)
-            self.objects[index] = self.canvas.create_image(*position, image=new_image)
+            self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
             self.images[index] = new_image
-        return index
 
-    def move_object(self, *args, **kwargs):
-        self.logic.move_object(self.move_object_callback, *args, **kwargs)
-
-    def move_object_callback(self, index, position):
+    def move_object(self, index, position):
         self.canvas.coords(self.objects[index], *position)
-
-    def mark_object(self, position):
-        return self.logic.mark_object(self.mark_object_callback, position)
 
     def mark_object_by_index(self, index):
         return self.logic.mark_object_by_index(self.mark_object_callback, index)
 
-    def mark_object_callback(self, index):
+    def mark_object(self, index):
         self.marked_object = index
         return self.marked_object
 
-    def rotate_object(self, *args, **kwargs):
-        self.logic.rotate_object(self.rotate_object_callback, *args, **kwargs)
-
-    def rotate_object_callback(self, index, rotation, logic_image):
+    def rotate_object(self, index, rotation):
         self._delete(index)
-        new_image = ImageTk.PhotoImage(logic_image.image)
-        self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
+        obj = self.logic.get_object(index)
+        new_image = ImageTk.PhotoImage(obj.image)
+        self.objects[index] = self.canvas.create_image(*obj.position, image=new_image)
         self.images[index] = new_image
 
-    def resize_object(self, *args, **kwargs):
-        self.logic.resize_object(self.resize_object_callback, *args, **kwargs)
-
-    def resize_object_callback(self, index, size, logic_image):
+    def resize_object(self, index, size):
+        logic_image = self.logic.get_object(index)
         self._delete(index)
         if not any([el<=0 for el in size]):
             new_image = ImageTk.PhotoImage(logic_image.image)
             self.objects[index] = self.canvas.create_image(*logic_image.position, image=new_image)
             self.images[index] = new_image
 
-    def delete_object(self, index=None):
-        self.logic.delete_object(self.delete_object_callback, index)
-
-    def delete_object_callback(self, index):
+    def delete_object(self, index):
         if self._delete(index):
             self.images.pop(index)
 
@@ -175,27 +175,28 @@ class SketchGui(tk.Frame):
         self.logic.gravity = gravity
 
     def get_command_table(self):
-        return {
-            'draw': self.draw_object,
-            'move': self.move_object,
-            'rotate': self.rotate_object,
-            'resize': self.resize_object,
-            'mark': self.mark_object_by_index,
-            'delete': self.delete_object,
-            'vel': self.set_velocity,
-            'acc': self.set_acceleration,
-            'motion': self.set_motion,
-            'gravity': self.set_gravity,
-            'save': self.save_image
-        }
+        return self.logic.get_command_table()
+        # return {
+        #     'draw': self.draw_object,
+        #     'move': self.move_object,
+        #     'rotate': self.rotate_object,
+        #     'resize': self.resize_object,
+        #     'mark': self.mark_object_by_index,
+        #     'delete': self.delete_object,
+        #     'vel': self.set_velocity,
+        #     'acc': self.set_acceleration,
+        #     'motion': self.set_motion,
+        #     'gravity': self.set_gravity,
+        #     'save': self.save_image
+        # }
 
     def on_button1_press(self, event):
         command = command_from_meta(self.config['commands'][self.interactive_command_name])
-        self.current_command = command(self, event, self.interactive_command_name)
+        self.current_command = command(self.logic, event, self.interactive_command_name, self.interpreter)
 
     def on_button2_press(self, event):
         command = command_from_meta(self.config['commands'][self.interactive_command_name])
-        self.current_command = command(self, event, self.interactive_command_name, button2=True)
+        self.current_command = command(self.logic, event, self.interactive_command_name, self.interpreter, button2=True)
 
     def on_move_press(self, event):
         self.current_command.on_move(event)
@@ -207,15 +208,15 @@ class SketchGui(tk.Frame):
         self.interactive_command_name = command_name
 
     def image_tool_active(self, image_name):
-        self.current_image = image_name
+        self.logic.current_image = image_name
         self.interactive_command_name = DRAW_COMMAND
 
     def color_filler_active(self, color):
-        self.filler = tuple(color)
+        self.logic.current_filler = tuple(color)
         self.image_buttons.update_filler(self.logic.get_filler(color))
 
     def elastic_image_filler_active(self, name):
-        self.filler = name
+        self.logic.current_filler = name
         self.image_buttons.update_filler(self.logic.get_filler(name))
 
     def get_image_path(self, image_name):

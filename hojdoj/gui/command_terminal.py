@@ -14,15 +14,18 @@ class InputEntry(tk.Entry):
 
 
 class CommandTerminal(tk.Frame):
-    def __init__(self, parent, command_table, width, height):
+    def __init__(self, parent, width, height):
         tk.Frame.__init__(self, parent)
         self.input = InputEntry(self)
         self.input.place(width=width, height=height)
 
-        self.interpreter = Interpreter(command_table)
+        self.interpreter = Interpreter()
 
     def run_command(self, text, update_text=False):
         self.interpreter.perform_command(text)
         if update_text:
             self.input.delete(0, tk.END)
             self.input.insert(0, text)
+
+    def set_command_table(self, command_table):
+        self.interpreter.command_table = command_table

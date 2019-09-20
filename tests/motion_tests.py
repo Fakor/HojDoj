@@ -12,7 +12,7 @@ from hojdoj_testcase import *
 class MotionTests(HojdojTestCase):
 
     def test_set_velocity(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG)
 
         sketch.draw_object(draw_callback, 'SQUARE', (0, 0), (10, 5), index=7)
 
@@ -39,7 +39,7 @@ class MotionTests(HojdojTestCase):
         self.assertFloatTupleEqual(sketch.object_position(7), (3.75,  -5))
 
     def test_set_acceleration(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG)
 
         sketch.draw_object(draw_callback, 'SQUARE', (0, 0), (10, 5), index=5)
         index, acceleration = sketch.set_acceleration(acceleration_callback, (-0.2, 0.5), index=5)
@@ -59,7 +59,7 @@ class MotionTests(HojdojTestCase):
         self.assertFloatTupleEqual(sketch.object_velocity(5), (-0.4, 1))
 
     def test_set_motion(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES)
+        sketch = SketchLogic(CONFIG)
 
         sketch.draw_object(draw_callback, 'SQUARE', (0, 0), (10, 5), index=5)
         sketch.set_motion(index=5, velocity=(2, 4))
@@ -95,7 +95,7 @@ class MotionTests(HojdojTestCase):
         self.assertFloatTupleEqual(i2.acceleration, (-1.12, 1.84))
 
     def test_apply_gravity_all(self):
-        sketch = SketchLogic(IMAGE_TEMPLATES, gravity=5)
+        sketch = SketchLogic(CONFIG, gravity=5)
 
         sketch.draw_object(draw_callback, 'SQUARE', (0, 0), (1, 1), index=0, mass=5, acceleration=(5, -5))
         sketch.draw_object(draw_callback, 'SQUARE', (2, 0), (1, 1), index=1, mass=1)

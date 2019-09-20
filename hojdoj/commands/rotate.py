@@ -9,22 +9,22 @@ class Command(BaseCommand):
         self.mark_object()
         if self.index is None:
             return
-        self.orig = self.sketch.get_object_position(self.index)
+        self.orig = self.logic.object_position(self.index)
         self.start_angle = self.get_angle(self.init_event.x, self.init_event.y)
 
     def on_move(self, event):
         if self.index is None:
             return
         rotation = self.get_angle(event.x,event.y)-self.start_angle
-        self.sketch.rotate_object(rotation, index=self.index, intermediate=True)
+        self.logic.rotate_object(rotation, index=self.index, intermediate=True)
 
     def on_release(self, event):
         if self.index is None:
             return
         rotation = self.get_angle(event.x,event.y)-self.start_angle
-        self.sketch.new_command(self.name,
-                                rotation,
-                                index=self.index)
+        self.perform_command(self.name,
+                             rotation,
+                             index=self.index)
 
     def get_angle(self, x, y):
         x_orig, y_orig = self.orig

@@ -15,3 +15,6 @@ class HojdojTestCase(unittest.TestCase):
         self.assertEqual(len(t1), len(t2))
         for el1, el2 in zip(t1, t2):
             self.assertAlmostEqual(el1, el2, EPSILON)
+
+    def callback(self, actions):
+        return actions
