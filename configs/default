@@ -72,11 +72,11 @@
 	    "path": "$PROJ_HOME/hojdoj/commands/delete.py",
 	    "image": "$PROJ_HOME/images/commands/delete.png"
 	},
-	"vel": {
+	"velocity": {
 	    "path": "$PROJ_HOME/hojdoj/commands/velocity.py",
 	    "image": "$PROJ_HOME/images/commands/velocity.png"
 	},
-	"acc": {
+	"acceleration": {
 	    "path": "$PROJ_HOME/hojdoj/commands/acceleration.py",
 	    "image": "$PROJ_HOME/images/commands/acceleration.png"
 	},

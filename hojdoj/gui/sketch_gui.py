@@ -35,8 +35,6 @@ class SketchGui(tk.Frame):
         self.objects = {}
         self.marked_object = None
 
-        #self.current_image = self.config.get_value('default_image')
-
         self.canvas.bind("<Button-1>", self.on_button1_press)
         self.canvas.bind("<Button-3>", self.on_button2_press)
         self.canvas.bind("<B1-Motion>", self.on_move_press)
@@ -157,10 +155,7 @@ class SketchGui(tk.Frame):
             self.images.pop(index)
 
     def set_velocity(self, *args, **kwargs):
-        self.logic.set_velocity(self.set_velocity_callback, *args, **kwargs)
-
-    def set_velocity_callback(self, index, velocity):
-        pass
+        self.logic.set_velocity(*args, **kwargs)
 
     def set_acceleration(self, *args, **kwargs):
         self.logic.set_acceleration(self.set_acceleration_callback, *args, **kwargs)
@@ -230,14 +225,7 @@ class SketchGui(tk.Frame):
 
     def start_motion_cycle(self):
         updates = self.logic.step()
-        for index, position in updates:
-            try:
-                self.canvas.coords(self.objects[index], *position)
-            except KeyError:
-                # Need to catch this exception since there might be a
-                # race condition problem were the logic sends back updated
-                # indexes that have not yet been registered here.
-                pass
+        self.handle_actions(updates)
         self.after(self.config['step_time'], self.start_motion_cycle)
 
     def save_image(self):

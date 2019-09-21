@@ -19,6 +19,6 @@ class Command(BaseCommand):
         kwargs = {'index': self.index}
         if self.button2:
             kwargs['range'] = np.hypot(*dpos)
-        self.sketch.new_command(self.name,
-                                velocity,
-                                **kwargs)
+        self.perform_command(self.name,
+                             velocity,
+                             **kwargs)

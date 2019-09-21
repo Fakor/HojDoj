@@ -21,7 +21,7 @@ class SketchLogic:
         ret = []
         for index, obj in self.objects.items():
             if obj.motion_update():
-                ret.append((index, obj.position))
+                ret.append(('move', {'index': index, 'position':obj.position}))
         return ret
 
     def get_object(self, index):
@@ -68,7 +68,9 @@ class SketchLogic:
             'delete': self.delete_object,
             'move': self.move_object,
             'rotate': self.rotate_object,
-            'resize': self.resize_object
+            'resize': self.resize_object,
+            'velocity': self.set_velocity,
+            'gravity': self.set_gravity
         }
 
     def draw_object(self,
@@ -134,11 +136,11 @@ class SketchLogic:
                 break
         return self.callback(actions)
 
-    def set_velocity(self, callback, velocity, index=None, range=None):
+    def set_velocity(self, velocity, index=None, range=None):
         if index is None:
             index = self.marked_object_index
-        vel = self.objects[index].set_velocity(velocity, range)
-        return callback(index, vel)
+        self.objects[index].set_velocity(velocity, range)
+        return self.callback([('velocity', {'index': index})])
 
     def set_motion(self, index=None, **kwargs):
         if index is None:
@@ -150,6 +152,9 @@ class SketchLogic:
             index = self.marked_object_index
         acc = self.objects[index].set_acceleration(acceleration)
         return callback(index, acc)
+
+    def set_gravity(self, gravity):
+        self.gravity = gravity
 
     def apply_gravity_all(self):
         for i1, obj1 in self.objects.items():

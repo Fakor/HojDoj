@@ -8,7 +8,7 @@ CONFIG={
     },
     "fillers":{
     },
-    "gravity": 0,
+    "gravity": 5,
     "default_image": "SQUARE",
     "default_color": [0,0,0]
 }
