@@ -4,14 +4,14 @@ import numpy as np
 from DTools.fillers import NoFiller
 from DTools.tools import sum_points
 
-# This constant is added to make gravity more stable.
-# If set to 0 there is a high chance that the force
-# applied will throw the object out of the screen in
-# a non-entertaining way.
-GRAVITY_MIN_RANGE = 20
-
 
 class ImageLogic:
+    # This constant is added to make gravity more stable.
+    # If set to 0 there is a high chance that the force
+    # applied will throw the object out of the screen in
+    # a non-entertaining way.
+    GRAVITY_MIN_RANGE = 20
+
     def __init__(self,
                  path,
                  position,
@@ -93,7 +93,7 @@ class ImageLogic:
 
     def apply_gravity(self, obj, gravity):
         dist = np.array(obj.position) - np.array(self.position)
-        r = np.max((np.linalg.norm(dist), GRAVITY_MIN_RANGE))
+        r = np.max((np.linalg.norm(dist), ImageLogic.GRAVITY_MIN_RANGE))
         acc = gravity*obj.mass/r**2
         added_acc = tuple(acc * el/r for el in dist)
         self.gravity_acceleration = sum_points(self.gravity_acceleration, added_acc)
