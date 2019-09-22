@@ -70,7 +70,8 @@ class SketchLogic:
             'rotate': self.rotate_object,
             'resize': self.resize_object,
             'motion': self.set_motion,
-            'gravity': self.set_gravity
+            'gravity': self.set_gravity,
+            'save': self.save
         }
 
     def draw_object(self,
@@ -151,3 +152,6 @@ class SketchLogic:
             for i2, obj2 in self.objects.items():
                 if i1 != i2:
                     obj1.apply_gravity(obj2, self.gravity)
+
+    def save(self):
+        self.callback([('save', {})])

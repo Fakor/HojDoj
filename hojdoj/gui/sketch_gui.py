@@ -115,6 +115,8 @@ class SketchGui(tk.Frame):
                 self.resize_object(**arguments)
             elif action == 'motion':
                 self.set_motion(**arguments)
+            elif action == 'save':
+                self.save_image(**arguments)
 
     def draw_object(self, index):
         logic_image = self.logic.get_object(index)
