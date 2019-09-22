@@ -20,7 +20,7 @@ class Command(BaseCommand):
         acceleration = (0, -2*np.sign(velocity[1]))
         rng = count_jump_range(velocity, acceleration)
 
-        self.sketch.new_command('motion',
-                                velocity=velocity,
-                                acceleration=acceleration,
-                                range=rng)
+        self.perform_command('motion',
+                             velocity=velocity,
+                             acceleration=acceleration,
+                             range=rng)
