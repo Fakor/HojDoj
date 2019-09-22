@@ -69,7 +69,7 @@ class SketchLogic:
             'move': self.move_object,
             'rotate': self.rotate_object,
             'resize': self.resize_object,
-            'velocity': self.set_velocity,
+            'motion': self.set_motion,
             'gravity': self.set_gravity
         }
 
@@ -136,22 +136,11 @@ class SketchLogic:
                 break
         return self.callback(actions)
 
-    def set_velocity(self, velocity, index=None, range=None):
-        if index is None:
-            index = self.marked_object_index
-        self.objects[index].set_velocity(velocity, range)
-        return self.callback([('velocity', {'index': index})])
-
     def set_motion(self, index=None, **kwargs):
         if index is None:
             index = self.marked_object_index
         self.objects[index].set_motion(**kwargs)
-
-    def set_acceleration(self, callback, acceleration, index=None):
-        if index is None:
-            index = self.marked_object_index
-        acc = self.objects[index].set_acceleration(acceleration)
-        return callback(index, acc)
+        return self.callback([('motion', {'index': index})])
 
     def set_gravity(self, gravity):
         self.gravity = gravity

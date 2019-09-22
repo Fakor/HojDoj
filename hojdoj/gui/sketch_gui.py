@@ -99,9 +99,6 @@ class SketchGui(tk.Frame):
         self.elastic_buttons.grid(row=3)
         self.start_motion_cycle()
 
-#    def new_command(self, command_name, *args, **kwargs):
-#        self.parent.new_command(command_name, *args, **kwargs)
-
     def handle_actions(self, actions):
         for action, arguments in actions:
             if action == 'draw':
@@ -116,6 +113,8 @@ class SketchGui(tk.Frame):
                 self.rotate_object(**arguments)
             elif action == 'resize':
                 self.resize_object(**arguments)
+            elif action == 'motion':
+                self.set_motion(**arguments)
 
     def draw_object(self, index):
         logic_image = self.logic.get_object(index)
@@ -154,17 +153,8 @@ class SketchGui(tk.Frame):
         if self._delete(index):
             self.images.pop(index)
 
-    def set_velocity(self, *args, **kwargs):
-        self.logic.set_velocity(*args, **kwargs)
-
-    def set_acceleration(self, *args, **kwargs):
-        self.logic.set_acceleration(self.set_acceleration_callback, *args, **kwargs)
-
-    def set_acceleration_callback(self, index, acceleration):
-        pass
-
     def set_motion(self, *args, **kwargs):
-        self.logic.set_motion(*args, **kwargs)
+        pass
 
     def set_gravity(self, gravity):
         self.logic.gravity = gravity

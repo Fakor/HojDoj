@@ -22,6 +22,6 @@ class Command(BaseCommand):
         scale = np.min((rng/MAX_RANGE, 1))
         acceleration = tuple(dpos*scale/rng)
 
-        self.sketch.new_command(self.name,
-                                acceleration,
-                                index=self.index)
+        self.perform_command('motion',
+                             acceleration=acceleration,
+                             index=self.index)

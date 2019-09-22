@@ -19,18 +19,18 @@ class MotionTests(HojdojTestCase):
         updated = sketch.step()
         self.assertListEqual(updated, [])
 
-        actions = sketch.set_velocity((1.5, -2), range=6.25)
-        self.assertEqual(actions, [('velocity', {'index': 7})])
+        actions = sketch.set_motion(velocity=(1.5, -2), range=6.25)
+        self.assertEqual(actions, [('motion', {'index': 7})])
 
         updated = sketch.step()
-        self.assertUpdateEqual(updated, [('move', {'index': 7, 'position': (1.5, -2)})])
+        self.assertActionEqual(updated, [('move', {'index': 7, 'position': (1.5, -2.0)})])
         self.assertFloatTupleEqual(sketch.object_position(7), (1.5,  -2))
         updated = sketch.step()
-        self.assertUpdateEqual(updated, [('move', {'index': 7, 'position': (3, -4)})])
+        self.assertActionEqual(updated, [('move', {'index': 7, 'position': (3, -4)})])
         self.assertFloatTupleEqual(sketch.object_position(7), (3,  -4))
 
         updated = sketch.step()
-        self.assertUpdateEqual(updated, [('move', {'index': 7, 'position': (3.75, -5)})])
+        self.assertActionEqual(updated, [('move', {'index': 7, 'position': (3.75, -5)})])
         self.assertFloatTupleEqual(sketch.object_position(7), (3.75,  -5))
 
         updated = sketch.step()
@@ -40,27 +40,28 @@ class MotionTests(HojdojTestCase):
     def test_set_acceleration(self):
         sketch = SketchLogic(CONFIG, self.callback)
 
-        sketch.draw_object(draw_callback, 'SQUARE', (0, 0), (10, 5), index=5)
-        index, acceleration = sketch.set_acceleration(acceleration_callback, (-0.2, 0.5), index=5)
-        self.assertEqual(index, 5)
-        self.assertEqual(acceleration, (-0.2, 0.5))
+        sketch.draw_object('SQUARE', (0, 0), (10, 5), index=5)
+        actions = sketch.set_motion(acceleration=(-0.2, 0.5), index=5)
+        self.assertEqual(actions, [('motion', {'index': 5})])
+
+        self.assertEqual(sketch.object_acceleration(5), (-0.2, 0.5))
         self.assertEqual(sketch.object_velocity(5), (0, 0))
         self.assertEqual(sketch.object_position(5), (0, 0))
 
         updated = sketch.step()
-        self.assertUpdateEqual(updated, [(5, (-0.2, 0.5))])
+        self.assertActionEqual(updated, [('move', {'index': 5, 'position': (-0.2, 0.5)})])
         self.assertFloatTupleEqual(sketch.object_position(5), (-0.2, 0.5))
         self.assertFloatTupleEqual(sketch.object_velocity(5), (-0.2, 0.5))
 
         updated = sketch.step()
-        self.assertUpdateEqual(updated, [(5, (-0.6, 1.5))])
+        self.assertActionEqual(updated, [('move', {'index': 5, 'position': (-0.6, 1.5)})])
         self.assertFloatTupleEqual(sketch.object_position(5), (-0.6, 1.5))
         self.assertFloatTupleEqual(sketch.object_velocity(5), (-0.4, 1))
 
     def test_set_motion(self):
         sketch = SketchLogic(CONFIG, self.callback)
 
-        sketch.draw_object(draw_callback, 'SQUARE', (0, 0), (10, 5), index=5)
+        sketch.draw_object('SQUARE', (0, 0), (10, 5), index=5)
         sketch.set_motion(index=5, velocity=(2, 4))
 
         self.assertFloatTupleEqual(sketch.object_position(5), (0, 0))

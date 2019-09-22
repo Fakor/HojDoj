@@ -16,9 +16,11 @@ class Command(BaseCommand):
             return
         dpos = np.array(self.delta_position(event))
         velocity = tuple(dpos/25)
-        kwargs = {'index': self.index}
+        kwargs = {
+            'index': self.index,
+            'velocity': velocity
+        }
         if self.button2:
             kwargs['range'] = np.hypot(*dpos)
-        self.perform_command(self.name,
-                             velocity,
+        self.perform_command('motion',
                              **kwargs)
