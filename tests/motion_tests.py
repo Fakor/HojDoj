@@ -77,8 +77,8 @@ class MotionTests(HojdojTestCase):
         self.assertEqual(sketch.object_range(5), 100)
 
     def test_count_jump_range(self):
-        rng = count_jump_range((1, 2), (0, -0.9))
-        self.assertAlmostEqual(rng, 8.9269, 3)
+        rng = count_jump_range((0,1), (0, -0.5))
+        self.assertAlmostEqual(rng, 1)
 
     def test_image_apply_gravity(self):
         ImageLogic.GRAVITY_MIN_RANGE = 0

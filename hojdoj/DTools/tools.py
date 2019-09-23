@@ -33,17 +33,17 @@ def sum_points(*points, min_value=None):
 def count_jump_range(velocity, acceleration):
     dx, dy = velocity
     _, acc_y = acceleration
-    dy = np.sqrt(dy**2)
-    acc_y = -np.sqrt(acc_y**2)
+    dy = np.abs(dy)
+    acc_y = -np.abs(acc_y)
     rng = 0
     pos = 0
-    while (np.sign(dy) == 1 or dy < pos):
+    dy += acc_y
+    while np.sign(dy) == 1 or np.abs(dy) < pos:
+        pos += dy
         rng += np.hypot(dx, dy)
         dy += acc_y
-        pos += dy
-
-    overshot = dy-pos
-    rng += np.hypot(dx, dy)*overshot/(-dy)
+    overshot = np.abs(pos/dy)
+    rng += np.hypot(dx, dy)*overshot
     return rng
 
 
