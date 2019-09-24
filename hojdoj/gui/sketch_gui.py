@@ -17,10 +17,9 @@ DRAW_COMMAND='draw'
 class SketchGui(tk.Frame):
     COLUMNS = 4
 
-    def __init__(self, parent, config, position, size, interpreter):
+    def __init__(self, parent, config, position, size):
         width, height = size
         tk.Frame.__init__(self, parent, width=width, height=height)
-        self.interpreter = interpreter
 
         self.logic = SketchLogic(config, self.handle_actions)
         self.images = {}
@@ -163,27 +162,14 @@ class SketchGui(tk.Frame):
 
     def get_command_table(self):
         return self.logic.get_command_table()
-        # return {
-        #     'draw': self.draw_object,
-        #     'move': self.move_object,
-        #     'rotate': self.rotate_object,
-        #     'resize': self.resize_object,
-        #     'mark': self.mark_object_by_index,
-        #     'delete': self.delete_object,
-        #     'vel': self.set_velocity,
-        #     'acc': self.set_acceleration,
-        #     'motion': self.set_motion,
-        #     'gravity': self.set_gravity,
-        #     'save': self.save_image
-        # }
 
     def on_button1_press(self, event):
         command = command_from_meta(self.config['commands'][self.interactive_command_name])
-        self.current_command = command(self.logic, event, self.interactive_command_name, self.interpreter)
+        self.current_command = command(self.logic, event, self.interactive_command_name)
 
     def on_button2_press(self, event):
         command = command_from_meta(self.config['commands'][self.interactive_command_name])
-        self.current_command = command(self.logic, event, self.interactive_command_name, self.interpreter, button2=True)
+        self.current_command = command(self.logic, event, self.interactive_command_name, button2=True)
 
     def on_move_press(self, event):
         self.current_command.on_move(event)

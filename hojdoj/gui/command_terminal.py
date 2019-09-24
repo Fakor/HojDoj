@@ -1,7 +1,5 @@
 import tkinter as tk
 
-from logic.interpreter import Interpreter
-
 
 class InputEntry(tk.Entry):
     def __init__(self, parent):
@@ -10,22 +8,18 @@ class InputEntry(tk.Entry):
         self.bind('<Return>', self.enter_pressed)
 
     def enter_pressed(self, event):
-        self.parent.run_command(self.get())
+        self.parent.callback(self.get())
 
 
 class CommandTerminal(tk.Frame):
-    def __init__(self, parent, width, height):
+    def __init__(self, parent, width, height, interpreter):
         tk.Frame.__init__(self, parent)
         self.input = InputEntry(self)
         self.input.place(width=width, height=height)
 
-        self.interpreter = Interpreter()
+        interpreter.callback = self.update_text
+        self.callback = interpreter.perform_command
 
-    def run_command(self, text, update_text=False):
-        self.interpreter.perform_command(text)
-        if update_text:
-            self.input.delete(0, tk.END)
-            self.input.insert(0, text)
-
-    def set_command_table(self, command_table):
-        self.interpreter.command_table = command_table
+    def update_text(self, text):
+        self.input.delete(0, tk.END)
+        self.input.insert(0, text)

@@ -4,6 +4,7 @@ from DTools.tools import value_from_string
 class Interpreter:
     def __init__(self, command_table={}):
         self.command_table = command_table
+        self.callback = None
 
     def perform_command(self, text):
         pars = text.split(sep='(', maxsplit=1)
@@ -15,6 +16,8 @@ class Interpreter:
         args, kwargs = interpret_values(values)
         command = self.get_command(command_str)
         command(*args, **kwargs)
+        if self.callback is not None:
+            self.callback(text)
 
     def get_command(self, command_string):
         return self.command_table[command_string]

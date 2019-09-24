@@ -2,12 +2,11 @@ from DTools.tools import value_to_string
 
 
 class BaseCommand:
-    def __init__(self, logic, event, command_name, interpreter, button2=False):
+    def __init__(self, logic, event, command_name, button2=False):
         self.name = command_name
         self.logic = logic
         self.init_event = event
         self.button2 = button2
-        self.interpreter = interpreter
         self.index = None
 
     def on_move(self, event):
@@ -31,4 +30,4 @@ class BaseCommand:
         kwargs_text =['{}={}'.format(str(key),value_to_string(value)) for key, value in kwargs.items() if value is not None]
         text = text + ', '.join(args_text  + kwargs_text) + ")"
 
-        self.interpreter.run_command(text, update_text=True)
+        self.logic.interpreter.perform_command(text)

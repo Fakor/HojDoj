@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from logic.image_logic import ImageLogic
 from DTools.fillers import *
+from logic.interpreter import Interpreter
 
 
 class SketchLogic:
@@ -15,6 +16,7 @@ class SketchLogic:
         self.marked_object_index = None
         self.object_index = 0
         self.used_object_indexes = set()
+        self.interpreter = Interpreter(self.get_command_table())
 
     def step(self):
         self.apply_gravity_all()
