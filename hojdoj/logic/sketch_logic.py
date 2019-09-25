@@ -76,7 +76,8 @@ class SketchLogic:
             'resize': self.resize_object,
             'motion': self.set_motion,
             'gravity': self.set_gravity,
-            'save': self.save
+            'save': self.save,
+            'save_image': self.save_image
         }
 
     def draw_object(self,
@@ -160,3 +161,6 @@ class SketchLogic:
 
     def save(self):
         self.callback([('save', {})])
+
+    def save_image(self):
+        self.callback([('save_image', {})])

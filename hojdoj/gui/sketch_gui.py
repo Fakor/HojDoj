@@ -115,6 +115,8 @@ class SketchGui(tk.Frame):
             elif action == 'motion':
                 self.set_motion(**arguments)
             elif action == 'save':
+                self.save(**arguments)
+            elif action == 'save_image':
                 self.save_image(**arguments)
 
     def draw_object(self, index):
@@ -205,6 +207,15 @@ class SketchGui(tk.Frame):
         updates = self.logic.step()
         self.handle_actions(updates)
         self.after(self.config['step_time'], self.start_motion_cycle)
+
+    def save(self):
+        file_name = filedialog.asksaveasfilename(initialdir=self.config['save_location'],
+                                                 title='Välj fil',
+                                                 filetypes = (("hojdoj", "*.hoj"),("all files","*.*")))
+        if file_name:
+            with open(file_name, 'w') as f:
+                f.write('\n'.join(self.logic.interpreter.history))
+
 
     def save_image(self):
         size = sum_points(self.canvas_position, self.canvas_size)

@@ -5,6 +5,7 @@ class Interpreter:
     def __init__(self, command_table={}):
         self.command_table = command_table
         self.callback = None
+        self.history = []
 
     def perform_command(self, text):
         pars = text.split(sep='(', maxsplit=1)
@@ -16,6 +17,7 @@ class Interpreter:
         args, kwargs = interpret_values(values)
         command = self.get_command(command_str)
         command(*args, **kwargs)
+        self.history.append(text)
         if self.callback is not None:
             self.callback(text)
 
