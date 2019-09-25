@@ -30,4 +30,4 @@ class BaseCommand:
         kwargs_text =['{}={}'.format(str(key),value_to_string(value)) for key, value in kwargs.items() if value is not None]
         text = text + ', '.join(args_text  + kwargs_text) + ")"
 
-        self.logic.interpreter.perform_command(text)
+        self.logic.perform_command(text)

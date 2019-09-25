@@ -18,6 +18,9 @@ class SketchLogic:
         self.used_object_indexes = set()
         self.interpreter = Interpreter(self.get_command_table())
 
+    def perform_command(self, text):
+        self.interpreter.perform_command(text)
+
     def step(self):
         self.apply_gravity_all()
         ret = []

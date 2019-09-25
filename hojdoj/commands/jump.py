@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         BaseCommand.__init__(self, *args, **kwargs)
         self.mark_object()
-        if self.button2:
+        if self.button2 and self.index is not None:
             dx = np.sign(self.logic.object_position(self.index)[0]-self.init_event.x)*5
             velocity = (dx, -20)
             acceleration = (0, 1)
