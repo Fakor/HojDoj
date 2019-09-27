@@ -118,6 +118,8 @@ class SketchGui(tk.Frame):
                 self.save(**arguments)
             elif action == 'save_image':
                 self.save_image(**arguments)
+            elif action == 'clear':
+                self.clear(**arguments)
 
     def draw_object(self, index):
         logic_image = self.logic.get_object(index)
@@ -216,7 +218,6 @@ class SketchGui(tk.Frame):
             with open(file_name, 'w') as f:
                 f.write('\n'.join(self.logic.interpreter.history))
 
-
     def save_image(self):
         size = sum_points(self.canvas_position, self.canvas_size)
         image = pyscreenshot.grab((*self.canvas_position, *size))
@@ -225,6 +226,12 @@ class SketchGui(tk.Frame):
                                                  filetypes = (("png", "*.png"),("all files","*.*")))
         if file_name:
             image.save(file_name)
+
+    def clear(self):
+        self.canvas.delete('all')
+        self.objects = dict()
+        self.images = dict()
+        self.marked_object = None
 
     def _delete(self, index):
         if index in self.objects:

@@ -113,6 +113,25 @@ class SketchLogicTests(HojdojTestCase):
         self.assertTrue(isinstance(filler, ColorFiller))
         self.assertEqual(filler.color, [100, 150, 200])
 
+    def test_clear(self):
+        sketch = SketchLogic(CONFIG, self.callback)
+
+        sketch.draw_object('SQUARE', (0,0), (10, 10))
+        sketch.draw_object('SQUARE', (0, 0), (10, 10))
+        sketch.draw_object('SQUARE', (0, 0), (10, 10), index=10)
+
+        self.assertEqual(len(sketch.objects), 3)
+        self.assertEqual(sketch.marked_object_index, 10)
+        self.assertEqual(sketch.object_index, 1)
+        self.assertSetEqual(sketch.used_object_indexes, {0, 1, 10})
+
+        actions = sketch.clear()
+        self.assertEqual(actions[0][0], 'clear')
+
+        self.assertEqual(len(sketch.objects), 0)
+        self.assertEqual(sketch.marked_object_index, None)
+        self.assertEqual(sketch.object_index, 0)
+        self.assertSetEqual(sketch.used_object_indexes, set())
 
 if __name__ == '__main__':
     unittest.main()

@@ -77,7 +77,8 @@ class SketchLogic:
             'motion': self.set_motion,
             'gravity': self.set_gravity,
             'save': self.save,
-            'save_image': self.save_image
+            'save_image': self.save_image,
+            'clear': self.clear
         }
 
     def draw_object(self,
@@ -93,6 +94,8 @@ class SketchLogic:
                     acceleration=(0, 0)):
         if index is None:
             index = self.next_image_index()
+        else:
+            self.used_object_indexes.add(index)
         self.objects[index] = ImageLogic(self.image_templates[name],
                                          position,
                                          size,
@@ -160,7 +163,14 @@ class SketchLogic:
                     obj1.apply_gravity(obj2, self.gravity)
 
     def save(self):
-        self.callback([('save', {})])
+        return self.callback([('save', {})])
 
     def save_image(self):
-        self.callback([('save_image', {})])
+        return self.callback([('save_image', {})])
+
+    def clear(self):
+        self.objects = dict()
+        self.marked_object_index = None
+        self.object_index = 0
+        self.used_object_indexes = set()
+        return self.callback([('clear', {})])
