@@ -21,7 +21,7 @@ class SketchGui(tk.Frame):
         width, height = size
         tk.Frame.__init__(self, parent, width=width, height=height)
 
-        self.logic = SketchLogic(config, self.handle_actions)
+        self.logic = SketchLogic(config, self.handle_actions, load_function=self.load)
         self.images = {}
 
         bg_color = color_to_tk(config.get_value('background_color'))
@@ -118,6 +118,8 @@ class SketchGui(tk.Frame):
                 self.save(**arguments)
             elif action == 'save_image':
                 self.save_image(**arguments)
+            elif action == 'load':
+                self.load(**arguments)
             elif action == 'clear':
                 self.clear(**arguments)
 
@@ -226,6 +228,12 @@ class SketchGui(tk.Frame):
                                                  filetypes = (("png", "*.png"),("all files","*.*")))
         if file_name:
             image.save(file_name)
+
+    def load(self):
+        file = filedialog.askopenfile(initialdir=self.config['save_location'],
+                                           title='Välj fil',
+                                           filetypes=(("hojdoj", "*.hoj"), ("all files", "*.*")))
+        self.logic.load(file)
 
     def clear(self):
         self.canvas.delete('all')

@@ -21,6 +21,10 @@ class Interpreter:
         if self.callback is not None:
             self.callback(text)
 
+    def perform_commands_from_file(self, file):
+        for row in file:
+            self.perform_command(row)
+
     def get_command(self, command_string):
         return self.command_table[command_string]
 

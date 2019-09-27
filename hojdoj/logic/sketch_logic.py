@@ -5,7 +5,7 @@ from logic.interpreter import Interpreter
 
 
 class SketchLogic:
-    def __init__(self, config, callback):
+    def __init__(self, config, callback, load_function=None):
         self.image_templates = config['image_templates']
         self.fillers = config['fillers']
         self.gravity = config['gravity']
@@ -16,6 +16,7 @@ class SketchLogic:
         self.marked_object_index = None
         self.object_index = 0
         self.used_object_indexes = set()
+        self.load_function = load_function
         self.interpreter = Interpreter(self.get_command_table())
 
     def perform_command(self, text):
@@ -78,6 +79,7 @@ class SketchLogic:
             'gravity': self.set_gravity,
             'save': self.save,
             'save_image': self.save_image,
+            'load': self.load_function,
             'clear': self.clear
         }
 
@@ -167,6 +169,10 @@ class SketchLogic:
 
     def save_image(self):
         return self.callback([('save_image', {})])
+
+    def load(self, path):
+        self.clear()
+        self.interpreter.perform_commands_from_file(path)
 
     def clear(self):
         self.objects = dict()
