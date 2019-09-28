@@ -1,11 +1,8 @@
-import unittest
-
 from logic.sketch_logic import SketchLogic
 from DTools.fillers import *
 
-from constants import *
-from functions import *
-from hojdoj_testcase import *
+from tests.resources.helper.constants import *
+from tests.resources.helper.hojdoj_testcase import *
 
 
 class SketchLogicTests(HojdojTestCase):

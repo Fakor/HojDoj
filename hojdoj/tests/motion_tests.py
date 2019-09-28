@@ -1,12 +1,9 @@
-import unittest
-
 from logic.sketch_logic import SketchLogic
 from logic.image_logic import ImageLogic
 from DTools.tools import count_jump_range
 
-from constants import *
-from functions import *
-from hojdoj_testcase import *
+from tests.resources.helper.constants import *
+from tests.resources.helper.hojdoj_testcase import *
 
 
 class MotionTests(HojdojTestCase):

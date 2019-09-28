@@ -1,9 +1,6 @@
 import unittest
 
-from logic.sketch_logic import SketchLogic
-from logic.interpreter import Interpreter, interpret_values, arg_split
-from constants import *
-from functions import *
+from logic.interpreter import interpret_values, arg_split
 
 
 class InterpreterTests(unittest.TestCase):
