@@ -1,0 +1,8 @@
+### GoogleTest ###
+1: Clone repo and cd to it.
+2: mkdir build
+3: cd build
+4: cmake ..
+5: make
+6: make install
+
