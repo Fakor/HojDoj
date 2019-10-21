@@ -19,9 +19,14 @@ void World::create_object(Shape* shape, const Vector& pos, Index ind){
 void World::step(Time step_time){
 }
 
-const Vector& World::get_object_position(Index index) const{
-    return objects_.at(index).get_position();
+const Object& World::operator[](Index index) const{
+    return objects_.at(index);
 }
+
+Object& World::operator[](Index index){
+    return objects_.at(index);
+}
+
 
 } // hojdoj
 

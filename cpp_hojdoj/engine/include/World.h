@@ -19,7 +19,8 @@ class World
         void create_object(Shape* shape, const Vector& pos, Index index);
         void step(Time step_time);
 
-        const Vector& get_object_position(Index index) const;
+        const Object& operator[](Index index) const;
+        Object& operator[](Index index);
     private:
         std::map<Index, Object> objects_;
 };

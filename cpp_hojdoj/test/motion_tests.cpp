@@ -17,10 +17,10 @@ TEST(MotionTests, SetVelocity){
     world.create_object(&square, position, index);
 
     world.step(step_time);
-    ASSERT_EQ(position, world.get_object_position(index));
+    ASSERT_EQ(position, world[index].get_position());
 
-    /*hojdoj::Velocity velocity(1.5, -2);
-    world.SetMotion(velocity, index);
+    /*hojdoj::Vector velocity(1.5, -2);
+    world.SetVelocity(velocity, index);
     world.StopAfterRange(6.25, index);
 
     world.Step(step_time);
