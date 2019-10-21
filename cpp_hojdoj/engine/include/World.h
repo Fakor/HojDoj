@@ -16,10 +16,10 @@ class World
         World();
         virtual ~World();
 
-        void create_object(Shape* shape, Position pos, Index index);
+        void create_object(Shape* shape, const Vector& pos, Index index);
         void step(Time step_time);
 
-        const Position& get_object_position(Index index) const;
+        const Vector& get_object_position(Index index) const;
     private:
         std::map<Index, Object> objects_;
 };

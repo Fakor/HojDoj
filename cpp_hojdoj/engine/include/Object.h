@@ -2,6 +2,7 @@
 #define OBJECT_H
 
 #include "Shape.h"
+#include "Vector.h"
 #include "data_types.h"
 
 namespace hojdoj {
@@ -9,13 +10,13 @@ namespace hojdoj {
 class Object
 {
     public:
-        Object(Shape* shape, Position position);
+        Object(Shape* shape, Vector position);
         virtual ~Object();
 
-        const Position& get_position() const;
+        const Vector& get_position() const;
     private:
         Shape* shape_;
-        Position position_;
+        Vector position_;
 };
 
 }

@@ -6,3 +6,5 @@ __pycache__
 bin
 *.o
 obj
+*.layout
+*.depend
