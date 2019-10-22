@@ -19,4 +19,9 @@ bool Vector::operator==(const Vector& other) const{
     return std::sqrt(dx*dx + dy*dy) < EPSILON;
 }
 
+std::ostream& operator<<(std::ostream& os, const Vector& v){
+    os << "(" << v.x << ", " << v.y << ")";
+    return os;
+}
+
 }

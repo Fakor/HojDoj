@@ -10,6 +10,8 @@
 
 namespace hojdoj {
 
+const Time STEP_TIME=1.0/30;
+
 class World
 {
     public:
@@ -23,6 +25,7 @@ class World
         Object& operator[](Index index);
     private:
         std::map<Index, Object> objects_;
+        b2World world_;
 };
 
 }

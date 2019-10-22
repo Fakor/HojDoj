@@ -19,14 +19,14 @@ TEST(MotionTests, SetVelocity){
     world.step(step_time);
     ASSERT_EQ(position, world[index].get_position());
 
-    /*hojdoj::Vector velocity(1.5, -2);
-    world.SetVelocity(velocity, index);
-    world.StopAfterRange(6.25, index);
+    hojdoj::Vector velocity(1.5, -2);
+    world[index].set_velocity(velocity);
+    world[index].stop_after_range(6.25);
 
-    world.Step(step_time);
-    ASSERT_EQ(hojdoj::Position(1.5, -2), world.GetObjectPosition(index));
+    world.step(step_time);
+    ASSERT_EQ(hojdoj::Vector(1.5, -2), world[index].get_position());
 
-    world.Step(step_time);
+    /*world.Step(step_time);
     ASSERT_EQ(hojdoj::Position(3, -4), world.GetObjectPosition(index));
 
     world.Step(step_time);

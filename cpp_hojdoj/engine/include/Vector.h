@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include <cmath>
+#include <iostream>
 
 #include "data_types.h"
 
@@ -16,6 +17,8 @@ class Vector
         bool operator==(const Vector& other) const;
 
         Coord x, y;
+
+        friend std::ostream& operator<<(std::ostream& os, const Vector& v);
 };
 
 }

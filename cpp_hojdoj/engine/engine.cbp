@@ -134,6 +134,7 @@
 		<Unit filename="include/Object.h" />
 		<Unit filename="include/Shape.h" />
 		<Unit filename="include/Square.h" />
+		<Unit filename="include/Vector.h" />
 		<Unit filename="include/World.h" />
 		<Unit filename="include/data_types.h" />
 		<Unit filename="main.c">
@@ -142,8 +143,8 @@
 		<Unit filename="src/Object.cpp" />
 		<Unit filename="src/Shape.cpp" />
 		<Unit filename="src/Square.cpp" />
+		<Unit filename="src/Vector.cpp" />
 		<Unit filename="src/World.cpp" />
-		<Unit filename="src/data_types.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
