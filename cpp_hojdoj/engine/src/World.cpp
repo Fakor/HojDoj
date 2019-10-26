@@ -1,5 +1,6 @@
 #include "World.h"
 
+
 namespace hojdoj {
 
 World::World()
@@ -46,6 +47,25 @@ Object& World::operator[](Index index){
     return objects_.at(index);
 }
 
+void World::set_object_max_range(Index index, Coord range){
+    Object& obj = this->operator[](index);
+    Vector position = obj.get_position();
+
+    b2BodyDef anchor_def;
+    anchor_def.type = b2_staticBody;
+    anchor_def.position.Set(position.x, position.y);
+
+    b2Body* anchor = world_.CreateBody(&anchor_def);
+
+    b2RopeJointDef rope_def;
+    rope_def.bodyA = obj.get_body();
+    rope_def.bodyB = anchor;
+    rope_def.maxLength = range;
+    rope_def.localAnchorA.Set(0,0);
+    rope_def.localAnchorB.Set(0,0);
+
+    b2Joint* joint = world_.CreateJoint(&rope_def);
+}
 
 } // hojdoj
 

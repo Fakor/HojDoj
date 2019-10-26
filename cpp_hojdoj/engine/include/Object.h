@@ -17,8 +17,8 @@ class Object
 
         Vector get_position() const;
         void set_velocity(Vector velocity);
-        void stop_after_range(Coord range);
 
+        b2Body* get_body();
     private:
         b2Body* body_;
 };

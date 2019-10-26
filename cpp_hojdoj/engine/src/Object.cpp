@@ -20,9 +20,8 @@ void Object::set_velocity(Vector velocity){
     body_->SetLinearVelocity({velocity.x, velocity.y});
 }
 
-void Object::stop_after_range(Coord range){
-
+b2Body* Object::get_body(){
+    return body_;
 }
-
 
 }
