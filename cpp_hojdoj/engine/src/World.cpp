@@ -37,6 +37,8 @@ void World::step(Time step_time){
 
     Time last_step = step_time - full_steps * STEP_TIME;
     world_.Step(last_step, velocityIterations, positionIterations);
+
+    clean_up_temporary_joints();
 }
 
 const Object& World::operator[](Index index) const{
@@ -47,7 +49,7 @@ Object& World::operator[](Index index){
     return objects_.at(index);
 }
 
-void World::set_object_max_range(Index index, Coord range){
+void World::set_leash(Index index, Coord range){
     Object& obj = this->operator[](index);
     Vector position = obj.get_position();
 
@@ -64,7 +66,24 @@ void World::set_object_max_range(Index index, Coord range){
     rope_def.localAnchorA.Set(0,0);
     rope_def.localAnchorB.Set(0,0);
 
-    b2Joint* joint = world_.CreateJoint(&rope_def);
+    b2RopeJoint* joint = (b2RopeJoint*)world_.CreateJoint(&rope_def);
+
+    leash_constraints_.emplace_back(joint, anchor);
+}
+
+
+void World::clean_up_temporary_joints(){
+    std::vector<std::pair<b2RopeJoint*, b2Body*>> updated_leashes;
+    for(auto& leash: leash_constraints_){
+        if(leash.first->GetLimitState() == b2LimitState::e_atUpperLimit){
+            world_.DestroyJoint(leash.first);
+            world_.DestroyBody(leash.second);
+        }
+        else {
+            updated_leashes.push_back(leash);
+        }
+    }
+    leash_constraints_ = updated_leashes;
 }
 
 } // hojdoj

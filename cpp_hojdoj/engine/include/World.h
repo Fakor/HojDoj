@@ -4,7 +4,6 @@
 #include <map>
 
 #include "Box2D/Box2D.h"
-#include "Box2D/Dynamics/Joints/b2RopeJoint.h"
 #include "Box2D/Dynamics/Joints/b2Joint.h"
 
 #include "Shape.h"
@@ -27,14 +26,14 @@ class World
         const Object& operator[](Index index) const;
         Object& operator[](Index index);
 
-        void set_object_max_range(Index index, Coord range);
-
+        void set_leash(Index index, Coord range);
     private:
+        void clean_up_temporary_joints();
+
         std::map<Index, Object> objects_;
-        std::map<Index, b2Body*> joint_objects_;
-        std::map<Index, b2Joint*> joints_;
         b2World world_;
 
+        std::vector<std::pair<b2RopeJoint*, b2Body*>> leash_constraints_;
 };
 
 }

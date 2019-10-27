@@ -21,7 +21,7 @@ TEST(MotionTests, SetVelocity){
 
     hojdoj::Vector velocity(1.5, -2);
     world[index].set_velocity(velocity);
-    world.set_object_max_range(index, 6.25);
+    world.set_leash(index, 6.25);
 
     world.step(step_time);
     ASSERT_EQ(hojdoj::Vector(1.5, -2), world[index].get_position());
@@ -31,4 +31,11 @@ TEST(MotionTests, SetVelocity){
 
     world.step(step_time);
     ASSERT_EQ(hojdoj::Vector(3.75, -5), world[index].get_position());
+
+    ASSERT_EQ(hojdoj::Vector(0, 0), world[index].get_velocity());
+
+    world[index].set_velocity(velocity);
+    world.step(step_time);
+    ASSERT_EQ(hojdoj::Vector(5.25, -7), world[index].get_position());
+
 }
