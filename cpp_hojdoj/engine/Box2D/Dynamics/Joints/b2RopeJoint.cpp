@@ -73,7 +73,7 @@ void b2RopeJoint::InitVelocityConstraints(const b2SolverData& data)
 	m_length = m_u.Length();
 
 	float32 C = m_length - m_maxLength;
-	if (C > 0.0f)
+	if (C >= 0.0f) // Original: C > 0.0f
 	{
 		m_state = e_atUpperLimit;
 	}
