@@ -14,15 +14,21 @@ World::~World()
     //dtor
 }
 
-void World::create_object(Shape* shape, const Vector& pos, Index ind){
+void World::create_object(Index ind, const Vector& pos,std::vector<b2Shape*> shapes){
     b2BodyDef body_def;
     body_def.type = b2_dynamicBody;
     body_def.position.Set(pos.x, pos.y);
 
     b2Body* body = world_.CreateBody(&body_def);
-
+    for(auto shape: shapes){
+        b2FixtureDef fixture;
+        fixture.shape = shape;
+        fixture.density = 0.25f; // TODO: Figure out why this have to be set as 0.25
+                                 // instead of 1 in order to get expected mass computation
+                                 // at least thats what happens with box shapes.
+        body->CreateFixture(&fixture);
+    }
     objects_.emplace(ind, Object(body));
-
 }
 
 void World::step(Time step_time){

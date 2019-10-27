@@ -2,11 +2,12 @@
 #define WORLD_H
 
 #include <map>
+#include <vector>
 
 #include "Box2D/Box2D.h"
 #include "Box2D/Dynamics/Joints/b2Joint.h"
 
-#include "Shape.h"
+#include "Vector.h"
 #include "Object.h"
 #include "data_types.h"
 
@@ -20,7 +21,7 @@ class World
         World();
         virtual ~World();
 
-        void create_object(Shape* shape, const Vector& pos, Index index);
+        void create_object(Index ind, const Vector& pos, std::vector<b2Shape*> shapes);
         void step(Time step_time);
 
         const Object& operator[](Index index) const;

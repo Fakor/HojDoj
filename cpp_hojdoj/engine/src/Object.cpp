@@ -24,23 +24,16 @@ Vector Object::get_velocity() const {
     return {body_->GetLinearVelocity().x, body_->GetLinearVelocity().y};
 }
 
+void Object::set_acceleration(Vector acceleration){
+    body_->ApplyForceToCenter({acceleration.x, acceleration.y}, true);
+}
+
+float32 Object::get_mass() const {
+    return body_->GetMass();
+}
 
 b2Body* Object::get_body(){
     return body_;
 }
-
-/*void Object::set_leash_objects(b2Body* anchor, b2RopeJoint* joint){
-    leash_anchor_ = anchor;
-    leash_joint_ = joint;
-}
-
-std::vector<b2Joint*> Object::get_joints_for_termination(){
-    std::vector<b2Joint*> joints;
-    if(leash_joint_ != NULL && leash_joint_->GetLimitState() == b2LimitState::e_atUpperLimit){
-        joints.push_back(leash_joint_);
-    }
-
-    return joints;
-}*/
 
 }
