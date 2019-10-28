@@ -10,5 +10,5 @@ namespace hojdoj{
     using Index = unsigned int;
     using Coord = float32;
 
-    using Time = double;
+    using Time = float32;
 }

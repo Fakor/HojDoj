@@ -3,10 +3,10 @@
 
 namespace hojdoj {
 
-World::World()
-: world_{{0,0}}
+World::World(float32 step_time)
+: world_{{0,0}}, step_time_{step_time}
 {
-    //ctor
+    world_.SetAutoClearForces(false);
 }
 
 World::~World()
@@ -31,18 +31,13 @@ void World::create_object(Index ind, const Vector& pos,std::vector<b2Shape*> sha
     objects_.emplace(ind, Object(body));
 }
 
-void World::step(Time step_time){
+void World::step(unsigned int nr_of_steps){
     int32 velocityIterations = 1;
     int32 positionIterations = 1;
 
-    unsigned int full_steps = step_time/STEP_TIME;
-
-    for(unsigned int i = 0; i < full_steps; ++i){
-        world_.Step(STEP_TIME, velocityIterations, positionIterations);
+    for(unsigned int i = 0; i < nr_of_steps; ++i){
+        world_.Step(step_time_, velocityIterations, positionIterations);
     }
-
-    Time last_step = step_time - full_steps * STEP_TIME;
-    world_.Step(last_step, velocityIterations, positionIterations);
 
     clean_up_temporary_joints();
 }

@@ -19,7 +19,7 @@ class Object
         Vector get_position() const;
         void set_velocity(Vector velocity);
         Vector get_velocity() const;
-        void set_acceleration(Vector acceleration);
+        void set_force(Vector force);
         float32 get_mass() const;
 
         b2Body* get_body();

@@ -24,8 +24,8 @@ Vector Object::get_velocity() const {
     return {body_->GetLinearVelocity().x, body_->GetLinearVelocity().y};
 }
 
-void Object::set_acceleration(Vector acceleration){
-    body_->ApplyForceToCenter({acceleration.x, acceleration.y}, true);
+void Object::set_force(Vector force){
+    body_->ApplyForceToCenter({force.x, force.y}, false);
 }
 
 float32 Object::get_mass() const {

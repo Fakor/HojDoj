@@ -13,26 +13,27 @@
 
 namespace hojdoj {
 
-const Time STEP_TIME=1.0/30;
 
 class World
 {
     public:
-        World();
+        World(float32 step_time);
         virtual ~World();
 
         void create_object(Index ind, const Vector& pos, std::vector<b2Shape*> shapes);
-        void step(Time step_time);
+        void step(unsigned int nr_of_steps);
 
         const Object& operator[](Index index) const;
         Object& operator[](Index index);
 
         void set_leash(Index index, Coord range);
     private:
+        b2World world_;
+        float32 step_time_;
+
         void clean_up_temporary_joints();
 
         std::map<Index, Object> objects_;
-        b2World world_;
 
         std::vector<std::pair<b2RopeJoint*, b2Body*>> leash_constraints_;
 };

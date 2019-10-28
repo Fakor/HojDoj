@@ -132,8 +132,6 @@
 		<Unit filename="Box2D/Rope/b2Rope.cpp" />
 		<Unit filename="Box2D/Rope/b2Rope.h" />
 		<Unit filename="include/Object.h" />
-		<Unit filename="include/Shape.h" />
-		<Unit filename="include/Square.h" />
 		<Unit filename="include/Vector.h" />
 		<Unit filename="include/World.h" />
 		<Unit filename="include/data_types.h" />
@@ -141,8 +139,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/Object.cpp" />
-		<Unit filename="src/Shape.cpp" />
-		<Unit filename="src/Square.cpp" />
 		<Unit filename="src/Vector.cpp" />
 		<Unit filename="src/World.cpp" />
 		<Extensions>
