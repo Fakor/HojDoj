@@ -26,10 +26,16 @@ class World
         const Object& operator[](Index index) const;
         Object& operator[](Index index);
 
+        void set_global_gravity(float32 gravity_constant);
+        void compute_gravity_forces();
+
         void set_leash(Index index, Coord range);
     private:
         b2World world_;
         float32 step_time_;
+
+        bool global_gravity_{false};
+        float32 G_;
 
         void clean_up_temporary_joints();
 

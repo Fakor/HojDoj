@@ -4,6 +4,7 @@
 #include "Box2D/Box2D.h"
 
 #include <vector>
+#include <cmath>
 
 #include "Vector.h"
 #include "data_types.h"
@@ -21,9 +22,11 @@ class Object
         Vector get_velocity() const;
         void set_force(Vector force);
         float32 get_mass() const;
+        Vector get_force() const;
 
         b2Body* get_body();
 
+        float32 distance_to(Vector pos) const;
     private:
         b2Body* body_;
 };

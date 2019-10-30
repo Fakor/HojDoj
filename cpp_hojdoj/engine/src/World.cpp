@@ -50,6 +50,36 @@ Object& World::operator[](Index index){
     return objects_.at(index);
 }
 
+void World::set_global_gravity(float32 gravity_constant){
+    global_gravity_ = true;
+    G_ = gravity_constant;
+    compute_gravity_forces();
+}
+
+void World::compute_gravity_forces(){
+    for(auto it1 = objects_.begin(); it1 != objects_.end(); ++it1){
+        Object o1 = it1->second;
+
+        auto it2 = it1;
+        it2++;
+        for(; it2 != objects_.end(); ++it2){
+            Object o2 = it2->second;
+
+            float32 r = o1.distance_to(o2.get_position());
+
+            float32 F = G_*o1.get_mass()*o2.get_mass()/(r*r);
+
+            float32 dx = o2.get_position().x-o1.get_position().x;
+            float32 dy = o2.get_position().y-o1.get_position().y;
+
+            float32 Fx = F*dx/r;
+            float32 Fy = F*dy/r;
+            o1.set_force({Fx, Fy});
+            o2.set_force({-Fx, -Fy});
+        }
+    }
+}
+
 void World::set_leash(Index index, Coord range){
     Object& obj = this->operator[](index);
     Vector position = obj.get_position();

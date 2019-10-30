@@ -32,8 +32,19 @@ float32 Object::get_mass() const {
     return body_->GetMass();
 }
 
+Vector Object::get_force() const {
+    b2Vec2 force = body_->GetForce();
+    return {force.x, force.y};
+}
+
 b2Body* Object::get_body(){
     return body_;
+}
+
+float32 Object::distance_to(Vector pos) const{
+    float32 dx = body_->GetPosition().x - pos.x;
+    float32 dy = body_->GetPosition().y - pos.y;
+    return std::sqrt(dx*dx + dy*dy);
 }
 
 }

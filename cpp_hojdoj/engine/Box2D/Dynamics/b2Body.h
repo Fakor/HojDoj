@@ -389,6 +389,7 @@ public:
 	/// Dump this body to a log file
 	void Dump();
 
+	b2Vec2 GetForce() const {return m_force;}
 private:
 
 	friend class b2World;
@@ -396,7 +397,7 @@ private:
 	friend class b2ContactManager;
 	friend class b2ContactSolver;
 	friend class b2Contact;
-	
+
 	friend class b2DistanceJoint;
 	friend class b2FrictionJoint;
 	friend class b2GearJoint;

@@ -63,6 +63,8 @@ TEST(MotionTests, SetForceOneStep){
     hojdoj::Vector force{-0.2, 0.5};
     world[index].set_force(force);
 
+    ASSERT_EQ(world[index].get_force(), force);
+
     world.step(steps);
 
     float32 t = step_time*steps;
@@ -134,4 +136,37 @@ TEST(MotionTests, SetForceOneSecond){
 
     EXPECT_EQ(hojdoj::Vector(expected_pos_x, expected_pos_y), world[index].get_position());
     ASSERT_EQ(hojdoj::Vector(expected_vel_x, expected_vel_y), world[index].get_velocity());
+}
+
+TEST(MotionTest, GravityTwoBodies){
+    float32 step_time = 1/30.0;
+    hojdoj::World world(step_time);
+
+    hojdoj::Vector position1{0, 0};
+    hojdoj::Index index1 = 0;
+    b2PolygonShape shape1;
+    shape1.SetAsBox(1, 2);
+
+    world.create_object(index1, position1, {&shape1});
+
+    hojdoj::Vector position2{20, 0};
+    hojdoj::Index index2 = 1;
+    b2PolygonShape shape2;
+    shape2.SetAsBox(10, 2);
+
+    world.create_object(index2, position2, {&shape2});
+
+    float32 expected_mass1 = 2.0;
+    float32 expected_mass2 = 20.0;
+
+    ASSERT_NEAR(world[index1].get_mass(), expected_mass1, 1e-7);
+    ASSERT_NEAR(world[index2].get_mass(), expected_mass2, 1e-7);
+
+    world.set_global_gravity(0.3);
+
+    hojdoj::Vector expected_force1{0.03, 0};
+    hojdoj::Vector expected_force2{-0.03, 0};
+
+    ASSERT_EQ(world[index1].get_force(), expected_force1);
+    ASSERT_EQ(world[index2].get_force(), expected_force2);
 }
