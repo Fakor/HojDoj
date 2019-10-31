@@ -61,7 +61,7 @@ TEST(MotionTests, SetForceOneStep){
     ASSERT_NEAR(world[index].get_mass(), expected_mass, 1e-7);
 
     hojdoj::Vector force{-0.2, 0.5};
-    world[index].set_force(force);
+    world[index].apply_force(force);
 
     ASSERT_EQ(world[index].get_force(), force);
 
@@ -110,7 +110,7 @@ TEST(MotionTests, SetForceOneSecond){
     ASSERT_NEAR(world[index].get_mass(), expected_mass, 1e-7);
 
     hojdoj::Vector force{-0.2, 0.5};
-    world[index].set_force(force);
+    world[index].apply_force(force);
 
     world.step(steps);
 
@@ -138,7 +138,7 @@ TEST(MotionTests, SetForceOneSecond){
     ASSERT_EQ(hojdoj::Vector(expected_vel_x, expected_vel_y), world[index].get_velocity());
 }
 
-TEST(MotionTest, GravityTwoBodies){
+TEST(MotionTest, Gravity2Bodies){
     float32 step_time = 1/30.0;
     hojdoj::World world(step_time);
 
@@ -170,3 +170,49 @@ TEST(MotionTest, GravityTwoBodies){
     ASSERT_EQ(world[index1].get_force(), expected_force1);
     ASSERT_EQ(world[index2].get_force(), expected_force2);
 }
+
+TEST(MotionTest, Gravity3Bodies){
+    float32 step_time = 1/30.0;
+    hojdoj::World world(step_time);
+
+    hojdoj::Vector position1{0, 0};
+    hojdoj::Index index1 = 0;
+    b2PolygonShape shape1;
+    shape1.SetAsBox(1, 2);
+
+    world.create_object(index1, position1, {&shape1});
+
+    hojdoj::Vector position2{20, 0};
+    hojdoj::Index index2 = 1;
+    b2PolygonShape shape2;
+    shape2.SetAsBox(10, 2);
+
+    world.create_object(index2, position2, {&shape2});
+
+    hojdoj::Vector position3{0, 10};
+    hojdoj::Index index3 = 2;
+    b2PolygonShape shape3;
+    shape3.SetAsBox(1, 1);
+
+    world.create_object(index3, position3, {&shape3});
+
+
+    float32 expected_mass1 = 2.0;
+    float32 expected_mass2 = 20.0;
+    float32 expected_mass3 = 1.0;
+
+    ASSERT_NEAR(world[index1].get_mass(), expected_mass1, 1e-7);
+    ASSERT_NEAR(world[index2].get_mass(), expected_mass2, 1e-7);
+    ASSERT_NEAR(world[index3].get_mass(), expected_mass3, 1e-7);
+
+    world.set_global_gravity(0.3);
+
+    hojdoj::Vector expected_force1{0.03, 0.006};
+    hojdoj::Vector expected_force2{-0.04073312, 0.0053665631};
+    hojdoj::Vector expected_force3{0.01073312, -0.011366563};
+
+    ASSERT_EQ(world[index1].get_force(), expected_force1);
+    ASSERT_EQ(world[index2].get_force(), expected_force2);
+    ASSERT_EQ(world[index3].get_force(), expected_force3);
+}
+

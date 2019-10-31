@@ -20,7 +20,7 @@ class Object
         Vector get_position() const;
         void set_velocity(Vector velocity);
         Vector get_velocity() const;
-        void set_force(Vector force);
+        void apply_force(Vector force);
         float32 get_mass() const;
         Vector get_force() const;
 

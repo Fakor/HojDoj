@@ -74,8 +74,8 @@ void World::compute_gravity_forces(){
 
             float32 Fx = F*dx/r;
             float32 Fy = F*dy/r;
-            o1.set_force({Fx, Fy});
-            o2.set_force({-Fx, -Fy});
+            o1.apply_force({Fx, Fy});
+            o2.apply_force({-Fx, -Fy});
         }
     }
 }
