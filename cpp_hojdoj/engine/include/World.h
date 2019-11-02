@@ -30,6 +30,7 @@ class World
         void compute_gravity_forces();
 
         void set_leash(Index index, Coord range);
+        void set_constant_force(Index index, const Vector& force);
     private:
         b2World world_;
         float32 step_time_;
@@ -37,11 +38,12 @@ class World
         bool global_gravity_{false};
         float32 G_;
 
-        void clean_up_temporary_joints();
+        void update_objects();
 
         std::map<Index, Object> objects_;
 
         std::vector<std::pair<b2RopeJoint*, b2Body*>> leash_constraints_;
+        std::map<Index, Vector> constant_forces_;
 };
 
 }

@@ -6,7 +6,6 @@ namespace hojdoj {
 World::World(float32 step_time)
 : world_{{0,0}}, step_time_{step_time}
 {
-    world_.SetAutoClearForces(false);
 }
 
 World::~World()
@@ -37,9 +36,8 @@ void World::step(unsigned int nr_of_steps){
 
     for(unsigned int i = 0; i < nr_of_steps; ++i){
         world_.Step(step_time_, velocityIterations, positionIterations);
+        update_objects();
     }
-
-    clean_up_temporary_joints();
 }
 
 const Object& World::operator[](Index index) const{
@@ -102,8 +100,12 @@ void World::set_leash(Index index, Coord range){
     leash_constraints_.emplace_back(joint, anchor);
 }
 
+void World::set_constant_force(Index index, const Vector& force){
+    objects_[index].apply_force(force);
+    constant_forces_[index] = force;
+}
 
-void World::clean_up_temporary_joints(){
+void World::update_objects(){
     std::vector<std::pair<b2RopeJoint*, b2Body*>> updated_leashes;
     for(auto& leash: leash_constraints_){
         if(leash.first->GetLimitState() == b2LimitState::e_atUpperLimit){
@@ -115,6 +117,12 @@ void World::clean_up_temporary_joints(){
         }
     }
     leash_constraints_ = updated_leashes;
+    for(auto& force: constant_forces_){
+        objects_[force.first].apply_force(force.second);
+    }
+    if(global_gravity_){
+        compute_gravity_forces();
+    }
 }
 
 } // hojdoj

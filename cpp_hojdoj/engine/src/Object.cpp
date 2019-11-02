@@ -2,6 +2,9 @@
 
 namespace hojdoj {
 
+Object::Object()
+{}
+
 Object::Object(b2Body* body)
 :body_{body}
 {

@@ -2,6 +2,10 @@
 
 namespace hojdoj {
 
+Vector::Vector()
+: Vector(0,0)
+{}
+
 Vector::Vector(Coord init_x, Coord init_y)
 : x{init_x}, y{init_y}
 {

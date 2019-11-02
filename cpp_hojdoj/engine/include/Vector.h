@@ -11,6 +11,7 @@ namespace hojdoj {
 class Vector
 {
     public:
+        Vector();
         Vector(Coord init_x, Coord init_y);
         virtual ~Vector();
 

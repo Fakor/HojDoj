@@ -14,6 +14,7 @@ namespace hojdoj {
 class Object
 {
     public:
+        Object();
         Object(b2Body* body);
         virtual ~Object();
 
