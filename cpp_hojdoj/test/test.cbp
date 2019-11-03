@@ -30,11 +30,15 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
 					<Add directory="include" />
+					<Add directory="../engine" />
+					<Add directory="../engine/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lgtest" />
+					<Add option="-pthread" />
+					<Add library="../engine/bin/Debug/libengine.a" />
 				</Linker>
 			</Target>
 		</Build>
