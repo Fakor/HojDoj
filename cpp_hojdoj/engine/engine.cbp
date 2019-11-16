@@ -19,6 +19,7 @@
 					<Add option="-g" />
 					<Add directory="include" />
 					<Add directory="../engine" />
+					<Add directory="/usr/local/include/ImageMagick-7" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -31,8 +32,10 @@
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-Wall" />
+					<Add option="-std=c++14" />
 					<Add directory="include" />
 					<Add directory="../engine" />
+					<Add directory="ImageMagick" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -132,6 +135,1120 @@
 		<Unit filename="Box2D/Dynamics/b2WorldCallbacks.h" />
 		<Unit filename="Box2D/Rope/b2Rope.cpp" />
 		<Unit filename="Box2D/Rope/b2Rope.h" />
+		<Unit filename="ImageMagick/Magick++/Blob.h" />
+		<Unit filename="ImageMagick/Magick++/BlobRef.h" />
+		<Unit filename="ImageMagick/Magick++/CoderInfo.h" />
+		<Unit filename="ImageMagick/Magick++/Color.h" />
+		<Unit filename="ImageMagick/Magick++/Drawable.h" />
+		<Unit filename="ImageMagick/Magick++/Exception.h" />
+		<Unit filename="ImageMagick/Magick++/Functions.h" />
+		<Unit filename="ImageMagick/Magick++/Geometry.h" />
+		<Unit filename="ImageMagick/Magick++/Image.h" />
+		<Unit filename="ImageMagick/Magick++/ImageRef.h" />
+		<Unit filename="ImageMagick/Magick++/Include.h" />
+		<Unit filename="ImageMagick/Magick++/Magick++.h" />
+		<Unit filename="ImageMagick/Magick++/Montage.h" />
+		<Unit filename="ImageMagick/Magick++/Options.h" />
+		<Unit filename="ImageMagick/Magick++/Pixels.h" />
+		<Unit filename="ImageMagick/Magick++/ResourceLimits.h" />
+		<Unit filename="ImageMagick/Magick++/STL.h" />
+		<Unit filename="ImageMagick/Magick++/SecurityPolicy.h" />
+		<Unit filename="ImageMagick/Magick++/Statistic.h" />
+		<Unit filename="ImageMagick/Magick++/Thread.h" />
+		<Unit filename="ImageMagick/Magick++/TypeMetric.h" />
+		<Unit filename="ImageMagick/MagickCore/MagickCore.h" />
+		<Unit filename="ImageMagick/MagickCore/accelerate-kernels-private.h" />
+		<Unit filename="ImageMagick/MagickCore/accelerate-private.h" />
+		<Unit filename="ImageMagick/MagickCore/animate-private.h" />
+		<Unit filename="ImageMagick/MagickCore/animate.h" />
+		<Unit filename="ImageMagick/MagickCore/annotate-private.h" />
+		<Unit filename="ImageMagick/MagickCore/annotate.h" />
+		<Unit filename="ImageMagick/MagickCore/artifact.h" />
+		<Unit filename="ImageMagick/MagickCore/attribute.h" />
+		<Unit filename="ImageMagick/MagickCore/blob-private.h" />
+		<Unit filename="ImageMagick/MagickCore/blob.h" />
+		<Unit filename="ImageMagick/MagickCore/cache-private.h" />
+		<Unit filename="ImageMagick/MagickCore/cache-view.h" />
+		<Unit filename="ImageMagick/MagickCore/cache.h" />
+		<Unit filename="ImageMagick/MagickCore/channel.h" />
+		<Unit filename="ImageMagick/MagickCore/cipher.h" />
+		<Unit filename="ImageMagick/MagickCore/client.h" />
+		<Unit filename="ImageMagick/MagickCore/coder-private.h" />
+		<Unit filename="ImageMagick/MagickCore/coder.h" />
+		<Unit filename="ImageMagick/MagickCore/color-private.h" />
+		<Unit filename="ImageMagick/MagickCore/color.h" />
+		<Unit filename="ImageMagick/MagickCore/colormap-private.h" />
+		<Unit filename="ImageMagick/MagickCore/colormap.h" />
+		<Unit filename="ImageMagick/MagickCore/colorspace-private.h" />
+		<Unit filename="ImageMagick/MagickCore/colorspace.h" />
+		<Unit filename="ImageMagick/MagickCore/compare.h" />
+		<Unit filename="ImageMagick/MagickCore/composite-private.h" />
+		<Unit filename="ImageMagick/MagickCore/composite.h" />
+		<Unit filename="ImageMagick/MagickCore/compress.h" />
+		<Unit filename="ImageMagick/MagickCore/configure-private.h" />
+		<Unit filename="ImageMagick/MagickCore/configure.h" />
+		<Unit filename="ImageMagick/MagickCore/constitute-private.h" />
+		<Unit filename="ImageMagick/MagickCore/constitute.h" />
+		<Unit filename="ImageMagick/MagickCore/decorate.h" />
+		<Unit filename="ImageMagick/MagickCore/delegate-private.h" />
+		<Unit filename="ImageMagick/MagickCore/delegate.h" />
+		<Unit filename="ImageMagick/MagickCore/deprecate.h" />
+		<Unit filename="ImageMagick/MagickCore/display-private.h" />
+		<Unit filename="ImageMagick/MagickCore/display.h" />
+		<Unit filename="ImageMagick/MagickCore/distort.h" />
+		<Unit filename="ImageMagick/MagickCore/distribute-cache-private.h" />
+		<Unit filename="ImageMagick/MagickCore/distribute-cache.h" />
+		<Unit filename="ImageMagick/MagickCore/draw-private.h" />
+		<Unit filename="ImageMagick/MagickCore/draw.h" />
+		<Unit filename="ImageMagick/MagickCore/effect.h" />
+		<Unit filename="ImageMagick/MagickCore/enhance.h" />
+		<Unit filename="ImageMagick/MagickCore/exception-private.h" />
+		<Unit filename="ImageMagick/MagickCore/exception.h" />
+		<Unit filename="ImageMagick/MagickCore/feature.h" />
+		<Unit filename="ImageMagick/MagickCore/fourier.h" />
+		<Unit filename="ImageMagick/MagickCore/fx-private.h" />
+		<Unit filename="ImageMagick/MagickCore/fx.h" />
+		<Unit filename="ImageMagick/MagickCore/gem-private.h" />
+		<Unit filename="ImageMagick/MagickCore/gem.h" />
+		<Unit filename="ImageMagick/MagickCore/geometry.h" />
+		<Unit filename="ImageMagick/MagickCore/histogram.h" />
+		<Unit filename="ImageMagick/MagickCore/identify.h" />
+		<Unit filename="ImageMagick/MagickCore/image-private.h" />
+		<Unit filename="ImageMagick/MagickCore/image-view.h" />
+		<Unit filename="ImageMagick/MagickCore/image.h" />
+		<Unit filename="ImageMagick/MagickCore/layer.h" />
+		<Unit filename="ImageMagick/MagickCore/linked-list.h" />
+		<Unit filename="ImageMagick/MagickCore/list.h" />
+		<Unit filename="ImageMagick/MagickCore/locale-private.h" />
+		<Unit filename="ImageMagick/MagickCore/locale_.h" />
+		<Unit filename="ImageMagick/MagickCore/log-private.h" />
+		<Unit filename="ImageMagick/MagickCore/log.h" />
+		<Unit filename="ImageMagick/MagickCore/magic-private.h" />
+		<Unit filename="ImageMagick/MagickCore/magic.h" />
+		<Unit filename="ImageMagick/MagickCore/magick-baseconfig.h" />
+		<Unit filename="ImageMagick/MagickCore/magick-config.h" />
+		<Unit filename="ImageMagick/MagickCore/magick-private.h" />
+		<Unit filename="ImageMagick/MagickCore/magick-type.h" />
+		<Unit filename="ImageMagick/MagickCore/magick.h" />
+		<Unit filename="ImageMagick/MagickCore/matrix-private.h" />
+		<Unit filename="ImageMagick/MagickCore/matrix.h" />
+		<Unit filename="ImageMagick/MagickCore/memory-private.h" />
+		<Unit filename="ImageMagick/MagickCore/memory_.h" />
+		<Unit filename="ImageMagick/MagickCore/method-attribute.h" />
+		<Unit filename="ImageMagick/MagickCore/methods-private.h" />
+		<Unit filename="ImageMagick/MagickCore/methods.h" />
+		<Unit filename="ImageMagick/MagickCore/mime-private.h" />
+		<Unit filename="ImageMagick/MagickCore/mime.h" />
+		<Unit filename="ImageMagick/MagickCore/module-private.h" />
+		<Unit filename="ImageMagick/MagickCore/module.h" />
+		<Unit filename="ImageMagick/MagickCore/monitor-private.h" />
+		<Unit filename="ImageMagick/MagickCore/monitor.h" />
+		<Unit filename="ImageMagick/MagickCore/montage.h" />
+		<Unit filename="ImageMagick/MagickCore/morphology-private.h" />
+		<Unit filename="ImageMagick/MagickCore/morphology.h" />
+		<Unit filename="ImageMagick/MagickCore/nt-base-private.h" />
+		<Unit filename="ImageMagick/MagickCore/nt-base.h" />
+		<Unit filename="ImageMagick/MagickCore/nt-feature.h" />
+		<Unit filename="ImageMagick/MagickCore/opencl-private.h" />
+		<Unit filename="ImageMagick/MagickCore/opencl.h" />
+		<Unit filename="ImageMagick/MagickCore/option-private.h" />
+		<Unit filename="ImageMagick/MagickCore/option.h" />
+		<Unit filename="ImageMagick/MagickCore/paint.h" />
+		<Unit filename="ImageMagick/MagickCore/pixel-accessor.h" />
+		<Unit filename="ImageMagick/MagickCore/pixel-private.h" />
+		<Unit filename="ImageMagick/MagickCore/pixel.h" />
+		<Unit filename="ImageMagick/MagickCore/policy-private.h" />
+		<Unit filename="ImageMagick/MagickCore/policy.h" />
+		<Unit filename="ImageMagick/MagickCore/prepress.h" />
+		<Unit filename="ImageMagick/MagickCore/profile-private.h" />
+		<Unit filename="ImageMagick/MagickCore/profile.h" />
+		<Unit filename="ImageMagick/MagickCore/property.h" />
+		<Unit filename="ImageMagick/MagickCore/quantize.h" />
+		<Unit filename="ImageMagick/MagickCore/quantum-private.h" />
+		<Unit filename="ImageMagick/MagickCore/quantum.h" />
+		<Unit filename="ImageMagick/MagickCore/random-private.h" />
+		<Unit filename="ImageMagick/MagickCore/random_-private.h" />
+		<Unit filename="ImageMagick/MagickCore/random_.h" />
+		<Unit filename="ImageMagick/MagickCore/registry-private.h" />
+		<Unit filename="ImageMagick/MagickCore/registry.h" />
+		<Unit filename="ImageMagick/MagickCore/resample-private.h" />
+		<Unit filename="ImageMagick/MagickCore/resample.h" />
+		<Unit filename="ImageMagick/MagickCore/resize-private.h" />
+		<Unit filename="ImageMagick/MagickCore/resize.h" />
+		<Unit filename="ImageMagick/MagickCore/resource-private.h" />
+		<Unit filename="ImageMagick/MagickCore/resource_.h" />
+		<Unit filename="ImageMagick/MagickCore/segment.h" />
+		<Unit filename="ImageMagick/MagickCore/semaphore-private.h" />
+		<Unit filename="ImageMagick/MagickCore/semaphore.h" />
+		<Unit filename="ImageMagick/MagickCore/shear.h" />
+		<Unit filename="ImageMagick/MagickCore/signature-private.h" />
+		<Unit filename="ImageMagick/MagickCore/signature.h" />
+		<Unit filename="ImageMagick/MagickCore/splay-tree.h" />
+		<Unit filename="ImageMagick/MagickCore/static.h" />
+		<Unit filename="ImageMagick/MagickCore/statistic.h" />
+		<Unit filename="ImageMagick/MagickCore/stream-private.h" />
+		<Unit filename="ImageMagick/MagickCore/stream.h" />
+		<Unit filename="ImageMagick/MagickCore/string-private.h" />
+		<Unit filename="ImageMagick/MagickCore/string_.h" />
+		<Unit filename="ImageMagick/MagickCore/studio.h" />
+		<Unit filename="ImageMagick/MagickCore/thread-private.h" />
+		<Unit filename="ImageMagick/MagickCore/thread_.h" />
+		<Unit filename="ImageMagick/MagickCore/threshold.h" />
+		<Unit filename="ImageMagick/MagickCore/timer-private.h" />
+		<Unit filename="ImageMagick/MagickCore/timer.h" />
+		<Unit filename="ImageMagick/MagickCore/token-private.h" />
+		<Unit filename="ImageMagick/MagickCore/token.h" />
+		<Unit filename="ImageMagick/MagickCore/transform-private.h" />
+		<Unit filename="ImageMagick/MagickCore/transform.h" />
+		<Unit filename="ImageMagick/MagickCore/type-private.h" />
+		<Unit filename="ImageMagick/MagickCore/type.h" />
+		<Unit filename="ImageMagick/MagickCore/utility-private.h" />
+		<Unit filename="ImageMagick/MagickCore/utility.h" />
+		<Unit filename="ImageMagick/MagickCore/version-private.h" />
+		<Unit filename="ImageMagick/MagickCore/version.h" />
+		<Unit filename="ImageMagick/MagickCore/vision.h" />
+		<Unit filename="ImageMagick/MagickCore/vms.h" />
+		<Unit filename="ImageMagick/MagickCore/widget-private.h" />
+		<Unit filename="ImageMagick/MagickCore/widget.h" />
+		<Unit filename="ImageMagick/MagickCore/xml-tree-private.h" />
+		<Unit filename="ImageMagick/MagickCore/xml-tree.h" />
+		<Unit filename="ImageMagick/MagickCore/xwindow-private.h" />
+		<Unit filename="ImageMagick/MagickCore/xwindow.h" />
+		<Unit filename="ImageMagick/MagickWand/MagickWand.h" />
+		<Unit filename="ImageMagick/MagickWand/animate.h" />
+		<Unit filename="ImageMagick/MagickWand/compare.h" />
+		<Unit filename="ImageMagick/MagickWand/composite.h" />
+		<Unit filename="ImageMagick/MagickWand/conjure.h" />
+		<Unit filename="ImageMagick/MagickWand/convert.h" />
+		<Unit filename="ImageMagick/MagickWand/deprecate.h" />
+		<Unit filename="ImageMagick/MagickWand/display.h" />
+		<Unit filename="ImageMagick/MagickWand/drawing-wand.h" />
+		<Unit filename="ImageMagick/MagickWand/identify.h" />
+		<Unit filename="ImageMagick/MagickWand/import.h" />
+		<Unit filename="ImageMagick/MagickWand/magick-cli.h" />
+		<Unit filename="ImageMagick/MagickWand/magick-image.h" />
+		<Unit filename="ImageMagick/MagickWand/magick-property.h" />
+		<Unit filename="ImageMagick/MagickWand/magick-wand-private.h" />
+		<Unit filename="ImageMagick/MagickWand/method-attribute.h" />
+		<Unit filename="ImageMagick/MagickWand/mogrify-private.h" />
+		<Unit filename="ImageMagick/MagickWand/mogrify.h" />
+		<Unit filename="ImageMagick/MagickWand/montage.h" />
+		<Unit filename="ImageMagick/MagickWand/operation-private.h" />
+		<Unit filename="ImageMagick/MagickWand/operation.h" />
+		<Unit filename="ImageMagick/MagickWand/pixel-iterator.h" />
+		<Unit filename="ImageMagick/MagickWand/pixel-wand-private.h" />
+		<Unit filename="ImageMagick/MagickWand/pixel-wand.h" />
+		<Unit filename="ImageMagick/MagickWand/script-token.h" />
+		<Unit filename="ImageMagick/MagickWand/stream.h" />
+		<Unit filename="ImageMagick/MagickWand/studio.h" />
+		<Unit filename="ImageMagick/MagickWand/wand-view.h" />
+		<Unit filename="ImageMagick/MagickWand/wand.h" />
+		<Unit filename="ImageMagick/MagickWand/wandcli-private.h" />
+		<Unit filename="ImageMagick/MagickWand/wandcli.h" />
+		<Unit filename="ImageMagick/coders/aai.h" />
+		<Unit filename="ImageMagick/coders/art.h" />
+		<Unit filename="ImageMagick/coders/avs.h" />
+		<Unit filename="ImageMagick/coders/bgr.h" />
+		<Unit filename="ImageMagick/coders/bmp.h" />
+		<Unit filename="ImageMagick/coders/braille.h" />
+		<Unit filename="ImageMagick/coders/bytebuffer-private.h" />
+		<Unit filename="ImageMagick/coders/cals.h" />
+		<Unit filename="ImageMagick/coders/caption.h" />
+		<Unit filename="ImageMagick/coders/cin.h" />
+		<Unit filename="ImageMagick/coders/cip.h" />
+		<Unit filename="ImageMagick/coders/clip.h" />
+		<Unit filename="ImageMagick/coders/clipboard.h" />
+		<Unit filename="ImageMagick/coders/cmyk.h" />
+		<Unit filename="ImageMagick/coders/coders-list.h" />
+		<Unit filename="ImageMagick/coders/coders-private.h" />
+		<Unit filename="ImageMagick/coders/coders.h" />
+		<Unit filename="ImageMagick/coders/cube.h" />
+		<Unit filename="ImageMagick/coders/cut.h" />
+		<Unit filename="ImageMagick/coders/dcm.h" />
+		<Unit filename="ImageMagick/coders/dds.h" />
+		<Unit filename="ImageMagick/coders/debug.h" />
+		<Unit filename="ImageMagick/coders/dib.h" />
+		<Unit filename="ImageMagick/coders/djvu.h" />
+		<Unit filename="ImageMagick/coders/dng.h" />
+		<Unit filename="ImageMagick/coders/dot.h" />
+		<Unit filename="ImageMagick/coders/dps.h" />
+		<Unit filename="ImageMagick/coders/dpx.h" />
+		<Unit filename="ImageMagick/coders/emf.h" />
+		<Unit filename="ImageMagick/coders/ept.h" />
+		<Unit filename="ImageMagick/coders/exr.h" />
+		<Unit filename="ImageMagick/coders/fax.h" />
+		<Unit filename="ImageMagick/coders/fits.h" />
+		<Unit filename="ImageMagick/coders/flif.h" />
+		<Unit filename="ImageMagick/coders/fpx.h" />
+		<Unit filename="ImageMagick/coders/ghostscript-private.h" />
+		<Unit filename="ImageMagick/coders/gif.h" />
+		<Unit filename="ImageMagick/coders/gradient.h" />
+		<Unit filename="ImageMagick/coders/gray.h" />
+		<Unit filename="ImageMagick/coders/hald.h" />
+		<Unit filename="ImageMagick/coders/hdr.h" />
+		<Unit filename="ImageMagick/coders/heic.h" />
+		<Unit filename="ImageMagick/coders/histogram.h" />
+		<Unit filename="ImageMagick/coders/hrz.h" />
+		<Unit filename="ImageMagick/coders/html.h" />
+		<Unit filename="ImageMagick/coders/icon.h" />
+		<Unit filename="ImageMagick/coders/info.h" />
+		<Unit filename="ImageMagick/coders/inline.h" />
+		<Unit filename="ImageMagick/coders/ipl.h" />
+		<Unit filename="ImageMagick/coders/jbig.h" />
+		<Unit filename="ImageMagick/coders/jnx.h" />
+		<Unit filename="ImageMagick/coders/jp2.h" />
+		<Unit filename="ImageMagick/coders/jpeg.h" />
+		<Unit filename="ImageMagick/coders/json.h" />
+		<Unit filename="ImageMagick/coders/jxl.h" />
+		<Unit filename="ImageMagick/coders/label.h" />
+		<Unit filename="ImageMagick/coders/mac.h" />
+		<Unit filename="ImageMagick/coders/magick.h" />
+		<Unit filename="ImageMagick/coders/map.h" />
+		<Unit filename="ImageMagick/coders/mask.h" />
+		<Unit filename="ImageMagick/coders/mat.h" />
+		<Unit filename="ImageMagick/coders/matte.h" />
+		<Unit filename="ImageMagick/coders/meta.h" />
+		<Unit filename="ImageMagick/coders/miff.h" />
+		<Unit filename="ImageMagick/coders/mono.h" />
+		<Unit filename="ImageMagick/coders/mpc.h" />
+		<Unit filename="ImageMagick/coders/mpeg.h" />
+		<Unit filename="ImageMagick/coders/mpr.h" />
+		<Unit filename="ImageMagick/coders/msl.h" />
+		<Unit filename="ImageMagick/coders/mtv.h" />
+		<Unit filename="ImageMagick/coders/mvg.h" />
+		<Unit filename="ImageMagick/coders/null.h" />
+		<Unit filename="ImageMagick/coders/otb.h" />
+		<Unit filename="ImageMagick/coders/palm.h" />
+		<Unit filename="ImageMagick/coders/pango.h" />
+		<Unit filename="ImageMagick/coders/pattern.h" />
+		<Unit filename="ImageMagick/coders/pcd.h" />
+		<Unit filename="ImageMagick/coders/pcl.h" />
+		<Unit filename="ImageMagick/coders/pcx.h" />
+		<Unit filename="ImageMagick/coders/pdb.h" />
+		<Unit filename="ImageMagick/coders/pdf.h" />
+		<Unit filename="ImageMagick/coders/pes.h" />
+		<Unit filename="ImageMagick/coders/pgx.h" />
+		<Unit filename="ImageMagick/coders/pict.h" />
+		<Unit filename="ImageMagick/coders/pix.h" />
+		<Unit filename="ImageMagick/coders/plasma.h" />
+		<Unit filename="ImageMagick/coders/png.h" />
+		<Unit filename="ImageMagick/coders/pnm.h" />
+		<Unit filename="ImageMagick/coders/ps.h" />
+		<Unit filename="ImageMagick/coders/ps2.h" />
+		<Unit filename="ImageMagick/coders/ps3.h" />
+		<Unit filename="ImageMagick/coders/psd-private.h" />
+		<Unit filename="ImageMagick/coders/psd.h" />
+		<Unit filename="ImageMagick/coders/pwp.h" />
+		<Unit filename="ImageMagick/coders/raw.h" />
+		<Unit filename="ImageMagick/coders/rgb.h" />
+		<Unit filename="ImageMagick/coders/rgf.h" />
+		<Unit filename="ImageMagick/coders/rla.h" />
+		<Unit filename="ImageMagick/coders/rle.h" />
+		<Unit filename="ImageMagick/coders/scr.h" />
+		<Unit filename="ImageMagick/coders/screenshot.h" />
+		<Unit filename="ImageMagick/coders/sct.h" />
+		<Unit filename="ImageMagick/coders/sfw.h" />
+		<Unit filename="ImageMagick/coders/sgi.h" />
+		<Unit filename="ImageMagick/coders/sixel.h" />
+		<Unit filename="ImageMagick/coders/stegano.h" />
+		<Unit filename="ImageMagick/coders/sun.h" />
+		<Unit filename="ImageMagick/coders/svg.h" />
+		<Unit filename="ImageMagick/coders/tga.h" />
+		<Unit filename="ImageMagick/coders/thumbnail.h" />
+		<Unit filename="ImageMagick/coders/tiff.h" />
+		<Unit filename="ImageMagick/coders/tile.h" />
+		<Unit filename="ImageMagick/coders/tim.h" />
+		<Unit filename="ImageMagick/coders/tim2.h" />
+		<Unit filename="ImageMagick/coders/ttf.h" />
+		<Unit filename="ImageMagick/coders/txt.h" />
+		<Unit filename="ImageMagick/coders/uil.h" />
+		<Unit filename="ImageMagick/coders/url.h" />
+		<Unit filename="ImageMagick/coders/uyvy.h" />
+		<Unit filename="ImageMagick/coders/vicar.h" />
+		<Unit filename="ImageMagick/coders/vid.h" />
+		<Unit filename="ImageMagick/coders/viff.h" />
+		<Unit filename="ImageMagick/coders/vips.h" />
+		<Unit filename="ImageMagick/coders/wbmp.h" />
+		<Unit filename="ImageMagick/coders/webp.h" />
+		<Unit filename="ImageMagick/coders/wmf.h" />
+		<Unit filename="ImageMagick/coders/wpg.h" />
+		<Unit filename="ImageMagick/coders/x.h" />
+		<Unit filename="ImageMagick/coders/xbm.h" />
+		<Unit filename="ImageMagick/coders/xc.h" />
+		<Unit filename="ImageMagick/coders/xcf.h" />
+		<Unit filename="ImageMagick/coders/xpm.h" />
+		<Unit filename="ImageMagick/coders/xps.h" />
+		<Unit filename="ImageMagick/coders/xtrn.h" />
+		<Unit filename="ImageMagick/coders/xwd.h" />
+		<Unit filename="ImageMagick/coders/ycbcr.h" />
+		<Unit filename="ImageMagick/coders/yuv.h" />
+		<Unit filename="ImageMagick/src/Magick++/Blob.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/BlobRef.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/CoderInfo.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Color.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Drawable.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Exception.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Functions.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Geometry.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Image.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/ImageRef.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Montage.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Options.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Pixels.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/ResourceLimits.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/STL.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/SecurityPolicy.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Statistic.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/Thread.cpp" />
+		<Unit filename="ImageMagick/src/Magick++/TypeMetric.cpp" />
+		<Unit filename="ImageMagick/src/MagickCore/accelerate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/animate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/annotate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/artifact.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/attribute.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/blob.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/cache-view.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/cache.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/channel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/cipher.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/client.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/coder.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/color.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/colormap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/colorspace.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/compare.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/composite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/compress.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/configure.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/constitute.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/decorate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/delegate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/deprecate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/display.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/distort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/distribute-cache.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/draw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/effect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/enhance.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/exception.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/feature.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/fourier.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/fx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/gem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/geometry.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/histogram.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/identify.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/image-view.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/layer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/linked-list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/locale.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/log.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/magic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/magick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/matrix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/memory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/mime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/module.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/monitor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/montage.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/morphology.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/nt-base.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/nt-feature.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/opencl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/option.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/paint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/pixel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/policy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/prepress.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/profile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/property.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/quantize.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/quantum-export.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/quantum-import.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/quantum.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/random.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/registry.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/resample.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/resize.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/resource.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/segment.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/semaphore.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/shear.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/signature.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/splay-tree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/static.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/statistic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/stream.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/thread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/threshold.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/token.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/transform.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/type.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/utility.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/version.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/vision.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/vms.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/widget.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/xml-tree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickCore/xwindow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/animate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/compare.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/composite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/conjure.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/convert.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/deprecate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/display.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/drawing-wand.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/identify.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/import.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/magick-cli.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/magick-image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/magick-property.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/magick-wand.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/mogrify.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/montage.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/operation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/pixel-iterator.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/pixel-wand.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/script-token.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/stream.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/wand-view.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/wand.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/MagickWand/wandcli.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/aai.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/art.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/avs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/bgr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/bmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/braille.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/cals.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/caption.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/cin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/cip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/clip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/clipboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/cmyk.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/cube.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/cut.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/dcm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/dds.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/debug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/dib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/djvu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/dng.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/dot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/dps.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/dpx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/emf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/ept.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/exr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/fax.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/fits.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/flif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/fpx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/gif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/gradient.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/gray.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/hald.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/hdr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/heic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/histogram.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/hrz.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/html.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/icon.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/info.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/inline.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/ipl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/jbig.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/jnx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/jp2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/jpeg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/json.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/jxl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/label.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/magick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/map.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mask.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/matte.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/meta.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/miff.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mono.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mpc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mpeg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mpr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/msl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mtv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/mvg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/null.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/otb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/palm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pango.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pattern.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pcd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pcl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pcx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pdb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pdf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pgx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pict.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/plasma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/png.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pnm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/ps.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/ps2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/ps3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/psd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/pwp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/raw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/rgb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/rgf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/rla.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/rle.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/scr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/screenshot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/sct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/sfw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/sgi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/sixel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/stegano.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/sun.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/svg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/tga.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/thumbnail.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/tiff.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/tile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/tim.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/tim2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/ttf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/txt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/uil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/url.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/uyvy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/vicar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/vid.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/viff.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/vips.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/wbmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/webp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/wmf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/wpg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/x.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/xbm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/xc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/xcf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/xpm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/xps.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/xtrn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/xwd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/ycbcr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ImageMagick/src/coders/yuv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="include/HojdojImage.h" />
 		<Unit filename="include/Object.h" />
 		<Unit filename="include/Vector.h" />
 		<Unit filename="include/World.h" />
@@ -139,9 +1256,11 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/HojdojImage.cpp" />
 		<Unit filename="src/Object.cpp" />
 		<Unit filename="src/Vector.cpp" />
 		<Unit filename="src/World.cpp" />
+		<Unit filename="src/data_types.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

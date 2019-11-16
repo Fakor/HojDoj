@@ -14,6 +14,7 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-pthread" />
+					<Add directory="/usr/local/include/ImageMagick-7" />
 					<Add directory="../engine/include" />
 					<Add directory="include" />
 					<Add directory="../engine" />
@@ -22,6 +23,10 @@
 					<Add option="-lgtest" />
 					<Add option="-pthread" />
 					<Add library="../engine/bin/Debug/libengine.a" />
+					<Add library="/usr/local/lib/libMagick++-7.Q16HDRI.a" />
+					<Add library="../engine/bin/Release/libengine.a" />
+					<Add library="/usr/local/lib/libMagickCore-7.Q16HDRI.a" />
+					<Add library="/usr/local/lib/libMagickWand-7.Q16HDRI.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -30,21 +35,48 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add directory="/usr/local/include/ImageMagick-7" />
 					<Add directory="include" />
 					<Add directory="../engine" />
 					<Add directory="../engine/include" />
+					<Add directory="/usr/local/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lgtest" />
 					<Add option="-pthread" />
-					<Add library="../engine/bin/Debug/libengine.a" />
+					<Add option="-lX11" />
+					<Add library="/usr/local/lib/libMagick++-7.Q16HDRI.a" />
+					<Add library="/usr/local/lib/libMagickCore-7.Q16HDRI.a" />
+					<Add library="/usr/local/lib/libMagickWand-7.Q16HDRI.a" />
+					<Add library="../engine/bin/Release/libengine.a" />
+					<Add library="/usr/local/lib/libbz2.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libjbig.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libjpeg.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libpng16.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libz.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libtiff.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/liblzma.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libX11.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libfreetype.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/liblqr-1.so" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libxml2.a" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libfontconfig.a" />
+					<Add directory="/usr/local/lib" />
+					<Add directory="/usr/lib/x86_64-linux-gnu" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Linker>
+			<Add library="/usr/local/lib/libMagick++-7.Q16HDRI.a" />
+			<Add library="../engine/bin/Release/libengine.a" />
+			<Add library="/usr/local/lib/libMagickCore-7.Q16HDRI.a" />
+			<Add library="/usr/local/lib/libMagickWand-7.Q16HDRI.a" />
+		</Linker>
+		<Unit filename="image_tests.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="motion_tests.cpp" />
 		<Extensions>
