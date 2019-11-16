@@ -20,5 +20,9 @@ bool operator==(const RGBAPixel& p1, const RGBAPixel& p2){
            (p1.A == p2.A);
 }
 
+std::ostream& operator<<(std::ostream& os, const RGBAPixel& p){
+    os << "(" << +p.R << "," << +p.G << "," << +p.B << "," << +p.A << ")";
+    return os;
+}
 
 }
