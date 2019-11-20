@@ -8,6 +8,8 @@
 #include "data_types.h"
 
 #include "Magick++/Image.h"
+#include "Magick++/Geometry.h"
+#include "Magick++/Pixels.h"
 
 namespace hojdoj {
 
@@ -18,7 +20,10 @@ class HojdojImage
         virtual ~HojdojImage();
 
         PixelSize get_size() const;
-        RGBAPixel get_pixel(uint16_t x, uint16_t y) const;
+        RGBAPixel get_pixel(size_t x, size_t y);
+
+        constexpr Magick::Quantum ToQuantum(char c) {return c*QuantumRange/256;}
+        constexpr char FromQuantum(Magick::Quantum c) {return c*256/QuantumRange;}
     protected:
 
     private:
