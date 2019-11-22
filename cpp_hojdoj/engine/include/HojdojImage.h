@@ -22,6 +22,8 @@ class HojdojImage
         PixelSize get_size() const;
         RGBAPixel get_pixel(size_t x, size_t y);
 
+        void rescale(PixelSize p_size);
+
         constexpr Magick::Quantum ToQuantum(char c) {return c*QuantumRange/256;}
         constexpr char FromQuantum(Magick::Quantum c) {return c*256/QuantumRange;}
     protected:

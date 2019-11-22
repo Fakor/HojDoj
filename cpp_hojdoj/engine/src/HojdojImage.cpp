@@ -32,5 +32,9 @@ RGBAPixel HojdojImage::get_pixel(size_t x, size_t y){
             FromQuantum(color.quantumAlpha())};
 }
 
+void HojdojImage::rescale(PixelSize p_size){
+    Magick::Geometry geometry(p_size.width, p_size.height);
+    image_.scale(geometry);
+}
 
 }
